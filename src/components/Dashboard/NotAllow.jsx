@@ -1,24 +1,23 @@
-import React, { useContext, useEffect, useReducer, useState } from 'react';
-import { Link, useParams } from "react-router-dom";
+import React, { useEffect, useState } from "react";
+import { useParams } from "react-router-dom";
 import axios from "axios";
 import { useSelector } from "react-redux";
-import { url, setHeaders } from "../../slices/api";
+import { url } from "../../slices/api";
 // import BerbixVerify from "berbix-react";
-import BerbixVerify from '../berbix';
-import Start from './Start';
+// import BerbixVerify from '../berbix';
+import Start from "./Start";
 
 const NotAllow = () => {
   const params = useParams();
-  const [userID, setuserID] = useState();
+  // const [userID, setuserID] = useState();
   const [clientID, setclientID] = useState();
   const user = useSelector((state) => state.auth);
-
 
   useEffect(() => {
     const fetchProduct = async () => {
       try {
         const res = await axios.get(`${url}/berbix/find/${user._id}`);
-        // !clientID && 
+        // !clientID &&
         setclientID(res.data[0].client_token);
       } catch (err) {
         console.log(err);
@@ -27,8 +26,8 @@ const NotAllow = () => {
     fetchProduct();
   }, [params.id, clientID]);
   // customerUid
-  console.log("clientID:", clientID)
-  console.log("ID:", user._id)
+  console.log("clientID:", clientID);
+  console.log("ID:", user._id);
   const verify = () => {
     // ${url}/berbix/create-transaction
     // https://api.berbix.com/v0/transactions
@@ -73,10 +72,10 @@ const NotAllow = () => {
       }
         </>
       )} */}
-       <Start />
-      <div className='mb-5'></div>
+      <Start />
+      <div className="mb-5"></div>
     </div>
-  )
-}
+  );
+};
 
-export default NotAllow
+export default NotAllow;

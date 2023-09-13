@@ -1,13 +1,13 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState } from "react";
 import { Link, useParams, useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import axios from "axios";
 import { useSelector } from "react-redux";
 import { url, setHeaders } from "../../slices/api";
-import Button from 'react-bootstrap/esm/Button';
-import Modal from 'react-bootstrap/Modal';
+import Button from "react-bootstrap/esm/Button";
+import Modal from "react-bootstrap/Modal";
 import { toast } from "react-toastify";
-import scrollreveal from "scrollreveal";
+// import scrollreveal from "scrollreveal";
 
 const Start = () => {
   const navigate = useNavigate();
@@ -17,8 +17,8 @@ const Start = () => {
   const [done, setdone] = useState(false);
   const [loading, setLoading] = useState(false);
   const [modalShow, setModalShow] = useState(false);
-  const [showMenu, setShowMenu] = useState(false);
-  const auth = useSelector((state) => state.auth);
+  // const [showMenu, setShowMenu] = useState(false);
+  // const auth = useSelector((state) => state.auth);
   // const id = useRef(0);
   const user = useSelector((state) => state.auth);
   const [checkTerm, setcheckTerm] = useState(false);
@@ -26,32 +26,38 @@ const Start = () => {
   useEffect(() => {
     const fetchProduct = async () => {
       try {
-        const response = await axios.get(`${url}/users/find/${user._id}`, setHeaders());
-         setcheckTerm(response.data.isAccept)
+        const response = await axios.get(
+          `${url}/users/find/${user._id}`,
+          setHeaders()
+        );
+        setcheckTerm(response.data.isAccept);
         if (checkTerm === false) {
-          setModalShow(true)
+          setModalShow(true);
         }
       } catch (error) {
         console.log(error);
       }
     };
-    fetchProduct()
+    fetchProduct();
   }, [checkTerm]);
 
   // setModalShow(false)
   useEffect(() => {
     if (checkTerm === true) {
-      setModalShow(false)
+      setModalShow(false);
     }
   });
 
   useEffect(() => {
     const fetchProduct = async () => {
       try {
-        const res = await axios.get(`${url}/berbix/find/${user._id}`, setHeaders());
-        console.log("Berbix Data", res)
+        const res = await axios.get(
+          `${url}/berbix/find/${user._id}`,
+          setHeaders()
+        );
+        console.log("Berbix Data", res);
         !clientID && setclientID(res.data[0].client_token);
-        // !clientID && 
+        // !clientID &&
       } catch (err) {
         console.log(err);
       }
@@ -62,42 +68,42 @@ const Start = () => {
     }
   }, [params.id, clientID, datas]);
 
-  console.log("Param ID", params.id)
-  console.log("user ID", user._id)
+  console.log("Param ID", params.id);
+  console.log("user ID", user._id);
   // useEffect(() => {
   //   if (clientID) {
   //     navigate("verification");
   // }
   // }, [clientID])
-  console.log("clientID", clientID)
-  console.log("datas", datas)
+  console.log("clientID", clientID);
+  console.log("datas", datas);
 
   // onClick={() => navigate(`/product/${params.row.id}`)}
   const verify = () => {
     setLoading(true);
-    axios.post(`${url}/berbix/create-transaction`, {
-      userId: user._id,
-      email: user.email,
-      phone: user.phone,
-    })
+    axios
+      .post(`${url}/berbix/create-transaction`, {
+        userId: user._id,
+        email: user.email,
+        phone: user.phone,
+      })
       .then((response) => {
         if (response.data.url) {
           window.location.href = response.data.url;
         }
         setLoading(false);
-        setdone(true)
+        setdone(true);
       })
       .catch((err) => console.log(err.message));
-
   };
-  console.log("Is Accept:", checkTerm)
+  console.log("Is Accept:", checkTerm);
   return (
     <div>
       {
         <div className=" mt-5 text ">
           <h1 className="display-2 ml-5 text-center fw-bold text-Black">
             Start <br />
-            ID  <span className="text-gradient">Verification....</span>
+            ID <span className="text-gradient">Verification....</span>
             <br />
             {done != true ? (
               <>
@@ -109,7 +115,6 @@ const Start = () => {
               <Button onClick={() => navigate("verification")}>Next</Button>
             )}
           </h1>
-
         </div>
       }
       {/* <button
@@ -200,16 +205,14 @@ const Start = () => {
         ) : null}
       </div> */}
       {/* {checkTerm === false ? ( */}
-      <Models show={modalShow}
-        onHide={() => setModalShow(false)} />
+      <Models show={modalShow} onHide={() => setModalShow(false)} />
 
-      <div className='mb-5'></div>
+      <div className="mb-5"></div>
     </div>
+  );
+};
 
-  )
-}
-
-export default Start
+export default Start;
 
 const Models = (props) => {
   const params = useParams();
@@ -218,17 +221,17 @@ const Models = (props) => {
   const user = useSelector((state) => state.auth);
   const { list } = useSelector((state) => state.users);
 
-  console.log("checkTerm", checkTerm)
+  console.log("checkTerm", checkTerm);
   useEffect(() => {
     const fetchProduct = async () => {
       try {
         const response = await axios.get(`${url}/TermsofCondition`);
-        setcheckTerm(response.data)
+        setcheckTerm(response.data);
       } catch (error) {
         console.log(error);
       }
     };
-    fetchProduct()
+    fetchProduct();
   }, [checkTerm]);
 
   const handleSubmit = () => {
@@ -261,33 +264,47 @@ const Models = (props) => {
 
   return (
     <>
-      {updating === false ?
+      {updating === false ? (
         <Modal
           {...props}
           size="lg"
           aria-labelledby="contained-modal-title-vcenter"
           centered
         >
-          {
-            checkTerm &&
+          {checkTerm &&
             checkTerm?.map((item) => (
               <>
-                <Modal.Header key={item._id} style={{backgroundColor:'white'}}>
+                <Modal.Header
+                  key={item._id}
+                  style={{ backgroundColor: "white" }}
+                >
                   <Modal.Title id="contained-modal-title-vcenter">
-                  <h4>Terms of Services</h4>  
+                    <h4>Terms of Services</h4>
                   </Modal.Title>
                 </Modal.Header>
-                <Modal.Body className='overflow-scroll' style={{height:"50vh", width:"412px",backgroundColor:"black"}}>
-                  <a className='text-white'>{new Date(item.createdAt).toDateString()}</a>
-                  <br/>
+                <Modal.Body
+                  className="overflow-scroll"
+                  style={{
+                    height: "50vh",
+                    width: "412px",
+                    backgroundColor: "black",
+                  }}
+                >
+                  <a className="text-white">
+                    {new Date(item.createdAt).toDateString()}
+                  </a>
+                  <br />
                   <div>
-                  <p>{item.heading}</p>
-                  <br/>
-                  <p>{item.desc}</p>
+                    <p>{item.heading}</p>
+                    <br />
+                    <p>{item.desc}</p>
                   </div>
                 </Modal.Body>
                 <Modal.Footer>
-                  <a>I agree to the Terms of Services and I read the Privacy Notice</a>
+                  <a>
+                    I agree to the Terms of Services and I read the Privacy
+                    Notice
+                  </a>
                 </Modal.Footer>
                 <Modal.Footer>
                   {/* <form onSubmit={handleSubmit}> */}
@@ -296,15 +313,14 @@ const Models = (props) => {
                   {/* </form> */}
                 </Modal.Footer>
               </>
-            ))
-
-          }
+            ))}
         </Modal>
-        : ""}
+      ) : (
+        ""
+      )}
     </>
-
-  )
-}
+  );
+};
 
 const Section = styled.section`
       margin-left: 18vw;

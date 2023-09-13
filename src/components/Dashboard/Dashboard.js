@@ -7,8 +7,8 @@ import styled from "styled-components";
 // import Profile from "./Profile";
 // import Transfers from "./Transfers";
 import scrollreveal from "scrollreveal";
-import UserDashboard from "./UserDashboard";
-import NotAllow from "./NotAllow";
+// import UserDashboard from "./UserDashboard";
+// import NotAllow from "./NotAllow";
 import Start from "./Start";
 export default function Dashboard() {
   useEffect(() => {
@@ -36,7 +36,7 @@ export default function Dashboard() {
       <div className="grid">
         {/* <UserDashboard/> */}
         {/* <NotAllow /> */}
-        <Start/>
+        <Start />
         {/* <div className="row__one">
           <Analytics />
           <FAQ />
