@@ -27,7 +27,7 @@ function Footer() {
                   </div>
                   <p>
                     For the first time, investors around the globe can buy into
-                    the US real estate market through fully compliant,
+                    the real estate market through fully compliant,
                     fractional, tokenized ownership. Powered by Blockchain
                   </p>
                   <div className="dz-social-icon transparent space-10">
