@@ -108,7 +108,7 @@ const Start = () => {
             {done != true ? (
               <>
                 <Link className="btn btn-primary" onClick={() => verify()}>
-                  {loading ? "Loading..." : "Satrt"}
+                  {loading ? "Loading..." : "Start"}
                 </Link>
               </>
             ) : (
