@@ -80,7 +80,7 @@ const Login = () => {
                         <li>
                           <i className="fas fa-map-marker-alt"></i>
                           <span>
-                            6 State RD, Suite 117 <br />
+                            6 State RD<br /> Suite 117 <br />
                             Mechanicsburg, PA 17050-7957
                           </span>
                         </li>
