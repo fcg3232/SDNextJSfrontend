@@ -90,7 +90,7 @@ function Footer() {
                   <h4 className="widget-title">Locations</h4>
                   <div className="clearfix">
                     <h6 className="title">Mechanicsburg</h6>
-                    <p>6 State RD, Suite 117 Mechanicsburg, PA 17050-7957</p>
+                    <p>6 State RD<br />Suite 117<br />Mechanicsburg, PA 17050-7957</p>
                     <img src={flags} alt="" />
                   </div>
                 </div>
