@@ -27,8 +27,8 @@ function Footer() {
                   </div>
                   <p>
                     For the first time, investors around the globe can buy into
-                    the US real estate market through fully-compliant,
-                    fractional, tokenized ownership. Powered by blockchain
+                    the real estate market through fully compliant, fractional,
+                    tokenized ownership. Powered by Blockchain
                   </p>
                   <div className="dz-social-icon transparent space-10">
                     <ul>
@@ -98,7 +98,13 @@ function Footer() {
                   <h4 className="widget-title">Locations</h4>
                   <div className="clearfix">
                     <h6 className="title">Mechanicsburg</h6>
-                    <p>6 State RD Suite 117 Mechanicsburg, PA 17050-7957 USA</p>
+                    <p>
+                      6 State RD
+                      <br />
+                      Suite 117
+                      <br />
+                      Mechanicsburg, PA 17050-7957
+                    </p>
                     <img src={flags} alt="" />
                   </div>
                 </div>

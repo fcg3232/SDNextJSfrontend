@@ -130,7 +130,7 @@ function BlogDetails() {
                                     <h4 className="title">Related Blog</h4>
                                 </div>
                                 <div className="row m-b30 m-sm-b10">
-                                    {data.map((item, ind, arr) => (
+                                    {data?.map((item, ind, arr) => (
                                         <div className="col-md-6 m-b30" key={ind}>
                                             {arr.length - 2 >= ind ? (
                                                 <>

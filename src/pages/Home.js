@@ -115,12 +115,12 @@ function Home() {
                 <h2 className="title">Why Trust Us?</h2>
                 <p>
                   SecondaryDAO leverages the security of Ethereum, and the
-                  affordability of layer 2 solutions like Arbitrum, to power
-                  it's transactions, backed by a team with over 50 years
-                  experience.Maybe Investing in any tokenized fractionalized
-                  real estate platform, including SecondaryDAO,involves risk,
+                  affordability of layer 2 solutions like Arbitral, to power its
+                  transactions, backed by a team with over 50 years of
+                  experience. Maybe Investing in any tokenized fractionalized
+                  real estate platform, including SecondaryDAO, involves risk,
                   and Investing in any tokenized fractionalized real estate
-                  platform, including SecondaryDAO it's important to thoroughly
+                  platform, including SecondaryDAO's important to thoroughly
                   research and understand the potential risks before investing.
                   However, there are several factors that may contribute to
                   building trust in SecondaryDAO and fractionalized tokenized
@@ -128,7 +128,7 @@ function Home() {
                 </p>
               </div>
               <div className="row">
-                {trustBlog.map((data, ind) => (
+                {trustBlog?.map((data, ind) => (
                   <div className="col-lg-6 m-b30" key={ind}>
                     <div className="icon-bx-wraper style-2">
                       <div className="icon-media">
@@ -174,7 +174,7 @@ function Home() {
           <div className=" mt-5">
             <ul>
               <Marquee speed={80} loop={0} pauseOnHover={true}>
-                {data.map((item, index) => (
+                {data?.map((item, index) => (
                   <div className="card overflow-hidden ms-4 " key={index}>
                     <div className="card-body d-flex align-items-center">
                       <div className="me-4 ">
