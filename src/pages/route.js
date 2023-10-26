@@ -90,32 +90,32 @@ function Index() {
             path="/"
             element={
               <Suspense fallback={<Loading />}>
-                <Home />
+                <MarketPlace />
               </Suspense>
             }
           />
           {/* <Route path='/' exact element={<Home />} /> */}
           <Route path="*" element={<NotFound />} />
           <Route path="/login" exact element={<Login />} />
-          <Route path="/marketplace" exact element={<MarketPlace />} />
+          {/* <Route path="/marketplace" exact element={<MarketPlace />} /> */}
           <Route
             path="/propertydetails/:id"
             exact
             element={<PropertyDetails />}
           />
-          <Route path="/about-us" exact element={<AboutUs />} />
+          {/* <Route path='/about-us' exact element={<AboutUs />} /> */}
           {/* <Route path='/introcard' exact element={<IntroCard />} /> */}
           <Route path="/enteremail" exact element={<EnterEmail />} />
           <Route path="/otpcode" exact element={<OtpCode />} />
-          <Route path="/pricing" exact element={<Pricing />} />
-          <Route path="/blog-list" exact element={<BlogList />} />
-          <Route path="/blog-grid" exact element={<BlogGrid />} />
-          <Route path="/blog-details/:id" exact element={<BlogDetails />} />
-          <Route path="/contact-us" exact element={<ContactUs />} />
+          {/* <Route path='/pricing' exact element={<Pricing />} /> */}
+          {/* <Route path='/blog-list' exact element={<BlogList />} /> */}
+          {/* <Route path='/blog-grid' exact element={<BlogGrid />} /> */}
+          {/* <Route path='/blog-details/:id' exact element={<BlogDetails />} /> */}
+          {/* <Route path='/contact-us' exact element={<ContactUs />} /> */}
           <Route path="/signup" exact element={<Registration />} />
-          <Route path="/termsofservice" exact element={<TermsofService />} />
-          <Route path="/faq" exact element={<Faq />} />
-          <Route path="/privacypolicy" exact element={<PrivacyPolicy />} />
+          {/* <Route path='/termsofservice' exact element={<TermsofService />} /> */}
+          {/* <Route path='/faq' exact element={<Faq />} /> */}
+          {/* <Route path='/privacypolicy' exact element={<PrivacyPolicy />} /> */}
           <Route path="/account" exact element={<Account />}>
             <Route index element={<Dashboard />} />
             <Route path="start" exact element={<Start />} />

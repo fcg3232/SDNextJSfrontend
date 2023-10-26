@@ -10,5 +10,4 @@ export const setHeaders = () => {
   return headers;
 };
 
-
 // http://localhost:5000

@@ -34,7 +34,7 @@ const Hero = () => {
             Feature of <br className="sm:block hidden" />{" "}
             <span className="text-gradient">Real Estate</span>{" "}
           </h1>
-          <Link to="/marketplace">
+          <Link to="/">
             <div className="ss:flex hidden md:mr-4 mr-0">
               <GetStarted />
             </div>

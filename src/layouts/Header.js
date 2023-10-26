@@ -33,7 +33,7 @@ function Header() {
         >
           <div className="main-bar clearfix">
             <div className="container clearfix">
-              <div className="logo-header"> 
+              <div className="logo-header">
                 <Link to={"/"} className="logo-dark">
                   <img src={Logos} alt="" />
                 </Link>
@@ -71,22 +71,14 @@ function Header() {
                   </NavLink>
                 </div>
                 <ul className="nav navbar-nav navbar">
+                  {/* <li><NavLink to={"/"}>Home</NavLink></li> */}
                   <li>
-                    <NavLink to={"/"}>Home</NavLink>
+                    <NavLink to={"/"}>MarketPlace</NavLink>
                   </li>
-                  <li>
-                    <NavLink to={"/marketplace"}>MarketPlace</NavLink>
-                  </li>
-                  <li>
-                    <NavLink to={"/about-us"}>About Us</NavLink>
-                  </li>
+                  {/* <li><NavLink to={"/about-us"}>About Us</NavLink></li> */}
                   {/* <li><NavLink to={"/pricing"}>Pricing</NavLink></li> */}
-                  <li>
-                    <NavLink to={"/blog-list"}>Blog</NavLink>
-                  </li>
-                  <li>
-                    <NavLink to={"/contact-us"}>Contact Us</NavLink>
-                  </li>
+                  {/* <li><NavLink to={"/blog-list"}>Blog</NavLink></li> */}
+                  {/* <li><NavLink to={"/contact-us"}>Contact Us</NavLink></li> */}
                   {auth._id && !auth.isAdmin ? (
                     <>
                       <li>

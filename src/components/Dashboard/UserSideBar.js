@@ -90,7 +90,7 @@ export default function UserSideBar() {
                 className={currentLink === 2 ? "active" : "none"}
                 onClick={() => setCurrentLink(2)}
               >
-                <Link to={"/marketplace"}>
+                <Link to={"/"}>
                   <RiDashboard2Fill />
                   <span> MarketPlace</span>
                 </Link>
@@ -168,7 +168,7 @@ export default function UserSideBar() {
               className={currentLink === 2 ? "active" : "none"}
               onClick={() => setCurrentLink(2)}
             >
-              <Link to={"/marketplace"}>
+              <Link to={"/"}>
                 <RiDashboard2Fill />
                 <span> MarketPlace</span>
               </Link>

@@ -86,7 +86,7 @@ function Home() {
                   </li>
                 </ul>
                 <Link
-                  to={"/marketplace"}
+                  to={"/"}
                   className="btn space-lg btn-gradient btn-shadow btn-primary "
                 >
                   Visit MarketPlace
