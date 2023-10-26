@@ -13,7 +13,9 @@ const SignUpValidationSchema = yup.object({
   name: yup.string().required("Please Enter Your First Name"),
   phone: yup.string().required("Please Enter Your Phone Number"),
   email: yup.string().email().required("Please Enter Your Email"),
-  password: yup.string().matches(
+  password: yup
+    .string()
+    .matches(
       /^(?=.*[!@#$%^&*])/g,
       "Must be at least 8 characters and use at least one special character."
     )
@@ -33,12 +35,13 @@ const Registration = () => {
   const navigate = useNavigate();
   const auth = useSelector((state) => state.auth);
 
-  const { values, errors, touched, handleSubmit, handleChange, handleBlur } = useFormik({
+  const { values, errors, touched, handleSubmit, handleChange, handleBlur } =
+    useFormik({
       initialValues: initialValues,
       onSubmit: (values) => {
         dispatch(registerUser(values));
-        },
-        validationSchema: SignUpValidationSchema,
+      },
+      validationSchema: SignUpValidationSchema,
     });
 
   useEffect(() => {
@@ -183,6 +186,7 @@ const Registration = () => {
                         <div className="row">
                           <div className="col-xl-6 mb-3 mb-md-4">
                             <input
+                              autoComplete="email"
                               name="email"
                               type="email"
                               className="form-control"
@@ -200,6 +204,7 @@ const Registration = () => {
 
                           <div className="col-xl-6 mb-3 mb-md-4">
                             <input
+                              autoComplete="current-password"
                               name="password"
                               type="password"
                               className="form-control"
