@@ -1,4 +1,4 @@
-export const url = "http://34.239.29.160/api";
+export const url = "https://secondarydao.com/api";
 
 export const setHeaders = () => {
   const headers = {
