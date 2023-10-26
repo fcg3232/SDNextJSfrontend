@@ -30,7 +30,7 @@ function BlogGrid(){
                 <section className="content-inner">
                     <div className="container">
                         <div className="row">
-                            {gridData.map((item, ind)=>(
+                            {gridData?.map((item, ind)=>(
                                 <div className="col-md-6 col-xl-4 m-b30" key={ind}>
                                     <div className="dz-card style-1 blog-lg overlay-shine">
                                         <div className="dz-media">
