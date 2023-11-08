@@ -2,10 +2,11 @@ import React from "react";
 import { Link } from "react-router-dom";
 import { useAppSelector } from "../../reducer/store";
 import prf from "./../../assets/images/prf.png";
+import { url } from "../../slices/api";
 
 function RecentNews() {
   const { blogs: data, status } = useAppSelector((state) => state.blogdb);
-  const PF = "http://localhost:5000/imges/";
+  const PF = url + "/imges/";
   return (
     <>
       {data?.map((item, ind, arr) => (

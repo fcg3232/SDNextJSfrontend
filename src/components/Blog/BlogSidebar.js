@@ -6,6 +6,7 @@ import { Link } from "react-router-dom";
 // import pic2 from './../../assets/images/blog/small/pic2.jpg';
 // import pic3 from './../../assets/images/blog/small/pic3.jpg';
 import { useAppSelector } from "../../reducer/store";
+import { url } from "../../slices/api";
 
 // const listData = [
 // 	{}, {}, {},
@@ -29,7 +30,7 @@ const tagData = [
 
 const BlogSidebar = () => {
   const { blogs: data } = useAppSelector((state) => state.blogdb);
-  const PF = "http://localhost:5000/imges/";
+  const PF = url + "/imges/";
 
   return (
     <>
