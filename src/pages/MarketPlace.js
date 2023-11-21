@@ -52,12 +52,12 @@ const MarketPlace = () => {
                             </div>
                         </div>
                         <Research />
-                        <div className='text-center row' style={{ marginTop: "40px", marginBottom: "40px", marginLeft:"10px" }}>
+                        {/* <div className='text-center row' style={{ marginTop: "40px", marginBottom: "40px", marginLeft:"10px" }}>
                             <navss className="col cltext-center">
-                                {/* <div className='logo'>
+                                <div className='logo'>
                                 <img src={logo} className="App-logo" alt="logo" />
                                 <span>Chrysus</span>
-                            </div> */}
+                            </div>
                                 <div className='timer'>
                                     <div className='box'>
                                         <p>{timeLeft.days}</p>
@@ -83,8 +83,8 @@ const MarketPlace = () => {
                             <p className='col titless'>
                                 COMING SOON
                             </p>
-                        </div>
-                        {/* <ListProperty/> */}
+                        </div> */}
+                        <ListProperty/>
                     </div>
                 ) :
                 (

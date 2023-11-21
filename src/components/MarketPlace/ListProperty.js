@@ -82,11 +82,12 @@ function ListProperty() {
                             key={item._id}
                           >
                             <div className="dz-card style-1 blog-lg overlay-shine">
-                              <div className="dz-media">
+                              <div className="dz-media !max-h-[300px]">
                                 <Link to={"/propertydetails/" + item._id}>
                                   <img
                                     width="400"
-                                    height="400"
+                                    height="300"
+                                    className="!max-h-[300px]"
                                     src={item.image?.url}
                                     alt=""
                                   />
