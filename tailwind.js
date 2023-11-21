@@ -1,6 +1,6 @@
 /** @type {import('tailwindcss').Config} */
 module.exports = {
-  content: ["./public/index.html", "./src/**/*.{js,jsx}"],
+  content: ["./public/index.html", "./src/components/**/*.{js,jsx,ts,tsx}"],
   mode: "jit",
   theme: {
     extend: {
@@ -23,30 +23,29 @@ module.exports = {
       xl: "1700px",
     },
     animation: {
-      'spin-slow': 'spin 3s linear infinite',
-      bounce: 'bounce 12s infinite',
-      ping:'ping 1s cubic-bezier(0, 0, 0.2, 1) infinite',
+      "spin-slow": "spin 3s linear infinite",
+      bounce: "bounce 12s infinite",
+      ping: "ping 1s cubic-bezier(0, 0, 0.2, 1) infinite",
     },
-    keyframes: {  
+    keyframes: {
       ping: {
-        ' 10%' : {
-          transform: 'scale(2)',
-          opacity: '0',
-        }
+        " 10%": {
+          transform: "scale(2)",
+          opacity: "0",
+        },
       },
-      bounce : {
-        ' 0%, 100%' : {
-          transform: 'translateY(-6%)'
+      bounce: {
+        " 0%, 100%": {
+          transform: "translateY(-6%)",
           // animation-timing-function: 'cubic-bezier(0.8, 0, 1, 1)',
         },
-        '50%':{
-          transform:' translateY(0)',
+        "50%": {
+          transform: " translateY(0)",
           // animation-timing-function: cubic-bezier(0, 0, 0.2, 1);
-        }
+        },
       },
+    },
   },
 
-  },
-  
   plugins: [],
 };
