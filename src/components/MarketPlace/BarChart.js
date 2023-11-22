@@ -1,9 +1,10 @@
 import React from 'react'
+import Chart from "react-apexcharts";
 
-const barChart = () => {
+const BarChart = ({ options, series }) => {
   return (
-    <div>barChart</div>
+    <Chart options={options} type="bar" series={series} width="100%" />
   )
 }
 
-export default barChart
+export default BarChart

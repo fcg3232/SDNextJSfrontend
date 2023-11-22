@@ -25,6 +25,7 @@ import Financials from "../components/MarketPlace/Financials";
 import Documents from "../components/MarketPlace/Documents";
 import BuyingProcess from "../components/MarketPlace/BuyingProcess";
 import Market from "../components/MarketPlace/Market";
+import OrderBook from "../components/MarketPlace/OrderBook";
 
 // const relatedBlog = [
 //     { image1: pic4, image2: avat2, title: 'Why You Should Not Go To Cryptocurrency.' },
@@ -109,7 +110,7 @@ function PropertyDetails() {
     }
   }, [params.id, loadchain, checkID]);
 
-  let currentSelected = <Financials />;
+  let currentSelected = <OrderBook />;
 
   const switchComp = (type) => {
     console.log("🚀 ~ file: PropertyDetails.js:108 ~ switchComp ~ type:", type);
@@ -126,6 +127,9 @@ function PropertyDetails() {
         break;
       case "Market":
         currentSelected = <Market />;
+        break;
+      case "Order Book":
+        currentSelected = <OrderBook />;
         break;
       default:
         currentSelected = <Details />;
@@ -192,6 +196,15 @@ function PropertyDetails() {
                         onClick={() => switchComp("Market")}
                       >
                         Market
+                      </Nav.Link>
+                      <Nav.Link
+                        as="button"
+                        className="nav-link"
+                        eventKey="Orb"
+                        type="button"
+                        onClick={() => switchComp("Order Book")}
+                      >
+                        Order Book
                       </Nav.Link>
                     </Nav>
                   </div>
