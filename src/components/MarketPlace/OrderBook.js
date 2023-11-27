@@ -1,26 +1,32 @@
 import React from 'react'
 import '../MarketPlace/compo.css';
+import OverlayTrigger from 'react-bootstrap/OverlayTrigger';
+import Tooltip from 'react-bootstrap/Tooltip';
 
 const orderBookData = [
     {
         text: 'Last trade',
         price: '49.00',
-        text2: 'Last trade value'
+        text2: 'Last trade value',
+        toolTip: 'long description description description description description description description'
     },
     {
         text: 'Estimated value',
         price: '50.05',
-        text2: 'HouseCanary'
+        text2: 'HouseCanary',
+        toolTip: 'long description descrdddddddddddddddddddddddddddddd ddddddddddddddd description description'
     },
     {
         text: 'Trade volume',
         price: '4,606',
-        text2: 'Last 4 weeks'
+        text2: 'Last 4 weeks',
+        toolTip: 'long description description qwertyuqwerty hgvfcdddddddddddddddddddddd'
     },
     {
         text: 'Market cap',
         price: '293,743',
-        text2: '5,869 tokens'
+        text2: '5,869 tokens',
+        toolTip: 'long description dnjdnsdcnnmn dsdddlkfjkfkf dsdsdsfkj '
     }
 ]
 
@@ -31,7 +37,6 @@ const OrderBook = () => {
             <div className='order-book-container'>
                 <div className='order-price-container'>
                     {orderBookData.map((currElem) => (
-
                         <OrderBookPriceCard data={currElem} />
                     ))}
                 </div>
@@ -54,6 +59,7 @@ const OrderBook = () => {
                                 </tr>
                             </table>
                         </div>
+                        <div className='mid-container'></div>
                         <div className='table-sub-container'>
                             <table className='open-order-table'>
                                 <tr>
@@ -79,7 +85,7 @@ const OrderBook = () => {
                             <table className='filled-order-table'>
                                 <tr>
                                     <th>Filled</th>
-                                    <th>Size</th>
+                                    <th className='filled-order-th'>Size</th>
                                     <th>Transacted Price</th>
                                 </tr>
                                 <tr>
@@ -127,7 +133,7 @@ const OrderBook = () => {
 
                     </div>
                 </div>
-            </div>
+            </div >
         </>
     )
 }
@@ -136,16 +142,26 @@ export default OrderBook
 
 
 export const OrderBookPriceCard = ({ data }) => {
-    const { text, price, text2 } = data
+    const { text, price, text2, toolTip } = data
     return (
         <>
-            <div className='order-price-card'>
-                <p className='order-card-text'>{text}</p>
-                <div className='price-card'>
-                    <span className='dollar-sign'>$</span><span className='order-card-price-text'>{price}</span>
+            <OverlayTrigger
+                placement="right"
+                delay={{ show: 250, hide: 400 }}
+                overlay={(props) => (
+                    <Tooltip id="button-tooltip" {...props}>
+                        {toolTip}
+                    </Tooltip>
+                )}
+            >
+                <div className='order-price-card'>
+                    <p className='order-card-text'>{text}</p>
+                    <div className='price-card'>
+                        <span className='dollar-sign'>$</span><span className='order-card-price-text'>{price}</span>
+                    </div>
+                    <p className='order-card-text'>{text2}</p>
                 </div>
-                <p className='order-card-text'>{text2}</p>
-            </div>
+            </OverlayTrigger>
         </>
     )
 }

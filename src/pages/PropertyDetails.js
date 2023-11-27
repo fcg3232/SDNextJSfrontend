@@ -32,6 +32,9 @@ import OrderBook from "../components/MarketPlace/OrderBook";
 //     { image1: pic5, image2: avat3, title: 'Five Easy Rules Of bitcoin.' },
 // ];
 
+const navbarLink = ['Details', "Financials", 'Documents', 'Buying Process', 'Market', 'Order Book']
+
+
 const CommentBlog = ({ image, title }) => {
   return (
     <>
@@ -61,14 +64,30 @@ const CommentBlog = ({ image, title }) => {
   );
 };
 
+
+const AllComponents = ({ componentType }) => {
+  const componentMap = {
+    Details: Details,
+    Financials: Financials,
+    Documents: Documents,
+    "Buying Process": BuyingProcess,
+    Market: Market,
+    "Order Book": OrderBook,
+  };
+
+  const ComponentToRender = componentMap[componentType];
+
+  return <>{ComponentToRender && <ComponentToRender />}</>;
+};
+
 function PropertyDetails() {
   const params = useParams();
   const [product, setProduct] = useState({});
   const [loadchain, setloadchain] = useState();
   const [datas, setdatas] = useState([]);
   const [loading, setLoading] = useState(false);
-  const [isContractLoad, setisContractLoad] = useState(false);
   const [checkID, setcheckID] = useState();
+  const [activeComponent, setActiveComponent] = useState('Details');
   const dispatch = useAppDispatch();
   const { web3, contract, accounts, socketContract } = useAppSelector(
     (state) => state.web3Connect
@@ -110,33 +129,7 @@ function PropertyDetails() {
     }
   }, [params.id, loadchain, checkID]);
 
-  let currentSelected = <OrderBook />;
 
-  const switchComp = (type) => {
-    console.log("🚀 ~ file: PropertyDetails.js:108 ~ switchComp ~ type:", type);
-
-    switch (type) {
-      case "Financials":
-        currentSelected = <Financials />;
-        break;
-      case "Documents":
-        currentSelected = <Documents />;
-        break;
-      case "Buying Process":
-        currentSelected = <BuyingProcess />;
-        break;
-      case "Market":
-        currentSelected = <Market />;
-        break;
-      case "Order Book":
-        currentSelected = <OrderBook />;
-        break;
-      default:
-        currentSelected = <Details />;
-    }
-
-    return currentSelected;
-  };
   return (
     <>
       <Header />
@@ -151,64 +144,21 @@ function PropertyDetails() {
                     <img src={product.image?.url} alt="" />
                   </div>
                   <div className="buy-sel mt-5">
-                    <Nav className="nav nav-tabs" role="tablist">
-                      <Nav.Link
-                        as="button"
-                        className="nav-link"
-                        eventKey="Navbuy"
-                        type="button"
-                        onClick={() => switchComp("Details")}
-                      >
-                        Details
-                      </Nav.Link>
-                      <Nav.Link
-                        as="button"
-                        className="nav-link"
-                        eventKey="Navsell"
-                        type="button"
-                        onClick={() => switchComp("Financials")}
-                      >
-                        Financials
-                      </Nav.Link>
-                      <Nav.Link
-                        as="button"
-                        className="nav-link"
-                        eventKey="Doc"
-                        type="button"
-                        onClick={() => switchComp("Documents")}
-                      >
-                        Documents
-                      </Nav.Link>
-                      <Nav.Link
-                        as="button"
-                        className="nav-link"
-                        eventKey="buy"
-                        type="button"
-                        onClick={() => switchComp("Buying Process")}
-                      >
-                        Buying Process
-                      </Nav.Link>
-                      <Nav.Link
-                        as="button"
-                        className="nav-link"
-                        eventKey="Mar"
-                        type="button"
-                        onClick={() => switchComp("Market")}
-                      >
-                        Market
-                      </Nav.Link>
-                      <Nav.Link
-                        as="button"
-                        className="nav-link"
-                        eventKey="Orb"
-                        type="button"
-                        onClick={() => switchComp("Order Book")}
-                      >
-                        Order Book
-                      </Nav.Link>
+                    <Nav defaultActiveKey={'Details'} className="nav nav-tabs" role="tablist">
+                      {navbarLink.map((navLink) => (
+                        <Nav.Link
+                          as="button"
+                          className={`nav-link ${navLink === activeComponent ? 'active' : ''} `}
+                          eventKey={navLink}
+                          type="button"
+                          onClick={() => setActiveComponent(navLink)}
+                        >
+                          {navLink}
+                        </Nav.Link>
+                      ))}
                     </Nav>
                   </div>
-                  {currentSelected}
+                  <AllComponents componentType={activeComponent} />
                 </div>
                 {/* <div className="widget-title">
                                     <h4 className="title">Related Blog</h4>
