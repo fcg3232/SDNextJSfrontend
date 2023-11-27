@@ -19,26 +19,26 @@ const FinancialCard = ({
     <>
       <div className="financial-card shadow-xl">
         <div className="financial-sub-card">
-          <span className="financial-card-heading text-xl md:text-2xl">
+          <span className="financial-card-heading">
             {Heading}
           </span>
-          <span className="financial-card-heading text-xl md:text-2xl">{TotalPrice}</span>
+          <span className="financial-card-heading">{TotalPrice}</span>
         </div>
         <div className="financial-sub-card">
-          <span className="financial-card-text md:text-lg">{FirstText}</span>
-          <span className="financial-card-price md:text-lg flex items-center">
+          <span className="financial-card-text">{FirstText}</span>
+          <span className="financial-card-price">
             <span>{FirstRight}</span>
           </span>
         </div>
         <div className="financial-sub-card">
-          <span className="financial-card-text md:text-lg">{secondText}</span>
-          <span className="financial-card-price md:text-lg flex items-center">
+          <span className="financial-card-text ">{secondText}</span>
+          <span className="financial-card-price">
             <span>{secondRight}</span>
           </span>
         </div>
         <div className="financial-sub-card-end">
-          <span className="financial-card-text md:text-lg">{thirdText}</span>
-          <span className="financial-card-price md:text-lg flex items-center">
+          <span className="financial-card-text">{thirdText}</span>
+          <span className="financial-card-price">
             <span>{thirdRight}</span>
           </span>
         </div>
