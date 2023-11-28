@@ -7,6 +7,7 @@ import Button from "react-bootstrap/Button";
 import { CONTRACT_ABIS } from "../../contract/property";
 import { useAppSelector, useAppDispatch } from "../../reducer/store";
 import { loadBlockchain, updatAccount } from "../../slices/web3ContractSlice";
+import "../../components/MarketPlace/compo.css"
 
 // import Nouislider from "nouislider-react";
 //import noUiSlider from "nouislider";
@@ -20,6 +21,23 @@ import { loadBlockchain, updatAccount } from "../../slices/web3ContractSlice";
 //     slider.noUiSlider.destroy();
 //   }
 // }
+
+const buyPriceData = [
+  {
+    price: "51",
+    tokenQuantity: '4'
+  },
+  {
+    price: "49.4",
+    tokenQuantity: '2'
+  },
+  {
+    price: "52",
+    tokenQuantity: '4'
+  },
+]
+
+
 
 const OrderForm = () => {
   const params = useParams();
@@ -234,6 +252,24 @@ const OrderForm = () => {
             )}
           </div>
         </div>
+        {buyPriceData.map((detail) => (
+          <div className="buy-container">
+            <div className="">
+              <div className="price-token-container">
+                <p>Price (USD)</p>
+                <p>${detail.price}</p>
+              </div>
+              <div className="price-token-container">
+                <p>Token Quantity</p>
+                <p className='token-quantity'>{detail.tokenQuantity}</p>
+              </div>
+            </div>
+            <div className='sell-container'>
+              <button className="sell-btn">Sell</button>
+            </div>
+          </div>
+        ))}
+
         {datas.length > 0 ? (
           <>
             {datas.PropertyDetails.StatrtResell == true ? (
