@@ -1,0 +1,376 @@
+.switch-button {
+  border: 1px solid rgb(210, 201, 201);
+  padding: 10px 10px 0px 10px;
+  cursor: pointer;
+  border-radius: 10%;
+}
+
+.financial-container {
+  margin-top: 20px;
+}
+
+.financial-card {
+  /* border: 1px solid black; */
+  border-radius: 15px;
+  box-shadow: 0 20px 25px -5px rgb(0 0 0 / 0.1),
+    0 8px 10px -6px rgb(0 0 0 / 0.1);
+  margin-top: 20px;
+}
+
+.financial-sub-card {
+  display: flex;
+  justify-content: space-between;
+  padding: 20px;
+  border-bottom: 1px solid rgb(172, 170, 170);
+  color: black;
+}
+
+.financial-sub-card-end {
+  display: flex;
+  justify-content: space-between;
+  padding: 20px;
+  color: black;
+}
+
+.financial-card-heading {
+  font-weight: 700;
+  font-size: 1.5rem;
+  line-height: 2rem;
+}
+
+.financial-card-text {
+  font-weight: 500;
+  font-size: 1.125rem
+    /* 18px */
+  ;
+  line-height: 1.75rem
+    /* 28px */
+  ;
+}
+
+.financial-card-price {
+  display: flex;
+  align-items: center;
+  font-size: 1.125rem
+    /* 18px */
+  ;
+  line-height: 1.75rem
+    /* 28px */
+  ;
+}
+
+.sider-card {
+  border: 1px solid rgb(195, 192, 192);
+  margin-top: 20px;
+  padding: 20px;
+  border-radius: 15px;
+  box-shadow: 0 20px 25px -5px rgb(0 0 0 / 0.1),
+    0 8px 10px -6px rgb(0 0 0 / 0.1);
+}
+
+.slider-box {
+  padding: 10px;
+  display: flex;
+  flex-direction: column;
+}
+
+.financial-table-sub-container {
+  width: 100%;
+  margin-top: 50px;
+}
+
+.financial-order-table {
+  border-collapse: collapse;
+  width: 100%;
+  color: black;
+}
+
+.financial-order-th,
+.financial-order-td {
+  border: 1px solid #dddddd;
+  text-align: left;
+  padding: 8px;
+  border-bottom: 1px solid #b3aeae;
+  border: none;
+}
+
+tr:last-child {
+  background-color: #dddddd;
+}
+
+
+.order-book-container {
+  width: 100%;
+  margin-top: 20px;
+}
+
+.order-price-container {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  column-gap: 10px;
+  row-gap: 10px;
+}
+
+.order-price-card {
+  width: 100%;
+  background-color: #F8FBFC;
+  border-radius: 10px;
+  padding: 10px 20px;
+  display: flex;
+  flex-direction: column;
+  cursor: pointer;
+  box-shadow: 0 1px 2px 0 rgb(0 0 0 / 0.05);
+}
+
+.order-card-text {
+  font-size: 1.25rem;
+  line-height: 1.75rem;
+  color: rgb(139, 136, 136);
+  font-weight: 500;
+}
+
+.price-card {
+  display: flex;
+}
+
+.dollar-sign {
+  margin-top: 10px;
+  font-size: 1.5rem;
+  font-weight: 600;
+  color: #9467FE;
+}
+
+.order-card-price-text {
+  font-size: 2.7rem;
+  font-weight: 600;
+  line-height: 2.5rem;
+  color: #9467FE;
+}
+
+
+.open-order-container {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+}
+
+.open-order-heading {
+  padding: 30px 0px;
+  color: black;
+}
+
+.table-container {
+  display: flex;
+  column-gap: 10px;
+}
+
+.mid-container {
+  height: 100px;
+  background-color: #F8FBFC;
+  width: 3px;
+  margin: 0px 10px;
+}
+
+.table-sub-container {
+  width: 50%;
+}
+
+.open-order-table {
+  width: 100%;
+  font-size: 1.25rem;
+  color: rgb(65, 63, 63);
+}
+
+.filled-order-table-sub-container {
+  width: 100%;
+}
+
+.filled-order-table {
+  width: 100%;
+  font-size: 1.1rem;
+  color: rgb(65, 63, 63);
+}
+
+.filled-order-th {
+  padding-left: 20px;
+}
+
+.filled-order-td {
+  padding-left: 105px;
+}
+
+.market-container {
+  padding: 20px 0px;
+  color: black;
+}
+
+.market-container-one {
+  display: flex;
+  flex-direction: column;
+}
+
+.market-heading {
+  border-bottom: 1px solid rgb(199, 195, 195);
+  padding: 20px 0px;
+}
+
+.market-container-two {
+  display: flex;
+  flex-direction: column;
+  padding: 10px 0px;
+}
+
+.buying-process-main-container {
+  padding: 20px 0px;
+  width: 100%;
+}
+
+.buying-process-container {
+  display: flex;
+  width: 100%;
+  flex-direction: column;
+}
+
+.buying-process-heading {
+  border-bottom: 1px solid rgb(199, 195, 195);
+  color: black;
+}
+
+nav {
+  padding: 30px 0px;
+}
+
+ol {
+  padding-left: 0px !important;
+}
+
+.buying-ol {
+  overflow: hidden;
+}
+
+.buying-li {
+  position: relative;
+  padding-bottom: 40px;
+}
+
+.done-tick {
+  margin-left: -0.125rem;
+  position: absolute;
+  margin-top: 0.125rem;
+  top: 1rem;
+  left: 1rem;
+  width: 0.25rem;
+  height: 100%;
+  background-color: rgb(188 223 255/1);
+}
+
+.buying-content {
+  position: relative;
+  display: flex;
+  align-items: start;
+
+}
+
+.buying-content-circle {
+  height: 2.25rem;
+  display: flex;
+  align-items: center;
+}
+
+.buying-tick-svg {
+  position: relative;
+  z-index: 10;
+  width: 2rem;
+  height: 2rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 9999px;
+  background-color: rgb(188 223 255/1);
+}
+
+.buying-tick-svg:hover {
+  background-color: #260f5d;
+}
+
+.buying-text-container {
+  margin-left: 1rem;
+  min-width: 0px;
+  display: flex;
+  flex-direction: column;
+}
+
+.buying-text-sub-container {
+  letter-spacing: 0.025em;
+  opacity: 0.7;
+  color: rgb(8 22 93/1);
+}
+
+.buying-text-sub-container-two {
+  margin-bottom: 0.5rem
+    /* 8px */
+  ;
+  font-weight: 600;
+  letter-spacing: 0.025em;
+  color: rgb(8 22 93/1);
+}
+
+.buying-text-sub-container-three {
+  opacity: 0.8;
+}
+
+.documents-download-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+}
+
+.anchor-link {
+  color: black;
+
+}
+
+.download-anchor {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 0.125rem;
+  background-color: #4d3fed1a
+}
+
+.download-btn {
+  margin-right: 0.5rem;
+  font-weight: 600;
+}
+
+
+@media (max-width: 768px) {
+
+  td,
+  th,
+  p,
+  span {
+    font-size: 12px;
+  }
+
+  .financial-card-heading {
+    font-size: 16px;
+  }
+
+  .financial-card-text {
+    font-size: 12px;
+  }
+
+  .anchor-link {
+    font-size: 12px;
+  }
+
+  .order-card-text {
+    font-size: 16px;
+  }
+
+  .order-card-price-text {
+    font-size: 32px;
+  }
+}
