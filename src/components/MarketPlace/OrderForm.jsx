@@ -22,23 +22,6 @@ import "../../components/MarketPlace/compo.css"
 //   }
 // }
 
-const buyPriceData = [
-  {
-    price: "51",
-    tokenQuantity: '4',
-    btnTitle: 'Buy'
-  },
-  {
-    price: "49.4",
-    tokenQuantity: '2',
-    btnTitle: 'Buy'
-  },
-  {
-    price: "52",
-    tokenQuantity: '4',
-    btnTitle: 'Buy'
-  },
-]
 
 
 
@@ -255,23 +238,6 @@ const OrderForm = () => {
             )}
           </div>
         </div>
-        {buyPriceData.map((detail) => (
-          <div className="buy-container">
-            <div className="">
-              <div className="price-token-container">
-                <p>Price (USD)</p>
-                <p>${detail.price}</p>
-              </div>
-              <div className="price-token-container">
-                <p>Token Quantity</p>
-                <p className='token-quantity'>{detail.tokenQuantity}</p>
-              </div>
-            </div>
-            <div className='sell-container'>
-              <button className="sell-btn">{detail.btnTitle}</button>
-            </div>
-          </div>
-        ))}
 
         {datas.length > 0 ? (
           <>
