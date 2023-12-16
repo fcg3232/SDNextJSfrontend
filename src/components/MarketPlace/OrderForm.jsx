@@ -25,15 +25,18 @@ import "../../components/MarketPlace/compo.css"
 const buyPriceData = [
   {
     price: "51",
-    tokenQuantity: '4'
+    tokenQuantity: '4',
+    btnTitle: 'Buy'
   },
   {
     price: "49.4",
-    tokenQuantity: '2'
+    tokenQuantity: '2',
+    btnTitle: 'Buy'
   },
   {
     price: "52",
-    tokenQuantity: '4'
+    tokenQuantity: '4',
+    btnTitle: 'Buy'
   },
 ]
 
@@ -265,14 +268,14 @@ const OrderForm = () => {
               </div>
             </div>
             <div className='sell-container'>
-              <button className="sell-btn">Sell</button>
+              <button className="sell-btn">{detail.btnTitle}</button>
             </div>
           </div>
         ))}
 
         {datas.length > 0 ? (
           <>
-            {datas.PropertyDetails.StatrtResell == true ? (
+            {datas.PropertyDetails.StatrtResell !== true ? (
               <div className="sell-blance">
                 <label className="form-label text-primary">
                   Limit Price Per Token

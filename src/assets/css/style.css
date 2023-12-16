@@ -16243,7 +16243,6 @@ section {
 
 @media only screen and (max-width: 991px) {
   .header-nav .nav>li {
-    border-bottom: 1px solid rgba(0, 0, 0, 0.1);
     width: 100%;
   }
 }
@@ -17029,7 +17028,7 @@ section {
 }
 
 .dz-bnr-inr {
-  height: 450px;
+  height: 400px;
   background-size: cover;
   background-position: center;
   position: relative;
@@ -23888,6 +23887,8 @@ ul a.rsswidget:hover {
   background: white;
   box-shadow: 0px 20px 40px rgba(1, 18, 111, 0.1);
   border-radius: var(--border-radius-base);
+  height: 600px;
+  max-height: 600px;
 }
 
 .dz-card.style-1.blog-lg .dz-media {
@@ -23914,8 +23915,9 @@ ul a.rsswidget:hover {
 }
 
 .dz-card.style-1.blog-lg .dz-media img {
+  width: 100%;
   border-radius: var(--border-radius-base) var(--border-radius-base) 0 0;
-  max-height: 300px;
+  height: 300px;
 }
 
 .dz-card.style-1.blog-lg:hover .dz-media::before {
