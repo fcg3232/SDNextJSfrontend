@@ -1,22 +1,12 @@
 import React, { useEffect, useState } from "react";
 import { Link, useParams } from "react-router-dom";
 import PageLayout from "./../layouts/PageLayout";
-// import BlogSidebar from './../components/Blog/BlogSidebar';
 import { Nav } from "react-bootstrap";
-import { CONTRACT_ABIS } from "../contract/property";
+import  Property_ABI  from "../contract/property.json";
 import { useAppSelector, useAppDispatch } from "../reducer/store";
 import { loadBlockchain } from "../slices/web3ContractSlice";
-// import styled from "styled-components";
-// import styles, { layout } from "../../style";
 import axios from "axios";
 import { url } from "../slices/api";
-//images
-// import blog from './../assets/images/blog/blog-detaills-1.jpg';
-import avat3 from "./../assets/images/avatar/avatar3.jpg";
-import avat2 from "./../assets/images/avatar/avatar2.jpg";
-import avat1 from "./../assets/images/avatar/avatar1.jpg";
-// import pic4 from './../assets/images/blog/pic4.jpg';
-// import pic5 from './../assets/images/blog/pic5.jpg';
 import Sidebar from "../components/MarketPlace/SideBar";
 import Header from "../layouts/Header";
 import Footer from "../layouts/Footer";
@@ -27,43 +17,8 @@ import BuyingProcess from "../components/MarketPlace/BuyingProcess";
 import Market from "../components/MarketPlace/Market";
 import OrderBook from "../components/MarketPlace/OrderBook";
 
-// const relatedBlog = [
-//     { image1: pic4, image2: avat2, title: 'Why You Should Not Go To Cryptocurrency.' },
-//     { image1: pic5, image2: avat3, title: 'Five Easy Rules Of bitcoin.' },
-// ];
 
 const navbarLink = ['Details', "Financials", 'Documents', 'Buying Process', 'Market', 'Order Book']
-
-
-const CommentBlog = ({ image, title }) => {
-  return (
-    <>
-      <div className="comment-body">
-        <div className="comment-author vcard">
-          <img className="avatar photo" src={image} alt="" />
-        </div>
-        <div className="comment-info">
-          <div className="title">
-            <cite className="fn">{title}</cite>
-            <span>07 March, 2022</span>
-          </div>
-          <p>
-            Integer consectetur diam vitae imperdiet iaculis. In faucibus, sem
-            sit amet tincidunt egestas, magna ligula interdum leo.
-          </p>
-          <div className="reply">
-            <Link to={"#"} className="comment-reply-link">
-              <span>
-                <i className="fa-solid fa-share"></i>REPLY
-              </span>
-            </Link>
-          </div>
-        </div>
-      </div>
-    </>
-  );
-};
-
 
 const AllComponents = ({ componentType }) => {
   const componentMap = {
@@ -109,7 +64,7 @@ function PropertyDetails() {
     fetchProduct();
     if (checkID) {
       const contractofProperty = new web3.eth.Contract(
-        CONTRACT_ABIS,
+        Property_ABI,
         product.uid
       );
       !loadchain && setloadchain(contractofProperty);
@@ -160,57 +115,8 @@ function PropertyDetails() {
                   </div>
                   <AllComponents componentType={activeComponent} />
                 </div>
-                {/* <div className="widget-title">
-                                    <h4 className="title">Related Blog</h4>
-                                </div> */}
-                {/* <div className="row m-b30 m-sm-b10">
-                                    {relatedBlog.map((item, ind) => (
-                                        <div className="col-md-6 m-b30" key={ind}>
-                                            <div className="dz-card style-1  blog-lg overlay-shine ">
-                                                <div className="dz-media ">
-                                                    <Link to={"/blog-details"}><img src={item.image1} alt="" /></Link>
-                                                </div>
-                                                <div className="dz-info">
-                                                    <div className="dz-meta">
-                                                        <ul>
-                                                            <li className="post-author">
-                                                                <Link to={"#"}>
-                                                                    <img src={item.image2} alt="" />
-                                                                    <span>By Jemmy</span>
-                                                                </Link>
-                                                            </li>
-                                                            <li className="post-date"><Link to={"#"}> 24 May 2022</Link></li>
-                                                        </ul>
-                                                    </div>
-                                                    <h4 className="dz-title"><Link to={"/blog-details"}>{item.title}</Link></h4>
-                                                    <p>A wonderful serenity has taken of my entire soul, like these.</p>
-                                                    <Link to={"/blog-details"} className="btn btn-primary">Read More</Link>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    ))}
-                                </div> */}
                 <div className="clear" id="comment-list">
                   <div className="comments-area style-1 clearfix" id="comments">
-                    <div className="widget-title">
-                      <h4 className="title">Comments</h4>
-                    </div>
-                    <div className="clearfix">
-                      <ol className="comment-list">
-                        <li className="comment">
-                          <CommentBlog image={avat1} title="Lillian Walsh" />
-                          <ol className="children">
-                            <li className="comment">
-                              <CommentBlog image={avat2} title="Walsh Nehan" />
-                            </li>
-                          </ol>
-                        </li>
-                        <li className="comment">
-                          <CommentBlog image={avat3} title="Boni Joye" />
-                        </li>
-                      </ol>
-                    </div>
-
                     <div className="widget-title">
                       <h4 className="title">Leave A Reply</h4>
                     </div>

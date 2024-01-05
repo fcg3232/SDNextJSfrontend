@@ -1,6 +1,8 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import { useAppSelector } from "../../reducer/store";
+import { RiDeleteBinLine } from "react-icons/ri";
+import { Dropdown } from 'react-bootstrap';
 
 function ListProperty() {
   const { items: data, status } = useAppSelector((state) => state.products);
@@ -20,118 +22,103 @@ function ListProperty() {
                         data
                           ?.filter((key) => key.location == Country)
                           .map((item) => (
-                            <div
-                              className="col-md-6 col-xl-4 m-b30"
-                              key={item._id}
-                            >
-                              <div class="card bg-dark text-white">
-                                <Link to={"/propertydetails/" + item._id}>
-                                  <img
-                                    width="200"
-                                    height="200"
-                                    src={item.image?.url}
-                                    alt=""
-                                  />
-                                </Link>
-                                <div class="card-img-overlay">
-                                  <h5 class="card-title">Card title</h5>
-                                  <p class="card-text">
-                                    This is a wider card with supporting text
-                                    below as a natural lead-in to additional
-                                    content. This content is a little bit
-                                    longer.
-                                  </p>
-                                  <p class="card-text">
-                                    Last updated 3 mins ago
-                                  </p>
+                            <div className="col-xl-3 col-md-6" key={item._id}>
+                              <div className="card contact_list ">
+                                <div className="card-body text-center">
+                                  <div className="user-content">
+                                    <div className="user-info">
+                                      <div className="user-img">
+                                        <Link to={"/propertydetails/" + item._id}>
+                                          <img
+                                            style={{
+                                              width: "13.50rem",
+                                              minWidth: "13.50rem",
+                                              height: "8.50rem",
+                                              borderRadius: "20px",
+                                              marginLeft: "auto",
+                                              marginRight: "auto",
+                                              position: "relative",
+                                              zIndex: "0",
+                                            }}
+                                            src={item.image?.url} alt="" />
+                                        </Link>
+                                      </div>
+                                      <div className="user-details">
+                                        <div className="ms-0">
+                                          <span className='fs-8'>{item.propertytype}</span>
+                                        </div>
+                                        <h4 className="user-name">{item.uid?.substring(0, 11) + "..."}</h4>
+                                        <p className="mb-0 fs-14 text-success">{item.location}</p>
+                                        <div className='col'>
+                                          <p className="mb-0 fs-14 text-black">Created</p>
+                                          <span className="fs-8">{new Date(item.createdAt).toDateString()}</span>
+                                        </div>
+                                      </div>
+                                    </div>
+                                  </div>
+                                  <div className="contact-icon">
+                                    <div className="">
+                                      <Link to={"/propertydetails/" + item._id}
+                                        type="button" className="btn btn-outline-primary" data-mdb-ripple-init data-mdb-ripple-color="dark">
+                                        Explore More
+                                      </Link>
+                                    </div>
+                                  </div>
                                 </div>
                               </div>
-                              {/* <div className="dz-card style-1 blog-lg overlay-shine">
-                                                            <div className="dz-media"
-                                                             style={{ width: "200px", height: "200px" }}>
-                                                                <Link to={"/propertydetails/" + item._id}><img width="200" height="200" src={item.image?.url} alt="" /></Link>
-                                                            </div>
-                                                            <div className="dz-info">
-                                                                <div className="dz-meta">
-                                                                    <ul>
-                                                                        <Link to={"#"}>
-                                                                            <img src={item.image2} alt="" />
-                                                                            <span>{item.location} - {item.propaddress}</span>
-                                                                        </Link>
-                                                                        <li className="post-date"><Link to={"#"}>{new Date(item.createdAt).toDateString()}</Link></li>
-                                                                    </ul>
-                                                                    <p className="post-date"><Link to={"#"}>{new Date(item.createdAt).toDateString()}</Link></p>
-                                                                </div>
-                                                                <h4 className="dz-title"><Link to={"/propertydetails/" + item._id}>{item.name}</Link></h4>
-                                                                <p>
-                                                                    <span className="price">50% IRR</span>
-                                                                    <span className="price">10% CoC</span>
-                                                                </p>
-                                                                <Link to={"/propertydetails/" + item._id} className="btn btn-primary">Availiable: 500 Tokens at $50</Link>
-                                                            </div>
-                                                        </div> */}
                             </div>
                           ))}
                     </>
                   ) : (
                     <>
-                      {data &&
-                        data?.map((item) => (
-                          <div
-                            className="col-md-6 col-xl-4 m-b30"
-                            key={item._id}
-                          >
-                            <div className="dz-card style-1 blog-lg overlay-shine">
-                              <div className="dz-media !max-h-[300px]">
-                                <Link to={"/propertydetails/" + item._id}>
-                                  <img
-                                    width="400"
-                                    height="300"
-                                    className="!max-h-[300px]"
-                                    src={item.image?.url}
-                                    alt=""
-                                  />
-                                </Link>
-                              </div>
-                              <div className="dz-info">
-                                <div className="dz-meta">
-                                  <ul>
-                                    <Link to={"#"}>
-                                      {/* <img src={item.image2} alt="" /> */}
-                                      <span>
-                                        {item.location} - {item.propaddress}
-                                      </span>
+                      {data && data?.map((item) => (
+                        <div className="col-xl-3 col-md-6" key={item._id}>
+                          <div className="card contact_list ">
+                            <div className="card-body text-center">
+                              <div className="user-content">
+                                <div className="user-info">
+                                  <div className="user-img">
+                                    <Link to={"/propertydetails/" + item._id}>
+                                      <img
+                                        style={{
+                                          width: "13.50rem",
+                                          minWidth: "13.50rem",
+                                          height: "8.50rem",
+                                          borderRadius: "20px",
+                                          marginLeft: "auto",
+                                          marginRight: "auto",
+                                          position: "relative",
+                                          zIndex: "0",
+                                        }}
+                                        src={item.image?.url} alt="" />
                                     </Link>
-                                    {/* <li className="post-date"><Link to={"#"}>{new Date(item.createdAt).toDateString()}</Link></li> */}
-                                  </ul>
-                                  <p className="post-date">
-                                    {" "}
-                                    Date:{" "}
-                                    <Link to={"#"}>
-                                      {new Date(item.createdAt).toDateString()}
-                                    </Link>
-                                  </p>
+                                  </div>
+                                  <div className="user-details">
+                                    <div className="ms-0">
+                                      <span className='fs-8'>{item.propertytype}</span>
+                                    </div>
+                                    <h4 className="user-name">{item.uid?.substring(0, 11) + "..."}</h4>
+                                    <p className="mb-0 fs-14 text-success">{item.location}</p>
+                                    <div className='col'>
+                                      <p className="mb-0 fs-14 text-black">Created</p>
+                                      <span className="fs-8">{new Date(item.createdAt).toDateString()}</span>
+                                    </div>
+                                  </div>
                                 </div>
-                                <h4 className="dz-title">
-                                  <Link to={"/propertydetails/" + item._id}>
-                                    {item.name}
+                              </div>
+                              <div className="contact-icon">
+                                <div className="">
+                                  <Link to={"/propertydetails/" + item._id}
+                                    type="button" className="btn btn-outline-primary" data-mdb-ripple-init data-mdb-ripple-color="dark">
+                                    Explore More
                                   </Link>
-                                </h4>
-                                <p>
-                                  <span className="price">50% IRR</span>
-                                  <br />
-                                  <span className="price">10% CoC</span>
-                                </p>
-                                <Link
-                                  to={"/propertydetails/" + item._id}
-                                  className="btn btn-primary"
-                                >
-                                  Available: 500 Tokens at $50
-                                </Link>
+                                </div>
                               </div>
                             </div>
                           </div>
-                        ))}
+                        </div>
+                      ))}
+
                     </>
                   )}
                 </>

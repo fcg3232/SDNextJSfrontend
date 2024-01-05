@@ -1,5 +1,9 @@
 import React, { useEffect, useState } from 'react';
+import { Link } from "react-router-dom";
+import PageLayout from "./../layouts/PageLayout";
 import blog3 from '../assets/images/blog3.png';
+import Shape1 from "../assets/images/home-banner/shape1.png";
+import logoo from "../assets/images/logoo.png";
 import { useAppSelector } from '../reducer/store';
 import Research from '../components/MarketPlace/search/Research';
 import LandPage from '../components/MarketPlace/LandPage';
@@ -25,39 +29,13 @@ const MarketPlace = () => {
             <Header />
             {web3 ?
                 (
-                    <div>
-                        <div className='page-content bg-black'>
-                            <div className='content-inner  bg-black' >
-                                <section className={`mt-5 `}>
-                                    <div className="row">
-                                        <div className={`col`}>
-                                            <div className={`text-center  mt-5 `}>
-                                                <div className="row">
-                                                    <div className="col">
-                                                        <h1 className="display-2 fw-bold text-white">
-                                                            SecondaryDAO <br className="sm:block hidden" />{" "}
-                                                            <span className="text-gradient">MarketPlace</span>{" "}
-                                                        </h1>
-                                                        <p className='font-monospace'>Invest in Tokenized Real Estate Assets</p>
-                                                    </div>
-                                                    <div className='col'>
-                                                        <img loading="lazy" width="300" height="300" src={blog3} alt="pic" />
-                                                    </div>
-                                                </div>
-                                                <h1 className='font-monospace'>Become the landlord of the future</h1>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </section>
-                            </div>
-                        </div>
+                    <div >
+                        <PageLayout desc={false} pageTitle="MarketPLace" />
                         <Research />
-                        {/* <div className='text-center row' style={{ marginTop: "40px", marginBottom: "40px", marginLeft:"10px" }}>
+                        <div className='text-center row' style={{ 
+                             marginLeft: "10px" , backgroundColor:"white"
+                            }}>
                             <navss className="col cltext-center">
-                                <div className='logo'>
-                                <img src={logo} className="App-logo" alt="logo" />
-                                <span>Chrysus</span>
-                            </div>
                                 <div className='timer'>
                                     <div className='box'>
                                         <p>{timeLeft.days}</p>
@@ -83,12 +61,15 @@ const MarketPlace = () => {
                             <p className='col titless'>
                                 COMING SOON
                             </p>
-                        </div> */}
-                        <ListProperty/>
+                            <div className='logo text-start ml-4 mb-2'>
+                                <img src={logoo} width="30px" height="30px" className="App-logo" alt="logo" />
+                                <span>SecondaryDAO</span>
+                            </div>
+                        </div>
+                        <ListProperty />
                     </div>
                 ) :
                 (
-
                     <LandPage />
                 )
 

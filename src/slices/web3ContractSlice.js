@@ -1,9 +1,7 @@
-import { CONTRACT_ADDRESS, CONTRACT_ABI } from '../contract/RealEstate';
-// import {CONTRACT_ABIS } from '../jsx/components/contract/property';
-import {USDT_ADDRESS, USDT_ABI } from '../contract/USDT';
-import {USDC_ADDRESS, USDC_ABI } from '../contract/USDC';
-import {ESCROW_ADDRESS, ESCROW_ABI } from '../contract/Escrow';
-import {VOTTING_ADDRESS, VOTTING_ABI } from '../contract/Voting';
+// import {USDT_ADDRESS, USDT_ABI } from '../contract/USDT';
+// import {USDC_ADDRESS, USDC_ABI } from '../contract/USDC';
+// import {ESCROW_ADDRESS, ESCROW_ABI } from '../contract/Escrow';
+// import {VOTTING_ADDRESS, VOTTING_ABI } from '../contract/Voting';
 import Web3 from 'web3';
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 // import WalletConnectProvider from "@walletconnect/web3-provider";
@@ -11,12 +9,20 @@ import WalletConnectProvider from '@walletconnect/web3-provider/dist/umd/index.m
 // import QRCodeModal from '@walletconnect/qrcode-modal/dist/umd/index.min.js';
 // import axios from "axios";
 // import { url, setHeaders } from "./api";
+import  CONTRACT_ABI  from '../contract/SecondaryDAO.json';
+import USDT_ABI from '../contract/USDT.json';
+import USDC_ABI from '../contract/USDC.json';
+
+const USDTADDRESS = "0x5417928Ef1Ab9e341E92872b3995ed03cb3f7e34";
+const USDCADDRESS = "0x67B77178515655715C0fD328B057aD318B76B6Bb";
+const CONTRACT_ADDRESS="0xD2D5b79f49C77319e71080dad82b0044BaF8AC07";
+const WhiteList_ADDRESS="0x6f463fd67F7e6742bA8C636879De8001df52FA2b";
 
 export const initialState = {
     status: null,
     web3: null,
     contract: null,
-    socketContract: null,
+    // socketContract: null,
     accounts: [],
     web3loadingerror: null,
     propContracts:[],
@@ -32,29 +38,29 @@ export const loadBlockchain = createAsyncThunk( "loadBlockchain", async (_, thun
         if (Web3.givenProvider) {
             await Web3.givenProvider.enable();
             const web3 = new Web3(Web3.givenProvider);
-            console.log('web3', web3)
+            // console.log('web3', web3)
             const contract = new web3.eth.Contract(CONTRACT_ABI, CONTRACT_ADDRESS);
-            console.log('contract', contract)
+            // console.log('contract', contract)
             const accounts = await web3.eth.getAccounts();
             //web3 Socket
-            const web3Socket = new Web3(new Web3.providers.WebsocketProvider(
-                `wss://goerli.infura.io/ws/v3/b0b0d100567e4e59bb2bab1a2c353381`
-            ))
+            // const web3Socket = new Web3(new Web3.providers.WebsocketProvider(
+            //     `wss://goerli.infura.io/ws/v3/b0b0d100567e4e59bb2bab1a2c353381`
+            // ))
 
-            const socketContract = new web3Socket.eth.Contract(CONTRACT_ABI, CONTRACT_ADDRESS)
-            const UsdtContract = new web3.eth.Contract(USDT_ABI, USDT_ADDRESS);
-            const UsdcContract = new web3.eth.Contract(USDC_ABI, USDC_ADDRESS);
-            const EscrowContract = new web3.eth.Contract(ESCROW_ABI, ESCROW_ADDRESS);
-            const VotingContract = new web3.eth.Contract(VOTTING_ABI, VOTTING_ADDRESS);
+            // const socketContract = new web3Socket.eth.Contract(CONTRACT_ABI, CONTRACT_ADDRESS)
+            const UsdtContract = new web3.eth.Contract(USDT_ABI, USDTADDRESS);
+            const UsdcContract = new web3.eth.Contract(USDC_ABI, USDCADDRESS);
+            // const EscrowContract = new web3.eth.Contract(ESCROW_ABI, ESCROW_ADDRESS);
+            // const VotingContract = new web3.eth.Contract(VOTTING_ABI, VOTTING_ADDRESS);
             return {
                 web3,
                 accounts,
                 contract,
-                socketContract,
+                // socketContract,
                 UsdtContract,
                 UsdcContract,
-                EscrowContract,
-                VotingContract,
+                // EscrowContract,
+                // VotingContract,
             }
         }
         else {
@@ -91,24 +97,24 @@ export const loadWalletConnect = createAsyncThunk( "loadWalletConnect", async (_
             const contract = new web3.eth.Contract(CONTRACT_ABI, CONTRACT_ADDRESS);
             console.log('contract', contract)
             const accounts = await web3.eth.getAccounts();
-            const UsdtContract = new web3.eth.Contract(USDT_ABI, USDT_ADDRESS);
-            const UsdcContract = new web3.eth.Contract(USDC_ABI, USDC_ADDRESS);
+            const UsdtContract = new web3.eth.Contract(USDT_ABI, USDTADDRESS);
+            const UsdcContract = new web3.eth.Contract(USDC_ABI, USDCADDRESS);
             //web3 Socket
             // const web3Socket = new Web3(new Web3.providers.WebsocketProvider(
             //     `wss://goerli.infura.io/ws/v3/b0b0d100567e4e59bb2bab1a2c353381`
             // ))
 
             // const socketContract = new web3Socket.eth.Contract(CONTRACT_ABI, CONTRACT_ADDRESS)
-            const EscrowContract = new web3.eth.Contract(ESCROW_ABI, ESCROW_ADDRESS);
-            const VotingContract = new web3.eth.Contract(VOTTING_ABI, VOTTING_ADDRESS);
+            // const EscrowContract = new web3.eth.Contract(ESCROW_ABI, ESCROW_ADDRESS);
+            // const VotingContract = new web3.eth.Contract(VOTTING_ABI, VOTTING_ADDRESS);
             return {
                 web3,
                 accounts,
                 contract,
                 UsdtContract,
                 UsdcContract,
-                EscrowContract,
-                VotingContract,
+                // EscrowContract,
+                // VotingContract,
                 // socketContract,
             }
         }
@@ -181,11 +187,11 @@ const web3ConnectSlice = createSlice({
             state.web3 = payload?.web3;
             state.contract = payload?.contract;
             state.accounts = payload?.accounts;
-            state.socketContract = payload?.socketContract;
+            // state.socketContract = payload?.socketContract;
             state.UsdtContract = payload?.UsdtContract;
             state.UsdcContract = payload?.UsdcContract;
-            state.EscrowContract = payload?.EscrowContract;
-            state.VotingContract = payload?.VotingContract;
+            // state.EscrowContract = payload?.EscrowContract;
+            // state.VotingContract = payload?.VotingContract;
             state.status = "success";
         },
         [loadBlockchain.rejected.toString()]: (state, { payload }) => {
@@ -198,8 +204,8 @@ const web3ConnectSlice = createSlice({
             state.accounts = payload?.accounts;
             state.UsdtContract = payload?.UsdtContract;
             state.UsdcContract = payload?.UsdcContract;
-            state.EscrowContract = payload?.EscrowContract;
-            state.VotingContract = payload?.VotingContract;
+            // state.EscrowContract = payload?.EscrowContract;
+            // state.VotingContract = payload?.VotingContract;
             // state.socketContract = payload?.socketContract;
             state.status = "success";
         },
