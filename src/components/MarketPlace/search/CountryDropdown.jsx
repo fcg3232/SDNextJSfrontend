@@ -1,32 +1,28 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect } from "react";
 import styled from "styled-components";
-import { useAppDispatch } from '../../../reducer/store';
-import { FILTERPROP } from '../../../slices/filter';
+import { useAppDispatch } from "../../../reducer/store";
+import { FILTERPROP } from "../../../slices/filter";
 
 const CountryDropdown = () => {
   const [location, setlocation] = useState("");
   const dispatch = useAppDispatch();
 
-
-
   useEffect(() => {
-    dispatch(
-      FILTERPROP(location),
-    );
-  },)
-
-
+    dispatch(FILTERPROP(location));
+  });
 
   return (
     <StyledForm>
-      <select className='bg-transparent'
+      <select
+        className="bg-transparent"
         style={{
           borderRadius: "12px",
           color: "#371178",
           fontStyle: "normal",
           fontWeight: "500",
         }}
-        onChange={(e) => setlocation(e.target.value)}>
+        onChange={(e) => setlocation(e.target.value)}
+      >
         <option value="">All Markets</option>
         <option value="Alabama">Alabama</option>
         <option value="Alaska">Alaska</option>
@@ -81,24 +77,25 @@ const CountryDropdown = () => {
         <option value="District of Columbia">District of Columbia</option>
         <option value="American Samoa">American Samoa</option>
         <option value="Guam">Guam</option>
-        <option value="Northern Mariana Islands">Northern Mariana Islands</option>
-        <option value="Northern Mariana Islands">Northern Mariana Islands</option>
+        <option value="Northern Mariana Islands">
+          Northern Mariana Islands
+        </option>
+        <option value="Northern Mariana Islands">
+          Northern Mariana Islands
+        </option>
         <option value="Puerto Rico">Puerto Rico</option>
         <option value="California"> U.S. Virgin Islands</option>
       </select>
     </StyledForm>
-  )
-}
+  );
+};
 
 export default CountryDropdown;
-
 
 const StyledForm = styled.form`
   display: flex;
   flex-direction: column;
   max-width: 300px;
-  
-
 
   select,
   input {
@@ -107,7 +104,7 @@ const StyledForm = styled.form`
     outline: none;
     border-radius: 5px;
     border: 1px solid rgb(182, 182, 182);
-    margin: 0.3rem 0;   
+    margin: 0.3rem 0;
 
     &:focus {
       border: 2px solid rgb(0, 208, 255);

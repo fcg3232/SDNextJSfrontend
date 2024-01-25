@@ -1,12 +1,28 @@
-export const CONTRACT_ABIS=[
+[
+<<<<<<< HEAD
+=======
+	{
+		"inputs": [
+			{
+				"internalType": "address",
+				"name": "_address",
+				"type": "address"
+			}
+		],
+		"name": "AccountantAddress",
+		"outputs": [],
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+>>>>>>> 85d30f519c30a2cd2ba72ddc63486af8441bb1bf
 	{
 		"inputs": [
 			{
 				"components": [
 					{
-						"internalType": "address",
-						"name": "propertyTokenAddress",
-						"type": "address"
+						"internalType": "string",
+						"name": "tokenName",
+						"type": "string"
 					}
 				],
 				"internalType": "struct IProp.PropertyModel",
@@ -22,19 +38,27 @@ export const CONTRACT_ABIS=[
 		"inputs": [
 			{
 				"indexed": false,
-				"internalType": "uint256",
-				"name": "_qantToken",
-				"type": "uint256"
-			},
-			{
-				"indexed": false,
-				"internalType": "uint256",
-				"name": "_price",
-				"type": "uint256"
+				"internalType": "address",
+				"name": "_address",
+				"type": "address"
 			}
 		],
-		"name": "BuyTokens",
+		"name": "CreateEscrow",
 		"type": "event"
+	},
+	{
+		"inputs": [],
+		"name": "CreateEscrows",
+		"outputs": [],
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"inputs": [],
+		"name": "EndReSell",
+		"outputs": [],
+		"stateMutability": "nonpayable",
+		"type": "function"
 	},
 	{
 		"anonymous": false,
@@ -42,7 +66,7 @@ export const CONTRACT_ABIS=[
 			{
 				"indexed": false,
 				"internalType": "address",
-				"name": "",
+				"name": "_address",
 				"type": "address"
 			}
 		],
@@ -69,163 +93,7 @@ export const CONTRACT_ABIS=[
 		"type": "event"
 	},
 	{
-		"inputs": [
-			{
-				"internalType": "enum Escrow.TypeOfFund",
-				"name": "Type_token",
-				"type": "uint8"
-			},
-			{
-				"internalType": "uint256",
-				"name": "TokenQuant",
-				"type": "uint256"
-			},
-			{
-				"internalType": "uint256",
-				"name": "_price",
-				"type": "uint256"
-			}
-		],
-		"name": "Buyers",
-		"outputs": [],
-		"stateMutability": "nonpayable",
-		"type": "function"
-	},
-	{
-		"inputs": [
-			{
-				"internalType": "address",
-				"name": "_buyer",
-				"type": "address"
-			},
-			{
-				"internalType": "enum Escrow.TypeOfFund",
-				"name": "_Type_of_Currency",
-				"type": "uint8"
-			},
-			{
-				"internalType": "uint256",
-				"name": "_NoPropertToken",
-				"type": "uint256"
-			},
-			{
-				"internalType": "uint256",
-				"name": "_SendingTokenCount",
-				"type": "uint256"
-			},
-			{
-				"internalType": "uint256",
-				"name": "_price",
-				"type": "uint256"
-			}
-		],
-		"name": "BuyersOffer",
-		"outputs": [],
-		"stateMutability": "nonpayable",
-		"type": "function"
-	},
-	{
-		"inputs": [],
-		"name": "EndReSell",
-		"outputs": [],
-		"stateMutability": "nonpayable",
-		"type": "function"
-	},
-	{
-		"inputs": [],
-		"name": "GetInitialBuyers",
-		"outputs": [
-			{
-				"internalType": "address[]",
-				"name": "",
-				"type": "address[]"
-			}
-		],
-		"stateMutability": "view",
-		"type": "function"
-	},
-	{
-		"inputs": [],
-		"name": "SatrtSelling",
-		"outputs": [],
-		"stateMutability": "nonpayable",
-		"type": "function"
-	},
-	{
-		"inputs": [
-			{
-				"internalType": "address",
-				"name": "_seller",
-				"type": "address"
-			},
-			{
-				"internalType": "uint256",
-				"name": "_toeknQuant",
-				"type": "uint256"
-			},
-			{
-				"internalType": "uint256",
-				"name": "_price",
-				"type": "uint256"
-			}
-		],
-		"name": "SellerOffer",
-		"outputs": [],
-		"stateMutability": "nonpayable",
-		"type": "function"
-	},
-	{
-		"inputs": [
-			{
-				"internalType": "uint256",
-				"name": "_toeknQuant",
-				"type": "uint256"
-			},
-			{
-				"internalType": "uint256",
-				"name": "_price",
-				"type": "uint256"
-			}
-		],
-		"name": "Sellers",
-		"outputs": [],
-		"stateMutability": "nonpayable",
-		"type": "function"
-	},
-	{
-		"inputs": [],
-		"name": "StatrtResell",
-		"outputs": [],
-		"stateMutability": "nonpayable",
-		"type": "function"
-	},
-	{
-		"inputs": [],
-		"name": "TokenCount",
-		"outputs": [
-			{
-				"internalType": "uint256",
-				"name": "",
-				"type": "uint256"
-			}
-		],
-		"stateMutability": "view",
-		"type": "function"
-	},
-	{
-		"inputs": [],
-		"name": "TokenPrice",
-		"outputs": [
-			{
-				"internalType": "uint256",
-				"name": "",
-				"type": "uint256"
-			}
-		],
-		"stateMutability": "view",
-		"type": "function"
-	},
-	{
+<<<<<<< HEAD
 		"inputs": [
 			{
 				"internalType": "address",
@@ -233,9 +101,209 @@ export const CONTRACT_ABIS=[
 				"type": "address"
 			}
 		],
-		"name": "Token_Transfer",
+		"name": "AccountantAddress",
 		"outputs": [],
 		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"inputs": [],
+		"name": "CreateEscrows",
+		"outputs": [],
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+=======
+>>>>>>> 85d30f519c30a2cd2ba72ddc63486af8441bb1bf
+		"inputs": [],
+		"name": "renounceOwnership",
+		"outputs": [],
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"inputs": [],
+<<<<<<< HEAD
+		"name": "EscrowAccount",
+		"outputs": [
+			{
+				"internalType": "address",
+				"name": "",
+				"type": "address"
+			}
+		],
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"inputs": [],
+		"name": "GetAccountant",
+		"outputs": [
+			{
+				"internalType": "address",
+				"name": "",
+				"type": "address"
+			}
+		],
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"inputs": [],
+		"name": "PropertyOwnerAddress",
+		"outputs": [
+			{
+				"internalType": "address",
+				"name": "",
+				"type": "address"
+			}
+		],
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"inputs": [],
+=======
+>>>>>>> 85d30f519c30a2cd2ba72ddc63486af8441bb1bf
+		"name": "SatrtSelling",
+		"outputs": [],
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+<<<<<<< HEAD
+=======
+		"inputs": [
+			{
+				"internalType": "address",
+				"name": "_PropertyOwnerAddress",
+				"type": "address"
+			},
+			{
+				"internalType": "address",
+				"name": "_WhitelistAddress",
+				"type": "address"
+			},
+			{
+				"internalType": "uint256",
+				"name": "_PurchasePrice",
+				"type": "uint256"
+			},
+			{
+				"internalType": "uint256",
+				"name": "_ListingFee",
+				"type": "uint256"
+			},
+			{
+				"internalType": "uint256",
+				"name": "_InitialReserves",
+				"type": "uint256"
+			},
+			{
+				"internalType": "uint256",
+				"name": "_TokenPrice",
+				"type": "uint256"
+			},
+			{
+				"internalType": "uint256",
+				"name": "_BuySellingFee",
+				"type": "uint256"
+			}
+		],
+		"name": "setInfo",
+		"outputs": [],
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+>>>>>>> 85d30f519c30a2cd2ba72ddc63486af8441bb1bf
+		"inputs": [],
+		"name": "StatrtResell",
+		"outputs": [],
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "address",
+				"name": "newOwner",
+				"type": "address"
+			}
+		],
+		"name": "transferOwnership",
+		"outputs": [],
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"inputs": [],
+		"name": "getBuySellingFee",
+		"outputs": [
+			{
+				"internalType": "uint256",
+<<<<<<< HEAD
+				"name": "",
+				"type": "uint256"
+			}
+		],
+		"stateMutability": "view",
+=======
+				"name": "_fee",
+				"type": "uint256"
+			}
+		],
+		"name": "updateBuySellingFee",
+		"outputs": [],
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"inputs": [],
+		"name": "updatedTokenPrice",
+		"outputs": [],
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"inputs": [],
+		"name": "EscrowAccount",
+		"outputs": [
+			{
+				"internalType": "address",
+				"name": "",
+				"type": "address"
+			}
+		],
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"inputs": [],
+		"name": "GetAccountant",
+		"outputs": [
+			{
+				"internalType": "address",
+				"name": "",
+				"type": "address"
+			}
+		],
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"inputs": [],
+		"name": "getBuySellingFee",
+		"outputs": [
+			{
+				"internalType": "uint256",
+				"name": "",
+				"type": "uint256"
+			}
+		],
+		"stateMutability": "view",
+>>>>>>> 85d30f519c30a2cd2ba72ddc63486af8441bb1bf
 		"type": "function"
 	},
 	{
@@ -248,29 +316,12 @@ export const CONTRACT_ABIS=[
 						"components": [
 							{
 								"internalType": "address",
-								"name": "propertyTokenAddress",
-								"type": "address"
-							}
-						],
-						"internalType": "struct IProp.PropertyModel",
-						"name": "prop",
-						"type": "tuple"
-					},
-					{
-						"components": [
-							{
-								"internalType": "address",
-								"name": "propertyAddress",
+								"name": "PropertyOwnerAddress",
 								"type": "address"
 							},
 							{
 								"internalType": "address",
-								"name": "Escrows",
-								"type": "address"
-							},
-							{
-								"internalType": "address",
-								"name": "VotingAddress",
+								"name": "WhitelistAddress",
 								"type": "address"
 							},
 							{
@@ -280,17 +331,12 @@ export const CONTRACT_ABIS=[
 							},
 							{
 								"internalType": "uint256",
-								"name": "TotalTokenHolders",
-								"type": "uint256"
-							},
-							{
-								"internalType": "uint256",
 								"name": "ListingFee",
 								"type": "uint256"
 							},
 							{
 								"internalType": "uint256",
-								"name": "ServicingFee",
+								"name": "InitialManagementReserves",
 								"type": "uint256"
 							},
 							{
@@ -334,7 +380,7 @@ export const CONTRACT_ABIS=[
 	},
 	{
 		"inputs": [],
-		"name": "isActive",
+		"name": "isResell",
 		"outputs": [
 			{
 				"internalType": "bool",
@@ -347,7 +393,7 @@ export const CONTRACT_ABIS=[
 	},
 	{
 		"inputs": [],
-		"name": "isResell",
+		"name": "isStartsell",
 		"outputs": [
 			{
 				"internalType": "bool",
@@ -373,137 +419,59 @@ export const CONTRACT_ABIS=[
 	},
 	{
 		"inputs": [],
-		"name": "renounceOwnership",
-		"outputs": [],
-		"stateMutability": "nonpayable",
+		"name": "PropertyOwnerAddress",
+		"outputs": [
+			{
+				"internalType": "address",
+				"name": "",
+				"type": "address"
+			}
+		],
+		"stateMutability": "view",
 		"type": "function"
 	},
 	{
+<<<<<<< HEAD
 		"inputs": [
 			{
-				"components": [
-					{
-						"internalType": "address",
-						"name": "propertyAddress",
-						"type": "address"
-					},
-					{
-						"internalType": "address",
-						"name": "Escrows",
-						"type": "address"
-					},
-					{
-						"internalType": "address",
-						"name": "VotingAddress",
-						"type": "address"
-					},
-					{
-						"internalType": "uint256",
-						"name": "PurchasePrice",
-						"type": "uint256"
-					},
-					{
-						"internalType": "uint256",
-						"name": "TotalTokenHolders",
-						"type": "uint256"
-					},
-					{
-						"internalType": "uint256",
-						"name": "ListingFee",
-						"type": "uint256"
-					},
-					{
-						"internalType": "uint256",
-						"name": "ServicingFee",
-						"type": "uint256"
-					},
-					{
-						"internalType": "uint256",
-						"name": "TokenPrice",
-						"type": "uint256"
-					},
-					{
-						"internalType": "uint256",
-						"name": "BuySellingFee",
-						"type": "uint256"
-					},
-					{
-						"internalType": "uint256",
-						"name": "Escrow",
-						"type": "uint256"
-					},
-					{
-						"internalType": "bool",
-						"name": "StartSell",
-						"type": "bool"
-					},
-					{
-						"internalType": "bool",
-						"name": "Resell",
-						"type": "bool"
-					}
-				],
-				"internalType": "struct IProp.PropertyInfo",
-				"name": "_sta",
-				"type": "tuple"
+				"internalType": "address",
+				"name": "_PropertyOwnerAddress",
+				"type": "address"
+			},
+			{
+				"internalType": "address",
+				"name": "_WhitelistAddress",
+				"type": "address"
+			},
+			{
+				"internalType": "uint256",
+				"name": "_PurchasePrice",
+				"type": "uint256"
+			},
+			{
+				"internalType": "uint256",
+				"name": "_ListingFee",
+				"type": "uint256"
+			},
+			{
+				"internalType": "uint256",
+				"name": "_InitialReserves",
+				"type": "uint256"
+			},
+			{
+				"internalType": "uint256",
+				"name": "_TokenPrice",
+				"type": "uint256"
+			},
+			{
+				"internalType": "uint256",
+				"name": "_BuySellingFee",
+				"type": "uint256"
 			}
 		],
 		"name": "setInfo",
 		"outputs": [],
 		"stateMutability": "nonpayable",
-		"type": "function"
-	},
-	{
-		"inputs": [
-			{
-				"internalType": "uint256",
-				"name": "TokenQuant",
-				"type": "uint256"
-			},
-			{
-				"internalType": "enum Escrow.TypeOfFund",
-				"name": "Type_token",
-				"type": "uint8"
-			}
-		],
-		"name": "stableToken",
-		"outputs": [
-			{
-				"internalType": "uint256",
-				"name": "",
-				"type": "uint256"
-			}
-		],
-		"stateMutability": "view",
-		"type": "function"
-	},
-	{
-		"inputs": [
-			{
-				"internalType": "uint256",
-				"name": "TokenQuant",
-				"type": "uint256"
-			},
-			{
-				"internalType": "enum Escrow.TypeOfFund",
-				"name": "Type_token",
-				"type": "uint8"
-			},
-			{
-				"internalType": "uint256",
-				"name": "_price",
-				"type": "uint256"
-			}
-		],
-		"name": "stableTokencounts",
-		"outputs": [
-			{
-				"internalType": "uint256",
-				"name": "",
-				"type": "uint256"
-			}
-		],
-		"stateMutability": "view",
 		"type": "function"
 	},
 	{
@@ -522,28 +490,45 @@ export const CONTRACT_ABIS=[
 	{
 		"inputs": [
 			{
-				"internalType": "enum Escrow.TypeOfFund",
-				"name": "Type_token",
-				"type": "uint8"
-			},
-			{
 				"internalType": "uint256",
-				"name": "_tokens",
+				"name": "_fee",
 				"type": "uint256"
-			},
-			{
-				"internalType": "address",
-				"name": "_address",
-				"type": "address"
 			}
 		],
-		"name": "withdrawTokens",
+		"name": "updateBuySellingFee",
 		"outputs": [],
 		"stateMutability": "nonpayable",
+=======
+		"inputs": [],
+		"name": "TokenCount",
+		"outputs": [
+			{
+				"internalType": "uint256",
+				"name": "",
+				"type": "uint256"
+			}
+		],
+		"stateMutability": "view",
+>>>>>>> 85d30f519c30a2cd2ba72ddc63486af8441bb1bf
 		"type": "function"
 	},
 	{
-		"stateMutability": "payable",
-		"type": "receive"
+		"inputs": [],
+<<<<<<< HEAD
+		"name": "updatedTokenPrice",
+		"outputs": [],
+		"stateMutability": "nonpayable",
+=======
+		"name": "TokenPrice",
+		"outputs": [
+			{
+				"internalType": "uint256",
+				"name": "",
+				"type": "uint256"
+			}
+		],
+		"stateMutability": "view",
+>>>>>>> 85d30f519c30a2cd2ba72ddc63486af8441bb1bf
+		"type": "function"
 	}
 ]

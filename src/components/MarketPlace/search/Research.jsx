@@ -71,9 +71,13 @@ const Research = () => {
 											<div className="card-body  bg-primary px-0 pt-1"> */}
                                 <Tab.Container defaultActiveKey="Navbuy">
                                     <div className="buy-sell">
-                                        <Nav className="nav nav-tabs" eventKey="nav-tab2" role="tablist">
+                                        {/* <Nav className="nav nav-tabs" eventKey="nav-tab2" role="tablist">
                                             <Nav.Link as="button" className="nav-link" eventKey="Navbuy" type="button">All</Nav.Link>
                                             <Nav.Link as="button" className="nav-link" eventKey="Navsell" type="button">New</Nav.Link>
+                                        </Nav> */}
+                                             <Nav className="nav nav-tabs" role="tablist">
+                                            <Nav.Link as="button" className="nav-link"  type="button">All</Nav.Link>
+                                            <Nav.Link as="button" className="nav-link"  type="button">New</Nav.Link>
                                         </Nav>
                                     </div>
                                     {/* <Tab.Content  >
