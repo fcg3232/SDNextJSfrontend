@@ -10,20 +10,13 @@ import WalletConnectProvider from '@walletconnect/web3-provider/dist/umd/index.m
 // import axios from "axios";
 // import { url, setHeaders } from "./api";
 import  CONTRACT_ABI  from '../contract/SecondaryDAO.json';
-<<<<<<< HEAD
 import WhiteList_ABI from '../contract/WhiteList.json';
-=======
->>>>>>> 85d30f519c30a2cd2ba72ddc63486af8441bb1bf
 import USDT_ABI from '../contract/USDT.json';
 import USDC_ABI from '../contract/USDC.json';
 
 const USDTADDRESS = "0x5417928Ef1Ab9e341E92872b3995ed03cb3f7e34";
 const USDCADDRESS = "0x67B77178515655715C0fD328B057aD318B76B6Bb";
-<<<<<<< HEAD
 const CONTRACT_ADDRESS="0xe0755986fEc9012c76Cb8ad9C4905286bc1EDA3c";
-=======
-const CONTRACT_ADDRESS="0xD2D5b79f49C77319e71080dad82b0044BaF8AC07";
->>>>>>> 85d30f519c30a2cd2ba72ddc63486af8441bb1bf
 const WhiteList_ADDRESS="0x6f463fd67F7e6742bA8C636879De8001df52FA2b";
 
 export const initialState = {
@@ -47,12 +40,7 @@ export const loadBlockchain = createAsyncThunk("loadBlockchain", async (_, thunk
             await Web3.givenProvider.enable();
             const web3 = new Web3(Web3.givenProvider);
             // console.log('web3', web3)
-            const contract = new web3.eth.Contract(CONTRACT_ABI, CONTRACT_ADDRESS);
-<<<<<<< HEAD
-            // console.log("contract", contract)
-=======
-            // console.log('contract', contract)
->>>>>>> 85d30f519c30a2cd2ba72ddc63486af8441bb1bf
+            const contract = new web3.eth.Contract(CONTRACT_ABI, CONTRACT_ADDRESS)
             const accounts = await web3.eth.getAccounts();
             localStorage.setItem("accounts", accounts);
             // console.log(`Wallet address ${accounts} stored on local storage.`);
@@ -66,31 +54,16 @@ export const loadBlockchain = createAsyncThunk("loadBlockchain", async (_, thunk
             // ))
 
             // const socketContract = new web3Socket.eth.Contract(CONTRACT_ABI, CONTRACT_ADDRESS)
-<<<<<<< HEAD
-=======
-            const UsdtContract = new web3.eth.Contract(USDT_ABI, USDTADDRESS);
-            const UsdcContract = new web3.eth.Contract(USDC_ABI, USDCADDRESS);
-            // const EscrowContract = new web3.eth.Contract(ESCROW_ABI, ESCROW_ADDRESS);
-            // const VotingContract = new web3.eth.Contract(VOTTING_ABI, VOTTING_ADDRESS);
->>>>>>> 85d30f519c30a2cd2ba72ddc63486af8441bb1bf
             return {
                 web3,
                 balance,
                 accounts,
                 Provider,
                 contract,
-<<<<<<< HEAD
                 UsdtContract,
                 UsdcContract,
                 whiteListContract,
                 // socketContract,
-=======
-                // socketContract,
-                UsdtContract,
-                UsdcContract,
-                // EscrowContract,
-                // VotingContract,
->>>>>>> 85d30f519c30a2cd2ba72ddc63486af8441bb1bf
             }
         }
         else {

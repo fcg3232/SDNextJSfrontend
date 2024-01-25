@@ -432,58 +432,6 @@
 		"inputs": [
 			{
 				"internalType": "address",
-<<<<<<< HEAD
-=======
-				"name": "",
-				"type": "address"
-			},
-			{
-				"internalType": "uint256",
-				"name": "",
-				"type": "uint256"
-			}
-		],
-		"name": "BuyersInfor",
-		"outputs": [
-			{
-				"internalType": "address",
-				"name": "buyerAddress",
-				"type": "address"
-			},
-			{
-				"internalType": "enum Escrow.TypeOfFund",
-				"name": "Type_of_Currency",
-				"type": "uint8"
-			},
-			{
-				"internalType": "uint256",
-				"name": "NoPropertToken",
-				"type": "uint256"
-			},
-			{
-				"internalType": "uint256",
-				"name": "Price",
-				"type": "uint256"
-			},
-			{
-				"internalType": "uint256",
-				"name": "ExpiryTime",
-				"type": "uint256"
-			},
-			{
-				"internalType": "enum Escrow.OrderStatus",
-				"name": "orderStatus",
-				"type": "uint8"
-			}
-		],
-		"stateMutability": "view",
-		"type": "function"
-	},
-	{
-		"inputs": [
-			{
-				"internalType": "address",
->>>>>>> 85d30f519c30a2cd2ba72ddc63486af8441bb1bf
 				"name": "buyerAddress",
 				"type": "address"
 			},
@@ -509,7 +457,6 @@
 		"type": "function"
 	},
 	{
-<<<<<<< HEAD
 		"inputs": [
 			{
 				"internalType": "address",
@@ -561,8 +508,6 @@
 		"type": "function"
 	},
 	{
-=======
->>>>>>> 85d30f519c30a2cd2ba72ddc63486af8441bb1bf
 		"inputs": [],
 		"name": "GetLastTradeTokenPrice",
 		"outputs": [
@@ -578,7 +523,6 @@
 	{
 		"inputs": [
 			{
-<<<<<<< HEAD
 				"internalType": "address",
 				"name": "_propAddress",
 				"type": "address"
@@ -625,50 +569,6 @@
 			}
 		],
 		"stateMutability": "view",
-=======
-				"internalType": "enum Escrow.TypeOfFund",
-				"name": "_Type_of_Currency",
-				"type": "uint8"
-			},
-			{
-				"internalType": "address",
-				"name": "_address",
-				"type": "address"
-			},
-			{
-				"internalType": "uint256",
-				"name": "_tokensAmount",
-				"type": "uint256"
-			}
-		],
-		"name": "PayRent",
-		"outputs": [],
-		"stateMutability": "nonpayable",
-		"type": "function"
-	},
-	{
-		"inputs": [
-			{
-				"internalType": "enum Escrow.TypeOfFund",
-				"name": "Type_token",
-				"type": "uint8"
-			},
-			{
-				"internalType": "uint256",
-				"name": "amount",
-				"type": "uint256"
-			}
-		],
-		"name": "PayTex",
-		"outputs": [
-			{
-				"internalType": "bool",
-				"name": "",
-				"type": "bool"
-			}
-		],
-		"stateMutability": "nonpayable",
->>>>>>> 85d30f519c30a2cd2ba72ddc63486af8441bb1bf
 		"type": "function"
 	},
 	{
@@ -752,58 +652,6 @@
 		"type": "function"
 	},
 	{
-<<<<<<< HEAD
-=======
-		"inputs": [
-			{
-				"internalType": "address",
-				"name": "",
-				"type": "address"
-			},
-			{
-				"internalType": "uint256",
-				"name": "",
-				"type": "uint256"
-			}
-		],
-		"name": "SellersInformation",
-		"outputs": [
-			{
-				"internalType": "address",
-				"name": "sellerAddress",
-				"type": "address"
-			},
-			{
-				"internalType": "uint256",
-				"name": "TokenQuantity",
-				"type": "uint256"
-			},
-			{
-				"internalType": "uint256",
-				"name": "Price",
-				"type": "uint256"
-			},
-			{
-				"internalType": "uint256",
-				"name": "PlateFormFee",
-				"type": "uint256"
-			},
-			{
-				"internalType": "uint256",
-				"name": "ExpiryTime",
-				"type": "uint256"
-			},
-			{
-				"internalType": "enum Escrow.OrderStatus",
-				"name": "orderStatus",
-				"type": "uint8"
-			}
-		],
-		"stateMutability": "view",
-		"type": "function"
-	},
-	{
->>>>>>> 85d30f519c30a2cd2ba72ddc63486af8441bb1bf
 		"inputs": [],
 		"name": "TotalBuyers",
 		"outputs": [

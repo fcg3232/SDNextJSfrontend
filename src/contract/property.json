@@ -1,20 +1,4 @@
 [
-<<<<<<< HEAD
-=======
-	{
-		"inputs": [
-			{
-				"internalType": "address",
-				"name": "_address",
-				"type": "address"
-			}
-		],
-		"name": "AccountantAddress",
-		"outputs": [],
-		"stateMutability": "nonpayable",
-		"type": "function"
-	},
->>>>>>> 85d30f519c30a2cd2ba72ddc63486af8441bb1bf
 	{
 		"inputs": [
 			{
@@ -45,20 +29,6 @@
 		],
 		"name": "CreateEscrow",
 		"type": "event"
-	},
-	{
-		"inputs": [],
-		"name": "CreateEscrows",
-		"outputs": [],
-		"stateMutability": "nonpayable",
-		"type": "function"
-	},
-	{
-		"inputs": [],
-		"name": "EndReSell",
-		"outputs": [],
-		"stateMutability": "nonpayable",
-		"type": "function"
 	},
 	{
 		"anonymous": false,
@@ -93,7 +63,6 @@
 		"type": "event"
 	},
 	{
-<<<<<<< HEAD
 		"inputs": [
 			{
 				"internalType": "address",
@@ -114,17 +83,14 @@
 		"type": "function"
 	},
 	{
-=======
->>>>>>> 85d30f519c30a2cd2ba72ddc63486af8441bb1bf
 		"inputs": [],
-		"name": "renounceOwnership",
+		"name": "EndReSell",
 		"outputs": [],
 		"stateMutability": "nonpayable",
 		"type": "function"
 	},
 	{
 		"inputs": [],
-<<<<<<< HEAD
 		"name": "EscrowAccount",
 		"outputs": [
 			{
@@ -164,60 +130,12 @@
 	},
 	{
 		"inputs": [],
-=======
->>>>>>> 85d30f519c30a2cd2ba72ddc63486af8441bb1bf
 		"name": "SatrtSelling",
 		"outputs": [],
 		"stateMutability": "nonpayable",
 		"type": "function"
 	},
 	{
-<<<<<<< HEAD
-=======
-		"inputs": [
-			{
-				"internalType": "address",
-				"name": "_PropertyOwnerAddress",
-				"type": "address"
-			},
-			{
-				"internalType": "address",
-				"name": "_WhitelistAddress",
-				"type": "address"
-			},
-			{
-				"internalType": "uint256",
-				"name": "_PurchasePrice",
-				"type": "uint256"
-			},
-			{
-				"internalType": "uint256",
-				"name": "_ListingFee",
-				"type": "uint256"
-			},
-			{
-				"internalType": "uint256",
-				"name": "_InitialReserves",
-				"type": "uint256"
-			},
-			{
-				"internalType": "uint256",
-				"name": "_TokenPrice",
-				"type": "uint256"
-			},
-			{
-				"internalType": "uint256",
-				"name": "_BuySellingFee",
-				"type": "uint256"
-			}
-		],
-		"name": "setInfo",
-		"outputs": [],
-		"stateMutability": "nonpayable",
-		"type": "function"
-	},
-	{
->>>>>>> 85d30f519c30a2cd2ba72ddc63486af8441bb1bf
 		"inputs": [],
 		"name": "StatrtResell",
 		"outputs": [],
@@ -225,68 +143,26 @@
 		"type": "function"
 	},
 	{
-		"inputs": [
-			{
-				"internalType": "address",
-				"name": "newOwner",
-				"type": "address"
-			}
-		],
-		"name": "transferOwnership",
-		"outputs": [],
-		"stateMutability": "nonpayable",
-		"type": "function"
-	},
-	{
 		"inputs": [],
-		"name": "getBuySellingFee",
+		"name": "TokenCount",
 		"outputs": [
 			{
 				"internalType": "uint256",
-<<<<<<< HEAD
 				"name": "",
 				"type": "uint256"
 			}
 		],
 		"stateMutability": "view",
-=======
-				"name": "_fee",
+		"type": "function"
+	},
+	{
+		"inputs": [],
+		"name": "TokenPrice",
+		"outputs": [
+			{
+				"internalType": "uint256",
+				"name": "",
 				"type": "uint256"
-			}
-		],
-		"name": "updateBuySellingFee",
-		"outputs": [],
-		"stateMutability": "nonpayable",
-		"type": "function"
-	},
-	{
-		"inputs": [],
-		"name": "updatedTokenPrice",
-		"outputs": [],
-		"stateMutability": "nonpayable",
-		"type": "function"
-	},
-	{
-		"inputs": [],
-		"name": "EscrowAccount",
-		"outputs": [
-			{
-				"internalType": "address",
-				"name": "",
-				"type": "address"
-			}
-		],
-		"stateMutability": "view",
-		"type": "function"
-	},
-	{
-		"inputs": [],
-		"name": "GetAccountant",
-		"outputs": [
-			{
-				"internalType": "address",
-				"name": "",
-				"type": "address"
 			}
 		],
 		"stateMutability": "view",
@@ -303,7 +179,6 @@
 			}
 		],
 		"stateMutability": "view",
->>>>>>> 85d30f519c30a2cd2ba72ddc63486af8441bb1bf
 		"type": "function"
 	},
 	{
@@ -419,19 +294,12 @@
 	},
 	{
 		"inputs": [],
-		"name": "PropertyOwnerAddress",
-		"outputs": [
-			{
-				"internalType": "address",
-				"name": "",
-				"type": "address"
-			}
-		],
-		"stateMutability": "view",
+		"name": "renounceOwnership",
+		"outputs": [],
+		"stateMutability": "nonpayable",
 		"type": "function"
 	},
 	{
-<<<<<<< HEAD
 		"inputs": [
 			{
 				"internalType": "address",
@@ -498,37 +366,13 @@
 		"name": "updateBuySellingFee",
 		"outputs": [],
 		"stateMutability": "nonpayable",
-=======
-		"inputs": [],
-		"name": "TokenCount",
-		"outputs": [
-			{
-				"internalType": "uint256",
-				"name": "",
-				"type": "uint256"
-			}
-		],
-		"stateMutability": "view",
->>>>>>> 85d30f519c30a2cd2ba72ddc63486af8441bb1bf
 		"type": "function"
 	},
 	{
 		"inputs": [],
-<<<<<<< HEAD
 		"name": "updatedTokenPrice",
 		"outputs": [],
 		"stateMutability": "nonpayable",
-=======
-		"name": "TokenPrice",
-		"outputs": [
-			{
-				"internalType": "uint256",
-				"name": "",
-				"type": "uint256"
-			}
-		],
-		"stateMutability": "view",
->>>>>>> 85d30f519c30a2cd2ba72ddc63486af8441bb1bf
 		"type": "function"
 	}
 ]

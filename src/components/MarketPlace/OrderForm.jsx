@@ -12,11 +12,7 @@ import "../../components/MarketPlace/compo.css";
 import CountdownTimer from "./countdownTimer";
 import { RiFileCopyLine } from 'react-icons/ri';
 import { IoCheckmarkDone } from "react-icons/io5";
-<<<<<<< HEAD
 import Loader from './Loader';
-=======
->>>>>>> 85d30f519c30a2cd2ba72ddc63486af8441bb1bf
-
 // import Nouislider from "nouislider-react";
 //import noUiSlider from "nouislider";
 //import "nouislider/distribute/nouislider.css";
@@ -85,13 +81,8 @@ const aggregatorV3InterfaceABI = [
 
 const OrderForm = () => {
   const params = useParams();
-<<<<<<< HEAD
   const [USDTprice, setUSDTprice] = useState(0);
   const [USDCprice, setUSDCprice] = useState(0);
-=======
-  const [USDTprice, setUSDTprice] = useState('');
-  const [USDCprice, setUSDCprice] = useState('');
->>>>>>> 85d30f519c30a2cd2ba72ddc63486af8441bb1bf
   const [usdtToken, setusdtToken] = useState();
   const [isApprove, setisApprove] = useState(false);
   const [tokenType, settokenType] = useState();
@@ -100,34 +91,21 @@ const OrderForm = () => {
   const [price, setprice] = useState();
   const [quantity, setquantity] = useState();
   const [product, setProduct] = useState({});
-<<<<<<< HEAD
   const [loadchain, setloadchain] = useState(null);
   const [loadEscrow, setloadEscrow] = useState();
   const [EscrowAddress, setEscrowAddress] = useState(null);
   const [tokensPrice, settokensPrice] = useState(0);
-=======
-  const [loadchain, setloadchain] = useState({});
-  const [loadEscrow, setloadEscrow] = useState();
-  const [EscrowAddress, setEscrowAddress] = useState();
-  const [tokensPrice, settokensPrice] = useState();
->>>>>>> 85d30f519c30a2cd2ba72ddc63486af8441bb1bf
   const [datas, setdatas] = useState([]);
   const [totaltoken, settotaltoken] = useState();
   const [loading, setLoading] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [contractAddr, setcontractAddr] = useState();
   const [checkID, setcheckID] = useState();
-<<<<<<< HEAD
   const [balnc, setbalnc] = useState(0);
   const [CalToken, setCalToken] = useState('');
   const [tokenQuant, settokenQuant] = useState();
   const [CalTokens, setCalTokens] = useState('');
   const [clickPrice, setclickPrice] = useState();
-
-=======
-  const [balnc, setbalnc] = useState('');
-  const [CalToken, setCalToken] = useState('');
->>>>>>> 85d30f519c30a2cd2ba72ddc63486af8441bb1bf
   const [timeLeft, setTimeLeft] = useState(CountdownTimer());
   const dispatch = useAppDispatch();
   const {
@@ -144,22 +122,7 @@ const OrderForm = () => {
   const [textToCopy, setTextToCopy] = useState();
   const [checkUSDTTokens, setcheckUSDTTokens] = useState();
   const [checkUSDCTokens, setcheckUSDCTokens] = useState();
-<<<<<<< HEAD
-=======
 
-  const copyToClipboard = () => {
-    // setIsCopying(true);
-    navigator.clipboard.writeText(textToCopy)
-      .then(() => {
-        setIsCopying(true);
-        // alert('Text copied to clipboard');
-      })
-      .catch((err) => {
-        setIsCopying(false);
-        // console.error('Failed to copy: ', err);
-      });
-  };
->>>>>>> 85d30f519c30a2cd2ba72ddc63486af8441bb1bf
 
   const copyToClipboard = () => {
     // setIsCopying(true);
@@ -176,16 +139,10 @@ const OrderForm = () => {
   // console.log("USDTprice",tokensPrice)
   const UsdtApprove = async () => {
     try {
-<<<<<<< HEAD
       let tokens = ((tokensPrice * quantity * 10 ** 6) / (USDTprice)).toFixed(0).toString();
       let fee = ((tokens / (10 ** 10)) * buySell).toFixed(0).toString();
       setcheckUSDTTokens(Number(tokens) + Number(fee));
       setLoading(true);
-=======
-      let tokens = ((tokensPrice * quantity * 10 ** 14) / (USDTprice)).toFixed(0).toString();
-      let fee = ((tokens / (10 ** 10)) * buySell).toFixed(0).toString();
-      setcheckUSDTTokens(Number(tokens) + Number(fee));
->>>>>>> 85d30f519c30a2cd2ba72ddc63486af8441bb1bf
       await UsdtContract?.methods
         .approve(EscrowAddress, Number(tokens) + Number(fee))
         .send({ from: accounts[0] })
@@ -194,13 +151,8 @@ const OrderForm = () => {
           await loadEscrow?.methods
             .BuyPropertyToken(accounts[0], tokenType, QuantNo)
             .send({ from: accounts[0] });
-<<<<<<< HEAD
           setLoading(false);
         })
-=======
-        })
-      setisApprove(true);
->>>>>>> 85d30f519c30a2cd2ba72ddc63486af8441bb1bf
     } catch (error) {
       setLoading(false);
       console.log("First Approve Error", error);
@@ -209,14 +161,9 @@ const OrderForm = () => {
 
   const UsdcApprove = async () => {
     try {
-<<<<<<< HEAD
       let tokens = ((tokensPrice * quantity * 10 ** 6) / (USDCprice)).toFixed(0).toString();
       let fee = ((tokens / (10 ** 10)) * buySell).toFixed(0).toString();
       setLoading(true);
-=======
-      let tokens = ((tokensPrice * quantity * 10 ** 14) / (USDCprice)).toFixed(0).toString();
-      let fee = ((tokens / (10 ** 10)) * buySell).toFixed(0).toString();
->>>>>>> 85d30f519c30a2cd2ba72ddc63486af8441bb1bf
       await UsdcContract?.methods
         .approve(EscrowAddress, Number(tokens) + Number(fee))
         .send({ from: accounts[0] })
@@ -225,19 +172,13 @@ const OrderForm = () => {
           await loadEscrow?.methods
             .BuyPropertyToken(accounts[0], tokenType, QuantNo)
             .send({ from: accounts[0] });
-<<<<<<< HEAD
           setLoading(false);
         })
-=======
-        })
-      setisApprove(true);
->>>>>>> 85d30f519c30a2cd2ba72ddc63486af8441bb1bf
     } catch (error) {
       setLoading(false);
       console.log("Second Approve Error", error);
     }
   };
-<<<<<<< HEAD
   // useEffect(() => {
   //   if (window.ethereum) {
   //     if (tokenType == 0) {
@@ -272,26 +213,6 @@ const OrderForm = () => {
   }, [tokensPrice, quantity])
 
 
-=======
-  useEffect(() => {
-    if (window.ethereum) {
-      if (tokenType == 0) {
-        let tokens = ((tokensPrice * quantity * 10 ** 14) / (USDTprice)).toFixed(0).toString();
-        let fee = ((tokens / (10 ** 10)) * buySell).toFixed(0).toString();
-        setCalToken(Number(tokens) + Number(fee))
-      } else {
-        let tokens = ((tokensPrice * quantity * 10 ** 14) / (USDCprice)).toFixed(0).toString();
-        let fee = ((tokens / (10 ** 10)) * buySell).toFixed(0).toString();
-        setCalToken(Number(tokens) + Number(fee))
-      }
-      const timer = setTimeout(() => {
-        setTimeLeft(CountdownTimer());
-      }, 10);
-      return () => clearTimeout(timer);
-      // timeLeft,
-    }
-  }, [timeLeft])
->>>>>>> 85d30f519c30a2cd2ba72ddc63486af8441bb1bf
   // update account
   useEffect(() => {
     window.localStorage.setItem("accounts[0]", accounts[0]);
@@ -304,20 +225,6 @@ const OrderForm = () => {
     }
   });
 
-<<<<<<< HEAD
-=======
-  // const BuyToken = async () => {
-  //   try {
-  //     const QuantNo = Number(quantity * 10 ** 18).toFixed(0).toString();
-  //     await loadEscrow?.methods
-  //       .BuyPropertyToken(accounts[0], tokenType, QuantNo)
-  //       .send({ from: accounts[0] });
-  //   } catch (error) {
-  //     console.log("buy token Error", error);
-  //   }
-  // };
-
->>>>>>> 85d30f519c30a2cd2ba72ddc63486af8441bb1bf
 
   // useEffect(()=>{
   // 	//destroyExistingSlider();
@@ -332,8 +239,6 @@ const OrderForm = () => {
   // 	});
   //});
 
-
-<<<<<<< HEAD
   //  fetch USDT and USDC price
   useEffect(() => {
     if (window.ethereum) {
@@ -368,9 +273,6 @@ const OrderForm = () => {
   }, [])
 
   // get property Address
-=======
-
->>>>>>> 85d30f519c30a2cd2ba72ddc63486af8441bb1bf
   useEffect(() => {
     if (window.ethereum) {
       const fetchProduct = async () => {
@@ -392,7 +294,6 @@ const OrderForm = () => {
   useEffect(() => {
     if (window.ethereum) {
       if (checkID) {
-<<<<<<< HEAD
         const fetchContract = async () => {
           try {
             const contractofProperty = new web3.eth.Contract(
@@ -497,120 +398,12 @@ const OrderForm = () => {
       }
     }
   })
-=======
-        const contractofProperty = new web3.eth.Contract(
-          Property_ABI,
-          product.uid
-        );
-        !loadchain && setloadchain(contractofProperty);
-        if (loadchain) {
-          const fetchData = async () => {
-            try {
-              let completeProp = await contractofProperty.methods
-                .getCompletePropDetails()
-                .call();
-              settokensPrice(Number(completeProp.PropertyDetails.TokenPrice) / 1e8);
-              setcontractAddr(completeProp.PropertyDetails.propertyAddress);
-              setbuySell(completeProp.PropertyDetails.BuySellingFee);
-              setdatas(completeProp);
-              let TotalTokens = await contractofProperty.methods
-                .TokenCount()
-                .call();
-              settotaltoken((Number(TotalTokens) / 1e18).toFixed(4));
-            } catch (err) {
-              console.log(err);
-            }
-          };
-          fetchData();
 
-          const fetchEscrowAdd = async () => {
-            try {
-              let Add = await contractofProperty.methods
-                .EscrowAccount()
-                .call();
-              setEscrowAddress(Add);
-              setTextToCopy(Add);
-            } catch (error) {
-              console.log("Ecrow Address Error", error);
-            }
-          }
-          fetchEscrowAdd();
-          if (EscrowAddress) {
-            const fetchEscrow = async () => {
-              try {
-                const contractofEscrow = new web3.eth.Contract(
-                  Escrow_ABI,
-                  EscrowAddress
-                );
-                setloadEscrow(contractofEscrow);
-                let bal = await contractofEscrow.methods.balanceOf(EscrowAddress).call();
-                setbalnc((Number(bal) / 1e18).toFixed(4));
-              } catch (error) {
-                console.log("Ecrow Contract Error", error);
-              }
-            }
-            fetchEscrow();
-            // if(loadEscrow){
-            // }
-          }
-        }
-      }
-      // if (EscrowContract) {
-      //   const escrowUSD = async () => {
-      //     try {
-      //       let TokeninUSD = await EscrowContract?.methods.TokenToUSD(1).call();
-      //       // let priceinUSD = TokeninUSD / (10 ** 8);
-      //       setTokenToUSD(TokeninUSD);
-      //     } catch (err) {
-      //       console.log(err);
-      //     }
-      //   };
-      //   escrowUSD();
-      // }
-
-      if (web3) {
-        const USDTPrice = async () => {
-          const USDTpriceFeed = new web3.eth.Contract(aggregatorV3InterfaceABI, USDTaddr);
-          USDTpriceFeed.methods.latestRoundData().call()
-            .then((roundData) => {
-              // const price = Number((roundData.answer) / 1e8).toFixed(3);
-              setUSDTprice(roundData.answer);
-            })
-        }
-        USDTPrice();
-      }
-      if (web3) {
-        const USDCPrice = async () => {
-          const USDCpriceFeed = new web3.eth.Contract(aggregatorV3InterfaceABI, USDCaddr);
-          USDCpriceFeed.methods.latestRoundData().call()
-            .then((roundData) => {
-              // const price = Number((roundData.answer) / 1e8).toFixed(3);
-              setUSDCprice(roundData.answer);
-            })
-        }
-        USDCPrice();
-      }
-      // getBuySellingFee
-
-      // if (quantity !== 0 && tokensPrice !== 0) {
-      // 	let tokens = (((tokensPrice * quantity) * (10 ** 14)) / (TokenToUSD)).toFixed(0).toString();
-      // 	let tkn = (tokens / 100000);
-      // 	setusdtToken(tkn);
-      // }
-    }
-    const timer = setTimeout(() => {
-      setTimeLeft(CountdownTimer());
-    }, 10000);
-    return () => clearTimeout(timer);
-    // timeLeft,
-  }, [params.id, loadchain, timeLeft, checkID]);
->>>>>>> 85d30f519c30a2cd2ba72ddc63486af8441bb1bf
 
   return (
     <>
       {/* <label className="form-label text-primary">{TokenToUSD}</label>
 			<label className="form-label text-primary">{tokensPrice}</label> */}
-<<<<<<< HEAD
       <form >
         {loading ? (
           <div className="text-center">
@@ -664,41 +457,6 @@ const OrderForm = () => {
                   <option value="1">USDC</option>
                 </select>
                 {/* <select
-=======
-      <form>
-        <div className="sell-blance">
-          {datas.length > 0 ? (
-            <>
-              {datas.PropertyDetails.StartSell == true || datas.PropertyDetails.Resell == true? (
-                <label className="form-label text-prime">
-                  Property Token Address:_{""}
-                  <span className="">
-                    {EscrowAddress?.substring(0, 10) + "...."}
-                  </span>
-                  <a className="" onClick={copyToClipboard} style={{ cursor: "Pointer" }}>
-                    {isCopying ? (
-                      <>
-                        <RiFileCopyLine /> <IoCheckmarkDone />
-                      </>
-                    ) : (
-                      <RiFileCopyLine />
-                    )}
-                  </a>
-                </label>
-              ) : (
-                <></>
-              )}
-            </>
-          ) : (
-            <></>
-          )}
-          <div className="form-label blance">
-            <span className="text-primary">Tokens Left:</span>
-            <p className="text-warning">{balnc}</p>
-          </div>
-          <div className="input-group">
-            <select
->>>>>>> 85d30f519c30a2cd2ba72ddc63486af8441bb1bf
               className="form-control"
               onChange={(e) => settokenType(e.target.value)}
               required
@@ -707,52 +465,8 @@ const OrderForm = () => {
               <option value="0">USDT</option>
               <option value="1">USDC</option>
             </select>
-<<<<<<< HEAD
             <span className="input-group-text">Payable Token Types</span> */}
-=======
-            <span className="input-group-text">Payable Token Types</span>
-          </div>
-        </div>
-        <div className="sell-blance">
-          <label className="form-label text-primary">
-            Property Token Quantity
-          </label>
-          <div className="input-group">
-            <input
-              type="text"
-              className="form-control"
-              onChange={(e) => setquantity(e.target.value)}
-              placeholder="0.00"
-            />
-            {tokenType == 0 ? (
-              <span className="input-group-text">
-                <span className="text-warning">
-                  {Number(CalToken / 1e6).toFixed(3)}</span> {""}-USDT</span>
-            ) : (
-              <span className="input-group-text">
-                <span className="text-warning">
-                  {Number(CalToken / 1e6).toFixed(3)}</span> {""}-USDC</span>
-            )}
-          </div>
-        </div>
 
-        {datas.length > 0 ? (
-          <>
-            {datas.PropertyDetails.StartSell == true || datas.PropertyDetails.Resell == true ? (
-              <div className="sell-blance">
-                <label className="form-label text-primary">
-                  Limit Price Per Token
-                </label>
-                <div className="input-group">
-                  <input
-                    type="text"
-                    className="form-control"
-                    // onChange={(e) => setprice(e.target.value)}
-                    placeholder={tokensPrice.toFixed(2)}
-                  />
-                  <span className="input-group-text">USD</span>
-                </div>
->>>>>>> 85d30f519c30a2cd2ba72ddc63486af8441bb1bf
               </div>
             </div>
             <div className="sell-blance">
@@ -828,11 +542,8 @@ const OrderForm = () => {
                       className="btn btn-primary w-75"
                       onClick={() => UsdtApprove()}
                     >
-<<<<<<< HEAD
                      Buy
-=======
-                      Buy
->>>>>>> 85d30f519c30a2cd2ba72ddc63486af8441bb1bf
+
                     </Button>
                   ) : (
                     <Button
@@ -882,11 +593,7 @@ const OrderForm = () => {
                           className="btn btn-primary w-75"
                           onClick={() => UsdtApprove()}
                         >
-<<<<<<< HEAD
                          Buy
-=======
-                          Buy
->>>>>>> 85d30f519c30a2cd2ba72ddc63486af8441bb1bf
                         </Button>
                       ) : (
                         <Button

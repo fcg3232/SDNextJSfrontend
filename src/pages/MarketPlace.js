@@ -35,11 +35,7 @@ const MarketPlace = () => {
                         <div className='text-center row' style={{ 
                              marginLeft: "10px" , backgroundColor:"white"
                             }}>
-<<<<<<< HEAD
                             <nav className="col cltext-center">
-=======
-                            <navss className="col cltext-center">
->>>>>>> 85d30f519c30a2cd2ba72ddc63486af8441bb1bf
                                 <div className='timer'>
                                     <div className='box'>
                                         <p>{timeLeft.days}</p>
