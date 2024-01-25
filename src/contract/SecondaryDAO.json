@@ -28,6 +28,59 @@
 	{
 		"inputs": [
 			{
+<<<<<<< HEAD
+				"internalType": "string",
+				"name": "name",
+				"type": "string"
+			}
+		],
+		"name": "CreateProperty",
+		"outputs": [],
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "address",
+				"name": "_address",
+				"type": "address"
+			}
+		],
+		"name": "GrantPropOwnerRole",
+		"outputs": [
+			{
+				"internalType": "bool",
+				"name": "success",
+				"type": "bool"
+			}
+		],
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "bytes32",
+				"name": "role",
+				"type": "bytes32"
+			},
+			{
+				"internalType": "address",
+				"name": "account",
+				"type": "address"
+			}
+		],
+		"name": "grantRole",
+		"outputs": [],
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
+=======
+>>>>>>> 85d30f519c30a2cd2ba72ddc63486af8441bb1bf
 				"internalType": "uint256",
 				"name": "value",
 				"type": "uint256"
@@ -87,6 +140,65 @@
 		"type": "event"
 	},
 	{
+<<<<<<< HEAD
+		"inputs": [],
+		"name": "renounceOwnership",
+		"outputs": [],
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "bytes32",
+				"name": "role",
+				"type": "bytes32"
+			},
+			{
+				"internalType": "address",
+				"name": "account",
+				"type": "address"
+			}
+		],
+		"name": "renounceRole",
+		"outputs": [],
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "address",
+				"name": "_address",
+				"type": "address"
+			}
+		],
+		"name": "revokePropertyAdminRole",
+		"outputs": [],
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "bytes32",
+				"name": "role",
+				"type": "bytes32"
+			},
+			{
+				"internalType": "address",
+				"name": "account",
+				"type": "address"
+			}
+		],
+		"name": "revokeRole",
+		"outputs": [],
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+=======
+>>>>>>> 85d30f519c30a2cd2ba72ddc63486af8441bb1bf
 		"anonymous": false,
 		"inputs": [
 			{
@@ -164,6 +276,8 @@
 	{
 		"inputs": [
 			{
+<<<<<<< HEAD
+=======
 				"internalType": "string",
 				"name": "name",
 				"type": "string"
@@ -235,6 +349,7 @@
 	{
 		"inputs": [
 			{
+>>>>>>> 85d30f519c30a2cd2ba72ddc63486af8441bb1bf
 				"internalType": "address",
 				"name": "_address",
 				"type": "address"
@@ -254,6 +369,39 @@
 	{
 		"inputs": [
 			{
+<<<<<<< HEAD
+				"internalType": "address",
+				"name": "newOwner",
+				"type": "address"
+			}
+		],
+		"name": "transferOwnership",
+		"outputs": [],
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"stateMutability": "payable",
+		"type": "receive"
+	},
+	{
+		"inputs": [],
+		"name": "DEFAULT_ADMIN_ROLE",
+		"outputs": [
+			{
+				"internalType": "bytes32",
+				"name": "",
+				"type": "bytes32"
+			}
+		],
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
+=======
+>>>>>>> 85d30f519c30a2cd2ba72ddc63486af8441bb1bf
 				"internalType": "bytes32",
 				"name": "role",
 				"type": "bytes32"
@@ -283,6 +431,8 @@
 				"type": "address"
 			}
 		],
+<<<<<<< HEAD
+=======
 		"name": "grantRole",
 		"outputs": [],
 		"stateMutability": "nonpayable",
@@ -301,6 +451,7 @@
 				"type": "address"
 			}
 		],
+>>>>>>> 85d30f519c30a2cd2ba72ddc63486af8441bb1bf
 		"name": "hasRole",
 		"outputs": [
 			{
@@ -314,6 +465,22 @@
 	},
 	{
 		"inputs": [],
+<<<<<<< HEAD
+		"name": "NoProperties",
+		"outputs": [
+			{
+				"internalType": "uint256",
+				"name": "",
+				"type": "uint256"
+			}
+		],
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"inputs": [],
+=======
+>>>>>>> 85d30f519c30a2cd2ba72ddc63486af8441bb1bf
 		"name": "owner",
 		"outputs": [
 			{
@@ -327,6 +494,30 @@
 	},
 	{
 		"inputs": [],
+<<<<<<< HEAD
+		"name": "PropertyAddress",
+		"outputs": [
+			{
+				"internalType": "address",
+				"name": "",
+				"type": "address"
+			}
+		],
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"inputs": [],
+		"name": "PropertyAdminAddress",
+		"outputs": [
+			{
+				"internalType": "address",
+				"name": "",
+				"type": "address"
+			}
+		],
+		"stateMutability": "view",
+=======
 		"name": "renounceOwnership",
 		"outputs": [],
 		"stateMutability": "nonpayable",
@@ -379,6 +570,7 @@
 		"name": "revokeRole",
 		"outputs": [],
 		"stateMutability": "nonpayable",
+>>>>>>> 85d30f519c30a2cd2ba72ddc63486af8441bb1bf
 		"type": "function"
 	},
 	{
@@ -399,6 +591,8 @@
 		],
 		"stateMutability": "view",
 		"type": "function"
+<<<<<<< HEAD
+=======
 	},
 	{
 		"inputs": [
@@ -412,5 +606,6 @@
 		"outputs": [],
 		"stateMutability": "nonpayable",
 		"type": "function"
+>>>>>>> 85d30f519c30a2cd2ba72ddc63486af8441bb1bf
 	}
 ]

@@ -432,6 +432,8 @@
 		"inputs": [
 			{
 				"internalType": "address",
+<<<<<<< HEAD
+=======
 				"name": "",
 				"type": "address"
 			},
@@ -481,6 +483,7 @@
 		"inputs": [
 			{
 				"internalType": "address",
+>>>>>>> 85d30f519c30a2cd2ba72ddc63486af8441bb1bf
 				"name": "buyerAddress",
 				"type": "address"
 			},
@@ -506,6 +509,60 @@
 		"type": "function"
 	},
 	{
+<<<<<<< HEAD
+		"inputs": [
+			{
+				"internalType": "address",
+				"name": "_propAddress",
+				"type": "address"
+			}
+		],
+		"name": "GetBuyerOffer",
+		"outputs": [
+			{
+				"components": [
+					{
+						"internalType": "address",
+						"name": "buyerAddress",
+						"type": "address"
+					},
+					{
+						"internalType": "enum Escrow.TypeOfFund",
+						"name": "Type_of_Currency",
+						"type": "uint8"
+					},
+					{
+						"internalType": "uint256",
+						"name": "NoPropertToken",
+						"type": "uint256"
+					},
+					{
+						"internalType": "uint256",
+						"name": "Price",
+						"type": "uint256"
+					},
+					{
+						"internalType": "uint256",
+						"name": "ExpiryTime",
+						"type": "uint256"
+					},
+					{
+						"internalType": "enum Escrow.OrderStatus",
+						"name": "orderStatus",
+						"type": "uint8"
+					}
+				],
+				"internalType": "struct Escrow.BuyerInfo[]",
+				"name": "",
+				"type": "tuple[]"
+			}
+		],
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+=======
+>>>>>>> 85d30f519c30a2cd2ba72ddc63486af8441bb1bf
 		"inputs": [],
 		"name": "GetLastTradeTokenPrice",
 		"outputs": [
@@ -521,6 +578,54 @@
 	{
 		"inputs": [
 			{
+<<<<<<< HEAD
+				"internalType": "address",
+				"name": "_propAddress",
+				"type": "address"
+			}
+		],
+		"name": "GetSellerOffer",
+		"outputs": [
+			{
+				"components": [
+					{
+						"internalType": "address",
+						"name": "sellerAddress",
+						"type": "address"
+					},
+					{
+						"internalType": "uint256",
+						"name": "TokenQuantity",
+						"type": "uint256"
+					},
+					{
+						"internalType": "uint256",
+						"name": "Price",
+						"type": "uint256"
+					},
+					{
+						"internalType": "uint256",
+						"name": "PlateFormFee",
+						"type": "uint256"
+					},
+					{
+						"internalType": "uint256",
+						"name": "ExpiryTime",
+						"type": "uint256"
+					},
+					{
+						"internalType": "enum Escrow.OrderStatus",
+						"name": "orderStatus",
+						"type": "uint8"
+					}
+				],
+				"internalType": "struct Escrow.SelerInfo[]",
+				"name": "",
+				"type": "tuple[]"
+			}
+		],
+		"stateMutability": "view",
+=======
 				"internalType": "enum Escrow.TypeOfFund",
 				"name": "_Type_of_Currency",
 				"type": "uint8"
@@ -563,6 +668,7 @@
 			}
 		],
 		"stateMutability": "nonpayable",
+>>>>>>> 85d30f519c30a2cd2ba72ddc63486af8441bb1bf
 		"type": "function"
 	},
 	{
@@ -646,6 +752,8 @@
 		"type": "function"
 	},
 	{
+<<<<<<< HEAD
+=======
 		"inputs": [
 			{
 				"internalType": "address",
@@ -695,6 +803,7 @@
 		"type": "function"
 	},
 	{
+>>>>>>> 85d30f519c30a2cd2ba72ddc63486af8441bb1bf
 		"inputs": [],
 		"name": "TotalBuyers",
 		"outputs": [

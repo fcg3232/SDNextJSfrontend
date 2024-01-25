@@ -13,9 +13,12 @@ import { propertyLLCFetch } from "./slices/llcSlice";
 import {berbixdataFetch} from "./slices/berbixSlice";
 import { usersFetch } from './slices/UsersSlice';
 import { usersFetchbyID } from './slices/UsersSlice';
+import {buyerOfferFetch} from './slices/buyersSlice';
+import {sellerOfferFetch} from './slices/sellersSlice';
+import {limitOrderOfferFetch} from "./slices/LimitOrderSlice";
+// import {UserlimitOrder} from "./slices/LimitOrderSlice";
 
 store.dispatch(productsFetch());
-// store.dispatch(getTotals());
 store.dispatch(personalFetch());
 store.dispatch(propertyFetch());
 store.dispatch(blogFetch());
@@ -23,6 +26,10 @@ store.dispatch(propertyLLCFetch());
 store.dispatch(berbixdataFetch());
 store.dispatch(usersFetch());
 store.dispatch(usersFetchbyID());
+store.dispatch(buyerOfferFetch());
+store.dispatch(sellerOfferFetch());
+store.dispatch(limitOrderOfferFetch());
+// store.dispatch(UserlimitOrder());
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(

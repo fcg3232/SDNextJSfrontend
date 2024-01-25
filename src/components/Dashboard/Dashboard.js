@@ -7,7 +7,7 @@ import styled from "styled-components";
 // import Profile from "./Profile";
 // import Transfers from "./Transfers";
 import scrollreveal from "scrollreveal";
-// import UserDashboard from "./UserDashboard";
+import UserDashboard from "./UserDashboard";
 // import NotAllow from "./NotAllow";
 import Start from "./Start";
 export default function Dashboard() {
@@ -34,9 +34,11 @@ export default function Dashboard() {
     <Section>
       {/* <Navbar /> */}
       <div className="grid">
-        {/* <UserDashboard/> */}
+        <UserDashboard/>
         {/* <NotAllow /> */}
-        <Start />
+
+        {/* <Start /> */}
+
         {/* <div className="row__one">
           <Analytics />
           <FAQ />

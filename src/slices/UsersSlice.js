@@ -19,10 +19,9 @@ export const usersFetch = createAsyncThunk("users/usersFetch", async () => {
   }
 });
 
-export const usersFetchbyID = createAsyncThunk("users/usersFetch", async (id) => {
+export const usersFetchbyID = createAsyncThunk("users/usersFetchbyID", async (id) => {
   try {
     const response = await axios.get(`${url}/users/find/${id}`, setHeaders());
-
     return response.data;
   } catch (error) {
     console.log(error);

@@ -24,7 +24,13 @@ import { otpGenerateApi } from "../slices/otpGenerateApi";
 import {otpGenerateReducer} from "../slices/otpGenerate";
 import resetPasswordReducer from "../slices/resetPassword";
 import { resetPasswordApi } from "../slices/resetPasswordApi";
-import { usersApi } from "../slices/UsersApi";
+// import { usersApi } from "../slices/UsersApi";
+import { buyersOrdrApi } from "../slices/buyersOrderAPI";
+import { buyerOrderReducer } from "../slices/buyersSlice";
+import { sellersOrdrApi } from "../slices/sellersApi";
+import { sellersOrderReducer } from "../slices/sellersSlice";
+import { limitOrderOfferReducer } from "../slices/LimitOrderSlice";
+import { limitOrderApi } from "../slices/limitOrderApi";
 
 const parentReducer = combineReducers({
     resetPassword: resetPasswordReducer,
@@ -44,6 +50,9 @@ const parentReducer = combineReducers({
     propertiesdb: propertiesdbReducer,
     propLLC: propLLCReducer,
     blogdb: blogdbReducer,
+    buyerOrder: buyerOrderReducer,
+    sellerOrder: sellersOrderReducer,
+    orderMatching: limitOrderOfferReducer,
     [productsApi.reducerPath]: productsApi.reducer,
     [personaldbApi.reducerPath]: personaldbApi.reducer,
     [propertiesdbApi.reducerPath]: propertiesdbApi.reducer,
@@ -52,7 +61,10 @@ const parentReducer = combineReducers({
     [berbixApi.reducerPath]: berbixApi.reducer,
     [otpGenerateApi.reducerPath]: otpGenerateApi.reducer,
     [resetPasswordApi.reducerPath]: resetPasswordApi.reducer,
-    [usersApi.reducerPath]: usersApi.reducer,
+    [buyersOrdrApi.reducerPath]: buyersOrdrApi.reducer,
+    [sellersOrdrApi.reducerPath]: sellersOrdrApi.reducer,
+    [limitOrderApi.reducerPath]: limitOrderApi.reducer,
+    // [usersApi.reducerPath]: usersApi.reducer,
 })
 
 export default parentReducer;

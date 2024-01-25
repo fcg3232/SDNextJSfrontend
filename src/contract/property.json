@@ -1,4 +1,6 @@
 [
+<<<<<<< HEAD
+=======
 	{
 		"inputs": [
 			{
@@ -12,6 +14,7 @@
 		"stateMutability": "nonpayable",
 		"type": "function"
 	},
+>>>>>>> 85d30f519c30a2cd2ba72ddc63486af8441bb1bf
 	{
 		"inputs": [
 			{
@@ -90,6 +93,29 @@
 		"type": "event"
 	},
 	{
+<<<<<<< HEAD
+		"inputs": [
+			{
+				"internalType": "address",
+				"name": "_address",
+				"type": "address"
+			}
+		],
+		"name": "AccountantAddress",
+		"outputs": [],
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"inputs": [],
+		"name": "CreateEscrows",
+		"outputs": [],
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+=======
+>>>>>>> 85d30f519c30a2cd2ba72ddc63486af8441bb1bf
 		"inputs": [],
 		"name": "renounceOwnership",
 		"outputs": [],
@@ -98,12 +124,56 @@
 	},
 	{
 		"inputs": [],
+<<<<<<< HEAD
+		"name": "EscrowAccount",
+		"outputs": [
+			{
+				"internalType": "address",
+				"name": "",
+				"type": "address"
+			}
+		],
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"inputs": [],
+		"name": "GetAccountant",
+		"outputs": [
+			{
+				"internalType": "address",
+				"name": "",
+				"type": "address"
+			}
+		],
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"inputs": [],
+		"name": "PropertyOwnerAddress",
+		"outputs": [
+			{
+				"internalType": "address",
+				"name": "",
+				"type": "address"
+			}
+		],
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"inputs": [],
+=======
+>>>>>>> 85d30f519c30a2cd2ba72ddc63486af8441bb1bf
 		"name": "SatrtSelling",
 		"outputs": [],
 		"stateMutability": "nonpayable",
 		"type": "function"
 	},
 	{
+<<<<<<< HEAD
+=======
 		"inputs": [
 			{
 				"internalType": "address",
@@ -147,6 +217,7 @@
 		"type": "function"
 	},
 	{
+>>>>>>> 85d30f519c30a2cd2ba72ddc63486af8441bb1bf
 		"inputs": [],
 		"name": "StatrtResell",
 		"outputs": [],
@@ -167,9 +238,18 @@
 		"type": "function"
 	},
 	{
-		"inputs": [
+		"inputs": [],
+		"name": "getBuySellingFee",
+		"outputs": [
 			{
 				"internalType": "uint256",
+<<<<<<< HEAD
+				"name": "",
+				"type": "uint256"
+			}
+		],
+		"stateMutability": "view",
+=======
 				"name": "_fee",
 				"type": "uint256"
 			}
@@ -223,6 +303,7 @@
 			}
 		],
 		"stateMutability": "view",
+>>>>>>> 85d30f519c30a2cd2ba72ddc63486af8441bb1bf
 		"type": "function"
 	},
 	{
@@ -350,6 +431,74 @@
 		"type": "function"
 	},
 	{
+<<<<<<< HEAD
+		"inputs": [
+			{
+				"internalType": "address",
+				"name": "_PropertyOwnerAddress",
+				"type": "address"
+			},
+			{
+				"internalType": "address",
+				"name": "_WhitelistAddress",
+				"type": "address"
+			},
+			{
+				"internalType": "uint256",
+				"name": "_PurchasePrice",
+				"type": "uint256"
+			},
+			{
+				"internalType": "uint256",
+				"name": "_ListingFee",
+				"type": "uint256"
+			},
+			{
+				"internalType": "uint256",
+				"name": "_InitialReserves",
+				"type": "uint256"
+			},
+			{
+				"internalType": "uint256",
+				"name": "_TokenPrice",
+				"type": "uint256"
+			},
+			{
+				"internalType": "uint256",
+				"name": "_BuySellingFee",
+				"type": "uint256"
+			}
+		],
+		"name": "setInfo",
+		"outputs": [],
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "address",
+				"name": "newOwner",
+				"type": "address"
+			}
+		],
+		"name": "transferOwnership",
+		"outputs": [],
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "uint256",
+				"name": "_fee",
+				"type": "uint256"
+			}
+		],
+		"name": "updateBuySellingFee",
+		"outputs": [],
+		"stateMutability": "nonpayable",
+=======
 		"inputs": [],
 		"name": "TokenCount",
 		"outputs": [
@@ -360,10 +509,16 @@
 			}
 		],
 		"stateMutability": "view",
+>>>>>>> 85d30f519c30a2cd2ba72ddc63486af8441bb1bf
 		"type": "function"
 	},
 	{
 		"inputs": [],
+<<<<<<< HEAD
+		"name": "updatedTokenPrice",
+		"outputs": [],
+		"stateMutability": "nonpayable",
+=======
 		"name": "TokenPrice",
 		"outputs": [
 			{
@@ -373,6 +528,7 @@
 			}
 		],
 		"stateMutability": "view",
+>>>>>>> 85d30f519c30a2cd2ba72ddc63486af8441bb1bf
 		"type": "function"
 	}
 ]
