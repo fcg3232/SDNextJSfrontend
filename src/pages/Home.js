@@ -96,8 +96,6 @@ function Home() {
           </div>
           <img loading="lazy" className="bg-shape1" src={Shape1} alt="" />
           <img loading="lazy" className="bg-shape2" src={Shape1} alt="" />
-          {/* <img className="bg-shape3" src={Shape3} alt="" /> */}
-          {/* <img className="bg-shape4" src={Shape3} alt="" /> */}
         </div>
         <div className="text-center clearfix bg-primary-light ">
           <div className="container">

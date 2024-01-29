@@ -237,7 +237,7 @@ const Section = styled.section`
   position: fixed;
   z-index: 99;
   left: 0;
-
+  overflow-y: scroll;
   background-color: #180752;
   height: 100vh;
   width: 18vw;

@@ -4,7 +4,7 @@ import { useAppDispatch, useAppSelector } from "../../reducer/store";
 import { loadBlockchain } from "../../slices/web3ContractSlice";
 import axios from "axios";
 import { url } from "../../slices/api";
-import { CONTRACT_ABIS } from "../../contract/property";
+import Property_ABI from '../../contract/property.json';
 
 import avat3 from "../../assets/images/avatar/avatar3.jpg";
 // import avat3 from "../../assets/images/avatar/avatar";
@@ -39,7 +39,7 @@ const Details = () => {
     fetchProduct();
     if (checkID) {
       const contractofProperty = new web3.eth.Contract(
-        CONTRACT_ABIS,
+        Property_ABI,
         product.uid
       );
       !loadchain && setloadchain(contractofProperty);
