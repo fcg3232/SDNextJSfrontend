@@ -558,7 +558,7 @@ const UserDashboard = () => {
                   </div>
                   <div className="previews-info-list" >
                     <div className="price data">
-                      <span>Total Properties Vlaue</span>
+                      <span>Total Properties Value</span>
                       <h4>2341 <sub>$</sub></h4>
                     </div>
                     <div className="price data">
