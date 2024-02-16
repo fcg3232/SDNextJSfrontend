@@ -178,7 +178,7 @@ const Login = () => {
                             ) : null}
                             <Link to={"/enteremail"}>
                               <span>
-                                <p className="font-18">Forget Password</p>
+                                <p className="font-18">Forgot Password</p>
                               </span>
                             </Link>
                           </div>
