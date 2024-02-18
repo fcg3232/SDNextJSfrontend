@@ -17,7 +17,9 @@ import {buyerOfferFetch} from './slices/buyersSlice';
 import {sellerOfferFetch} from './slices/sellersSlice';
 import {limitOrderOfferFetch} from "./slices/LimitOrderSlice";
 // import {UserlimitOrder} from "./slices/LimitOrderSlice";
+import {loadBlockchain} from "./slices/web3ContractSlice"; 
 
+store.dispatch(loadBlockchain());
 store.dispatch(productsFetch());
 store.dispatch(personalFetch());
 store.dispatch(propertyFetch());
