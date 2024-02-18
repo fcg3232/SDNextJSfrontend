@@ -805,42 +805,6 @@ const Sidebar = () => {
                 <Tab.Content>
                   <Tab.Pane eventKey="Openorder" >
                     <div className="list-table danger mt-4">
-                      {/* {sellerInfo.map((item, index) => (
-                        <div className="card list-table  overflow-hidden " key={index}>
-                          <div className="card-body  previews-info-list">
-                            <span>
-                              <p className="mb-2 fs-13"
-                                style={{ fontSize: "10px" }}
-                              ><i className="fa fa-caret-up scale5 me-2 text-success" aria-hidden="true"></i>
-                                Accepet Crypto <span className='text-success'> USDT</span>
-                              </p>
-<<<<<<< HEAD
-                              <h4 className="heading mb-0">{Number(item[index].Price / 1e8).toFixed(2)}<span>(USD) </span></h4>
-                              <h4 className="fs-13"
-                                style={{ fontSize: "15px" }}
-                              >Tokens: {""} <span className='text-primary' style={{ fontSize: "25px" }}
-                              >{""} {Number(item[index].TokenQuantity / 1e18).toFixed(2)} </span><span style={{ fontSize: "9px" }}> For Sell</span></h4>
-=======
-                              <h4 className="heading mb-0">{Number(item.Price / 1e8).toFixed(2)}<span>(USD) </span></h4>
-                              <h4 className="fs-13"
-                                style={{ fontSize: "15px" }}
-                              >Tokens: {""} <span className='text-primary' style={{ fontSize: "25px" }}
-                              >{""} {Number(item.TokenQuantity / 1e18).toFixed(2)} </span><span style={{ fontSize: "9px" }}> For Sell</span></h4>
->>>>>>> 85d30f519c30a2cd2ba72ddc63486af8441bb1bf
-                            </span>
-
-                            <span className="text-end">
-                              <p className="mb-1" style={{ fontSize: "10px" }}>
-                                Expire in:<br /> {convertTime(item[index].ExpiryTime - Math.round(+new Date() / 1000))}
-                              </p>
-                              <button className="btn btn-success text-end btn-sm"
-                                onClick={() => ModleDatas(item[index].sellerAddress, index, Number(item[index].Price / 1e8).toFixed(2), Number(item[index].TokenQuantity / 1e18).toFixed(2), item[index].sellerAddress)}
-                              >Buy
-                              </button>
-                            </span>
-                          </div>
-                        </div>
-                      ))} */}
                       {sellerOffer.length != 0 ? (
                         <>
                           {sellerOffer && sellerOffer.map((item, index) => (

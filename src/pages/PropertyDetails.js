@@ -115,69 +115,6 @@ function PropertyDetails() {
                   </div>
                   <AllComponents componentType={activeComponent} />
                 </div>
-                <div className="clear" id="comment-list">
-                  <div className="comments-area style-1 clearfix" id="comments">
-                    <div className="widget-title">
-                      <h4 className="title">Leave A Reply</h4>
-                    </div>
-                    <div className="clearfix">
-                      <div
-                        className="default-form comment-respond style-1"
-                        id="respond"
-                      >
-                        <form
-                          className="comment-form"
-                          id="commentform"
-                          method="post"
-                        >
-                          <p className="">
-                            <label>
-                              Name <span className="required">*</span>
-                            </label>
-                            <input
-                              type="text"
-                              name="FirstName"
-                              placeholder="First Name"
-                              id="FirstName"
-                              className="form-control"
-                            />
-                          </p>
-                          <p className="">
-                            <label>
-                              Email <span className="required">*</span>
-                            </label>
-                            <input
-                              type="text"
-                              placeholder="Email"
-                              name="email"
-                              id="email"
-                              className="form-control"
-                            />
-                          </p>
-                          <p className="comment-form-comment">
-                            <label>Message</label>
-                            <textarea
-                              rows="8"
-                              name="Message"
-                              placeholder="Message"
-                              id="Message"
-                              className="form-control"
-                            ></textarea>
-                          </p>
-                          <p className="form-submit">
-                            <button
-                              type="submit"
-                              className="btn btn-primary btn-skew btn-icon"
-                              id="submit"
-                            >
-                              <span>Submit Now</span>
-                            </button>
-                          </p>
-                        </form>
-                      </div>
-                    </div>
-                  </div>
-                </div>
               </div>
               <div className="col-xl-4 col-lg-4">
                 <Sidebar />
