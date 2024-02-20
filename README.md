@@ -53,7 +53,7 @@ To Access the MarketPlace of SecondaryDAO you need to connect the MetaMask or An
 
 **Network name:**  Arbitrum Sepolia Testnet
 
-**New RPC URL:** https://arbitrum-sepolia.infura.io/v3/61679e33f48747afac34c6aabc66e5c4
+**New RPC URL:** https://arbitrum-sepolia.infura.io/v3/API-KEY
 
 **Chain ID:** 421614
 
