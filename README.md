@@ -47,6 +47,7 @@ Ensure you have the following before starting
 - MetaMask Extension
 ## Connecting to MetaMask
 ![Logo](https://res.cloudinary.com/dsybcfxyc/image/upload/v1708463427/download__3_-removebg-preview_lwp48h.png)
+
 To Access the MarketPlace of SecondaryDAO you need to connect the MetaMask or Any other wallet without connecting you are unable to access the Marketplace.
 
 **Add Arbitrium Test Network**
