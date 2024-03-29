@@ -5,7 +5,7 @@ SecondaryDAO is a Decentralized Finance (DeFi) ecosystem focused on Property Tok
 be traded anytime.SecondaryDAO was founded with the simple mission of making everyone a part of a fair and inclusive real estate ecosystem.
 To make real estate accessible for everyone by using the power of data and technology.
 
-[![ISC License](https://img.shields.io/badge/License-ISC-green.svg)](https://choosealicense.com/licenses/ISC/)
+[![This is a private REPO, there is no license](https://img.shields.io/badge/License-ISC-green.svg)](https://choosealicense.com/licenses/ISC/)
 
 
 ## Live Demo
