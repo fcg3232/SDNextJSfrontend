@@ -5,6 +5,8 @@ import Login from "../pages/Login";
 import MarketPlace from "../pages/MarketPlace";
 import PrivateRoutes from "./route";
 import Registration from "../pages/Registration";
+import EnterEmail from "../pages/EnterEmail";
+import OtpCode from "../pages/OtpCode";
 
 const AppRoutes = () => {
   const isUserLoggedIn = localStorage.getItem("token");
@@ -22,6 +24,8 @@ const AppRoutes = () => {
           <>
             <Route path="/signup" element={<Registration />} />
             <Route path="/login" element={<Login />} />
+            <Route path="/enteremail" exact element={<EnterEmail />} />
+            <Route path="/otpcode" exact element={<OtpCode />} />
             <Route path="/" element={<MarketPlace />} />
             <Route path="*" element={<Navigate to="/login" />} />
           </>
