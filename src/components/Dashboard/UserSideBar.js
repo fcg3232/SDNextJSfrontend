@@ -44,6 +44,7 @@ export default function UserSideBar() {
       .links>ul>li:nth-of-type(4),
       .links>ul>li:nth-of-type(5),
       .links>ul>li:nth-of-type(6),
+      .links>ul>li:nth-of-type(7),
       .logout
       `,
       {
@@ -133,6 +134,17 @@ export default function UserSideBar() {
                   <IoSettings />
                   {/* <Link to={"/login"}></Link> */}
                   <span> Settings</span>
+                </a>
+              </li>
+
+              <li
+                className={currentLink === 7 ? "active" : "none"}
+                onClick={() => setCurrentLink(7)}
+              >
+                <a href="account/swap">
+                  <IoSettings />
+                  {/* <Link to={"/login"}></Link> */}
+                  <span> SWAP Wallet</span>
                 </a>
               </li>
             </ul>

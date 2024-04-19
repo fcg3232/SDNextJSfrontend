@@ -10,37 +10,42 @@ import {
   useNavigate,
 } from "react-router-dom";
 // import { Route, Routes, useLocation, useNavigate, useParams, BrowserRouter } from 'react-router-dom';
-import NotFound from "./NotFound";
+import NotFound from "../pages/NotFound";
 import { useDispatch } from "react-redux";
 import { loadUser } from "../slices/authSlice";
-import ScrollToTop from "./../layouts/ScrollToTop";
+import ScrollToTop from "../layouts/ScrollToTop";
 // import Header from './../layouts/Header';
 // import Footer from './../layouts/Footer';
 // import Home from './Home';
-import AboutUs from "./AboutUs";
-import Pricing from "./Pricing";
-import BlogList from "./BlogList";
-import BlogGrid from "./BlogGrid";
-import BlogDetails from "./BlogDetails";
-import ContactUs from "./ContactUs";
-import MarketPlace from "./MarketPlace";
-import PropertyDetails from "./PropertyDetails";
-import Account from "./Account";
-import Login from "./Login";
-import Registration from "./Registration";
-import TermsofService from "./TermsofService";
-import Faq from "./Faq";
-import PrivacyPolicy from "./PrivacyPolicy";
+import AboutUs from "../pages/AboutUs";
+import Pricing from "../pages/Pricing";
+import BlogList from "../pages/BlogList";
+import BlogGrid from "../pages/BlogGrid";
+import BlogDetails from "../pages/BlogDetails";
+import ContactUs from "../pages/ContactUs";
+import MarketPlace from "../pages/MarketPlace";
+import PropertyDetails from "../pages/PropertyDetails";
+import Account from "../pages/Account";
+import Login from "../pages/Login";
+import Registration from "../pages/Registration";
+import TermsofService from "../pages/TermsofService";
+import Faq from "../pages/Faq";
+import PrivacyPolicy from "../pages/PrivacyPolicy";
 import Dashboard from "../components/Dashboard/Dashboard";
 import Start from "../components/Dashboard/Start";
 import Verification from "../components/Dashboard/Verification";
-import EnterEmail from "./EnterEmail";
-import OtpCode from "./OtpCode";
+import EnterEmail from "../pages/EnterEmail";
+import OtpCode from "../pages/OtpCode";
+import SWAPWALLETS from "../components/swap-wallets";
+import SwapWallets from "../components/swap-wallets";
+import ProtectedRoute from "./protectedRoute";
 // const Login = lazy(() => import('./Login'));
-const Home = lazy(() => import("./Home"));
+const Home = lazy(() => import("../pages/Home"));
 
 function Loading() {
   const dispatch = useDispatch();
+  const isUserLoggedIn = localStorage.getItem('token')
+  console.log("isUserLoggedIn", isUserLoggedIn)
 
   useEffect(() => {
     dispatch(loadUser(null));
@@ -79,9 +84,10 @@ function Loading() {
   );
 }
 
-function Index() {
+function PrivateRoutes() {
   return (
-    <BrowserRouter basename="/">
+    <>
+   
       <ToastContainer />
       <div className="page-wraper">
         {/* <Header /> */}
@@ -94,6 +100,7 @@ function Index() {
               </Suspense>
             }
           />
+   
           {/* <Route path='/' exact element={<Home />} /> */}
           <Route path="*" element={<NotFound />} />
           <Route path="/login" exact element={<Login />} />
@@ -120,6 +127,7 @@ function Index() {
             <Route index element={<Dashboard />} />
             <Route path="start" exact element={<Start />} />
             <Route path="verification" exact element={<Verification />} />
+            <Route path="swap" exact element={<SwapWallets />} />
           </Route>
           {/* <Route path="/start" element={<Start />}>
 						<
@@ -128,7 +136,7 @@ function Index() {
         {/* <Footer /> */}
         <ScrollToTop />
       </div>
-    </BrowserRouter>
+      </>
   );
 }
-export default Index;
+export default PrivateRoutes;
