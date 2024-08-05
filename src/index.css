@@ -491,4 +491,52 @@ code {
 
 }
 
+.custom-kyc-link {
+  /* background-color: #4CAF50; Green */
+  display: flex;
+  justify-content: center;
+  color: #3C0987;
+  font-size: 24px;
+  font-weight: 900px;
+  cursor: pointer;
+
+}
+.custom-setting {
+  
+  /* border: 2px solid #3C0987; */
+  background-color: white;
+  border-radius: 20px;
+  margin: 5px 270px ;
+  padding: 20px 20px;
+  text-align: left;
+  font-size: 18px;
+  color: #8A8ABF;
+}
+
+.settings-link {
+  margin: 5px 250px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 18px;
+  color: #3C0987;
+  border: none;
+  outline: none;
+  background-color: transparent;
+}
+.left-arrow {
+  font-size: 40px;
+  font-weight: 700px;
+}
+
+.custom-setting h1 {
+  color: #3C0987;
+  font-size: 40px;
+  padding-bottom: 24px;
+  margin-top: 20px;
+}
+
+
+
+
 /* Add more styles as needed */

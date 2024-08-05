@@ -130,11 +130,11 @@ export default function UserSideBar() {
                 className={currentLink === 6 ? "active" : "none"}
                 onClick={() => setCurrentLink(6)}
               >
-                <a href="#">
+                <Link to={"Settings"}>
                   <IoSettings />
                   {/* <Link to={"/login"}></Link> */}
                   <span> Settings</span>
-                </a>
+                </Link>
               </li>
 
               <li

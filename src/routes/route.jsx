@@ -39,6 +39,11 @@ import OtpCode from "../pages/OtpCode";
 import SWAPWALLETS from "../components/swap-wallets";
 import SwapWallets from "../components/swap-wallets";
 import ProtectedRoute from "./protectedRoute";
+import Kyc from "../components/kyc/kyc";
+import Settings from "../components/Dashboard/Settings";
+import KycForm from "../components/kyc/kycForm";
+import Aml from "../components/kyc/Aml";
+
 // const Login = lazy(() => import('./Login'));
 const Home = lazy(() => import("../pages/Home"));
 
@@ -128,6 +133,11 @@ function PrivateRoutes() {
             <Route path="start" exact element={<Start />} />
             <Route path="verification" exact element={<Verification />} />
             <Route path="swap" exact element={<SwapWallets />} />
+            {/* <Route path="kyc" exact element={<Kyc/>} /> */}
+            <Route path="Settings" exact element={<Settings/>} />
+            <Route path="kycForm" exact element={<KycForm/>} />
+            <Route path="Aml" exact element={<Aml/>} />
+            
           </Route>
           {/* <Route path="/start" element={<Start />}>
 						<
