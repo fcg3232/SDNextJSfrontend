@@ -1,36 +1,17 @@
-// // import React from "react";
-// // import KycForm from "../kyc/kycForm";
-
-// // const Settings = ({ formResponse }) => {
-// //   // console.log(formResponse,"fromresa")
-  
-// //   return (
-// //     <div>
-// //       <div className="custom-setting">
-// //         <h1>Settings</h1>
-// //         <div>
-// //           <KycForm />
-
-// //            <p>Candidate id: </p>
-// //         <p>Candidate Name: </p>
-// //         <p>KYC Verified: </p> 
-// //         </div>
-// //       </div>
-// //     </div>
-// //   );
-// // };
-
-// // export default Settings;
-
-
-import React, {useState} from 'react';
-import { useFormContext } from '../../slices/KycContext';
+import React, {useState, useEffect} from 'react';
+import { fetchCandidateId } from '../../slices/KycContext'
 import KycForm from '../kyc/kycForm';
 import { FaCheck, FaTimes } from 'react-icons/fa';
+import { useDispatch, useSelector } from 'react-redux';
 
 const Settings = () => {
-  const { state } = useFormContext();
-  const { formResponse } = state;
+  
+  const dispatch = useDispatch();
+  const { formResponse, error } = useSelector((state) => state.form);
+
+  useEffect(() => {
+    dispatch(fetchCandidateId());
+  }, [dispatch]);
 
 
   return (
@@ -39,9 +20,9 @@ const Settings = () => {
       <KycForm/>
       {formResponse ? (
         <div>
-          <p>Form URL: {formResponse.form_url}</p>
-          <p>Candidate id: {formResponse.form_id}</p>
-          <p>KYC Verified: {formResponse.kyc_verified ? (
+          <p>Form URL: {formResponse?.form_url}</p>
+          <p>Candidate id: {formResponse?.form_token}</p>
+          <p>KYC Verified: {formResponse?.kyc_verified ? (
               <FaCheck color="green" size={20} />
             ) : (
               <FaTimes color="red" size={20} />

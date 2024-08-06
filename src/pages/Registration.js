@@ -8,6 +8,7 @@ import Header from "../layouts/Header";
 // import { loginUser } from "../slices/authSlice";
 import { registerUser } from "../slices/authSlice";
 import * as yup from "yup";
+import { fetchCandidateId } from '../slices/KycContext'
 
 const SignUpValidationSchema = yup.object({
   name: yup.string().required("Please Enter Your First Name"),
@@ -34,12 +35,15 @@ const Registration = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const auth = useSelector((state) => state.auth);
-
+ 
   const { values, errors, touched, handleSubmit, handleChange, handleBlur } =
     useFormik({
       initialValues: initialValues,
-      onSubmit: (values) => {
-        dispatch(registerUser(values));
+      onSubmit: async (values) => {
+        const response = await dispatch(fetchCandidateId());
+        const { form_token: tokenId } = response.payload;
+        dispatch(registerUser({ values, candidateId: tokenId }));
+
       },
       validationSchema: SignUpValidationSchema,
     });

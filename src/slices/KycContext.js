@@ -1,51 +1,15 @@
-// // FormContext.js
-import React, { createContext, useContext, useReducer, useState, useEffect } from 'react';
+import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import axios from 'axios';
-
 
 const initialState = {
   formResponse: null,
+  status: 'idle',
   error: null,
 };
 
-
-const FETCH_FORM_RESPONSE_SUCCESS = 'FETCH_FORM_RESPONSE_SUCCESS';
-const FETCH_FORM_RESPONSE_FAILURE = 'FETCH_FORM_RESPONSE_FAILURE';
-
-
-const formReducer = (state, action) => {
-  switch (action.type) {
-    case FETCH_FORM_RESPONSE_SUCCESS:
-      return {
-        ...state,
-        formResponse: action.payload,
-        error: null,
-      };
-    case FETCH_FORM_RESPONSE_FAILURE:
-      return {
-        ...state,
-        formResponse: null,
-        error: action.error,
-      };
-    default:
-      return state;
-  }
-};
-
-
-const FormContext = createContext();
-
-
-export const useFormContext = () => {
-  return useContext(FormContext);
-};
-
-
-export const FormProvider = ({ children }) => {
-  const [state, dispatch] = useReducer(formReducer, initialState);
-  const [fetchTrigger, setFetchTrigger] = useState(false);
-  
-  const fetchFormResponse = async () => {
+export const fetchCandidateId = createAsyncThunk(
+  'form/fetchCandidateId',
+  async (_, { rejectWithValue }) => {
     try {
       const response = await axios.post(
         'https://kyc-api.amlbot.com/forms/8b32344e08c0454c312878540ce69ba5892c/urls',
@@ -59,23 +23,41 @@ export const FormProvider = ({ children }) => {
           }
         }
       );
-      console.log(response,"response")
-      dispatch({ type: FETCH_FORM_RESPONSE_SUCCESS, payload: response.data });
+      console.log("Response:", response); 
+      return response.data;
     } catch (error) {
-      console.error('Error fetching form URL:', error);
-      dispatch({ type: FETCH_FORM_RESPONSE_FAILURE, error });
+      console.error("Error:", error); 
+      if (error.response) {
+        return rejectWithValue(error.response.data);
+      } else if (error.request) {
+         return rejectWithValue(error.request);
+      } else {
+         return rejectWithValue(error.message);
+      }
     }
-  };
+  }
+);
 
-  useEffect(() => {
-    
-      fetchFormResponse();
-     }, []);
 
-  return (
-    <FormContext.Provider value={{ state, setFetchTrigger }}>
-      {children}
-    </FormContext.Provider>
-  );
-};
+const formSlice = createSlice({
+  name: 'form',
+  initialState,
+  reducers: {},
+  extraReducers: (builder) => {
+    builder
+      .addCase(fetchCandidateId.fulfilled, (state, action) => {
+        console.log("🚀 ~ .addCase ~ action:", action)
+        state.formResponse = action.payload;
+        state.error = null;
+      })
+      .addCase(fetchCandidateId.pending, (state) => {
+        state.status = 'loading';
+      })
+      .addCase(fetchCandidateId.rejected, (state, action) => {
+        state.formResponse = null;
+        state.error = action.payload;
+      });
+  },
+});
 
+export default formSlice.reducer;

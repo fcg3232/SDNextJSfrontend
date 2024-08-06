@@ -6,9 +6,6 @@ import "./pages/style"
 import ChatwootWidget from './components/ChatwootWidget';
 import { Fragment } from 'react'
 import { AppRoutes } from './routes/protectedRoute';
-import KycForm from './components/kyc/kycForm';
-import Settings from './components/Dashboard/Settings';
-import { FormContext, formReducer, initialState } from '../src/slices/KycContext'
 
 function App() {
   const isUserLoggedIn = localStorage.getItem('token')
