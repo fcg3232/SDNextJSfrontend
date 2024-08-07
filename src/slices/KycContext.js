@@ -46,7 +46,7 @@ const formSlice = createSlice({
   extraReducers: (builder) => {
     builder
       .addCase(fetchCandidateId.fulfilled, (state, action) => {
-        console.log("🚀 ~ .addCase ~ action:", action)
+        // console.log("🚀 ~ .addCase ~ action:", action)
         state.formResponse = action.payload;
         state.error = null;
       })
@@ -61,3 +61,4 @@ const formSlice = createSlice({
 });
 
 export default formSlice.reducer;
+

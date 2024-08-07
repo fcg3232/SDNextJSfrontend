@@ -39,10 +39,10 @@ import OtpCode from "../pages/OtpCode";
 import SWAPWALLETS from "../components/swap-wallets";
 import SwapWallets from "../components/swap-wallets";
 import ProtectedRoute from "./protectedRoute";
-import Kyc from "../components/kyc/kyc";
 import Settings from "../components/Dashboard/Settings";
 import KycForm from "../components/kyc/kycForm";
-import Aml from "../components/kyc/Aml";
+import { Navigate } from 'react-router-dom';
+import { useSelector } from 'react-redux';
 
 // const Login = lazy(() => import('./Login'));
 const Home = lazy(() => import("../pages/Home"));
@@ -56,6 +56,7 @@ function Loading() {
     dispatch(loadUser(null));
   }, [dispatch]);
 
+  
   return (
     <div className="flex mt-5 h-screen w-screen items-center text-center justify-center">
       <button
@@ -105,6 +106,8 @@ function PrivateRoutes() {
               </Suspense>
             }
           />
+
+          
    
           {/* <Route path='/' exact element={<Home />} /> */}
           <Route path="*" element={<NotFound />} />
@@ -133,10 +136,9 @@ function PrivateRoutes() {
             <Route path="start" exact element={<Start />} />
             <Route path="verification" exact element={<Verification />} />
             <Route path="swap" exact element={<SwapWallets />} />
-            {/* <Route path="kyc" exact element={<Kyc/>} /> */}
             <Route path="Settings" exact element={<Settings/>} />
             <Route path="kycForm" exact element={<KycForm/>} />
-            <Route path="Aml" exact element={<Aml/>} />
+            
             
           </Route>
           {/* <Route path="/start" element={<Start />}>

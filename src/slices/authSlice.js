@@ -10,6 +10,7 @@ const initialState = {
   phone:"",
   email: "",
   _id: "",
+  Kycstatus:false,
   isAdmin: false,
   isAccept:false,
   registerStatus: "",

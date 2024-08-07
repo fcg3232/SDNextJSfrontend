@@ -28,7 +28,7 @@ const AppRoutes = () => {
             <Route path="/otpcode" exact element={<OtpCode />} />
             <Route path="/" element={<MarketPlace />} />
             <Route path="*" element={<Navigate to="/login" />} />
-          </>
+            </>
         )}
       </Routes>
     </BrowserRouter>
