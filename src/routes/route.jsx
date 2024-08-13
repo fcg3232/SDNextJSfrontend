@@ -12,7 +12,7 @@ import {
 // import { Route, Routes, useLocation, useNavigate, useParams, BrowserRouter } from 'react-router-dom';
 import NotFound from "../pages/NotFound";
 import { useDispatch } from "react-redux";
-import { loadUser } from "../slices/authSlice";
+import { getUser, loadUser } from "../slices/authSlice";
 import ScrollToTop from "../layouts/ScrollToTop";
 // import Header from './../layouts/Header';
 // import Footer from './../layouts/Footer';
@@ -41,22 +41,19 @@ import SwapWallets from "../components/swap-wallets";
 import ProtectedRoute from "./protectedRoute";
 import Settings from "../components/Dashboard/Settings";
 import KycForm from "../components/kyc/kycForm";
-import { Navigate } from 'react-router-dom';
-import { useSelector } from 'react-redux';
+import { Navigate } from "react-router-dom";
+import { useSelector } from "react-redux";
 
 // const Login = lazy(() => import('./Login'));
 const Home = lazy(() => import("../pages/Home"));
 
 function Loading() {
   const dispatch = useDispatch();
-  const isUserLoggedIn = localStorage.getItem('token')
-  console.log("isUserLoggedIn", isUserLoggedIn)
 
   useEffect(() => {
     dispatch(loadUser(null));
   }, [dispatch]);
 
-  
   return (
     <div className="flex mt-5 h-screen w-screen items-center text-center justify-center">
       <button
@@ -91,64 +88,81 @@ function Loading() {
 }
 
 function PrivateRoutes() {
+  const dispatch = useDispatch();
+  const { verificationResponse } = useSelector((state) => state.verify);
+  const isUserLoggedIn = localStorage.getItem("token");
+
+  useEffect(() => {
+    dispatch(loadUser(isUserLoggedIn));
+    dispatch(getUser());
+  }, [dispatch]);
   return (
     <>
-   
       <ToastContainer />
       <div className="page-wraper">
         {/* <Header /> */}
         <Routes>
-          <Route
-            path="/"
-            element={
-              <Suspense fallback={<Loading />}>
-                <MarketPlace />
-              </Suspense>
-            }
-          />
+          {verificationResponse?.verified ? (
+            <>
+              <Route
+                path="/"
+                element={
+                  <Suspense fallback={<Loading />}>
+                    <MarketPlace />
+                  </Suspense>
+                }
+              />
 
-          
-   
-          {/* <Route path='/' exact element={<Home />} /> */}
-          <Route path="*" element={<NotFound />} />
-          <Route path="/login" exact element={<Login />} />
-          {/* <Route path="/marketplace" exact element={<MarketPlace />} /> */}
-          <Route
-            path="/propertydetails/:id"
-            exact
-            element={<PropertyDetails />}
-          />
-          {/* <Route path='/about-us' exact element={<AboutUs />} /> */}
-          {/* <Route path='/introcard' exact element={<IntroCard />} /> */}
-          <Route path="/enteremail" exact element={<EnterEmail />} />
-          <Route path="/otpcode" exact element={<OtpCode />} />
-          {/* <Route path='/pricing' exact element={<Pricing />} /> */}
-          {/* <Route path='/blog-list' exact element={<BlogList />} /> */}
-          {/* <Route path='/blog-grid' exact element={<BlogGrid />} /> */}
-          {/* <Route path='/blog-details/:id' exact element={<BlogDetails />} /> */}
-          {/* <Route path='/contact-us' exact element={<ContactUs />} /> */}
-          <Route path="/signup" exact element={<Registration />} />
-          {/* <Route path='/termsofservice' exact element={<TermsofService />} /> */}
-          {/* <Route path='/faq' exact element={<Faq />} /> */}
-          {/* <Route path='/privacypolicy' exact element={<PrivacyPolicy />} /> */}
-          <Route path="/account" exact element={<Account />}>
-            <Route index element={<Dashboard />} />
-            <Route path="start" exact element={<Start />} />
-            <Route path="verification" exact element={<Verification />} />
-            <Route path="swap" exact element={<SwapWallets />} />
-            <Route path="Settings" exact element={<Settings/>} />
-            <Route path="kycForm" exact element={<KycForm/>} />
-            
-            
-          </Route>
-          {/* <Route path="/start" element={<Start />}>
+              {/* <Route path='/' exact element={<Home />} /> */}
+              <Route path="*" element={<NotFound />} />
+              <Route path="/login" exact element={<Login />} />
+              {/* <Route path="/marketplace" exact element={<MarketPlace />} /> */}
+              <Route
+                path="/propertydetails/:id"
+                exact
+                element={<PropertyDetails />}
+              />
+              {/* <Route path='/about-us' exact element={<AboutUs />} /> */}
+              {/* <Route path='/introcard' exact element={<IntroCard />} /> */}
+              <Route path="/enteremail" exact element={<EnterEmail />} />
+              <Route path="/otpcode" exact element={<OtpCode />} />
+              {/* <Route path='/pricing' exact element={<Pricing />} /> */}
+              {/* <Route path='/blog-list' exact element={<BlogList />} /> */}
+              {/* <Route path='/blog-grid' exact element={<BlogGrid />} /> */}
+              {/* <Route path='/blog-details/:id' exact element={<BlogDetails />} /> */}
+              {/* <Route path='/contact-us' exact element={<ContactUs />} /> */}
+              <Route path="/signup" exact element={<Registration />} />
+              {/* <Route path='/termsofservice' exact element={<TermsofService />} /> */}
+              {/* <Route path='/faq' exact element={<Faq />} /> */}
+              {/* <Route path='/privacypolicy' exact element={<PrivacyPolicy />} /> */}
+              <Route path="/account" exact element={<Account />}>
+                <Route index element={<Dashboard />} />
+                <Route path="start" exact element={<Start />} />
+                <Route path="verification" exact element={<Verification />} />
+                <Route path="swap" exact element={<SwapWallets />} />
+              </Route>
+              {/* <Route path="/start" element={<Start />}>
 						<
 					</Route> */}
+            </>
+          ) : (
+            <>
+              <Route
+                path="Settings"
+                element={
+                  <Suspense fallback={<Loading />}>
+                    <Settings />
+                  </Suspense>
+                }
+              />
+              <Route path="kycForm" exact element={<KycForm />} />
+            </>
+          )}
         </Routes>
         {/* <Footer /> */}
         <ScrollToTop />
       </div>
-      </>
+    </>
   );
 }
 export default PrivateRoutes;

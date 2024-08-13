@@ -1,19 +1,20 @@
-import React, { useState, useEffect } from 'react';
-import axios from 'axios';
-import { fetchCandidateId } from '../../slices/KycContext'
+import React, { useState, useEffect } from "react";
+import axios from "axios";
+import { fetchCandidateId } from "../../slices/KycContext";
 // import KycForm from '../kyc/kycForm';
-import { Link } from 'react-router-dom';
-import { FaCheck, FaTimes } from 'react-icons/fa';
-import { useDispatch, useSelector } from 'react-redux';
-import { verifyCandidate } from '../../slices/verificationSlice'
+import { Link } from "react-router-dom";
+import { FaCheck, FaTimes } from "react-icons/fa";
+import { useDispatch, useSelector } from "react-redux";
+import { verifyCandidate } from "../../slices/verificationSlice";
+import { Section } from "../common/Styles";
 
 const Settings = () => {
-
   const dispatch = useDispatch();
+  const user = useSelector((state) => state.auth);
   const { formResponse } = useSelector((state) => state.form);
   const { verificationResponse } = useSelector((state) => state.verify);
-  console.log(verificationResponse, 'verification');
-  
+  console.log(verificationResponse, "verification");
+
   // const [verificationResponse, setVerificationResponse] = useState({})
 
   // const verifiedCandidate = async () => {
@@ -34,84 +35,43 @@ const Settings = () => {
   // };
 
   useEffect(() => {
-
     // verifiedCandidate();
-    const data = dispatch(verifyCandidate())
-     dispatch(fetchCandidateId())
+    const data = dispatch(verifyCandidate());
+    // dispatch(fetchCandidateId());
   }, []);
-
-
-
+  const handleVerification = async () => {
+    dispatch(fetchCandidateId());
+  };
+  console.log({ user });
   return (
-    <div className='custom-setting'>
-       <Link to={formResponse?.form_url} className='custom-kyc-link' target='blank'>
-        VERIFY YOURSELF
-      </Link>
-      {formResponse ? (
+    <Section>
+      <div className="custom-setting">
+        {!user?.kycVerified && (
+          <button
+            onClick={handleVerification}
+            className="bg-[#7E87BF] border-none p-3"
+            style={{
+              border: "none",
+            }}
+            target="blank"
+          >
+            VERIFY YOURSELF
+          </button>
+        )}
+
         <div>
-         <p>Candidate id: {formResponse.form_token}</p>
-          <p>KYC Verified: {verificationResponse?.verified ? (
+          <p>
+            KYC Verified:{" "}
+            {user?.kycVerified ? (
               <FaCheck color="green" size={20} />
             ) : (
               <FaTimes color="red" size={20} />
-            )}</p>
+            )}
+          </p>
         </div>
-      ) : (
-        <p>No form data available</p>
-      )}
-    </div>
+      </div>
+    </Section>
   );
 };
 
 export default Settings;
-
-// import React, { useEffect, useState } from 'react';
-// import { useDispatch, useSelector } from 'react-redux';
-// import { Link } from 'react-router-dom';
-// import { FaCheck, FaTimes } from 'react-icons/fa';
-// import { MdSpaceDashboard } from 'react-icons/md';
-// import KycForm from '../kyc/kycForm';
-// import { fetchCandidateId } from '../../slices/KycContext';
-// import { verifyCandidate } from '../../slices/verificationSlice';
-
-// const Settings = () => {
-//   const dispatch = useDispatch();
-//   const { formResponse } = useSelector((state) => state.form);
-//   const { verificationResponse, status, error } = useSelector((state) => state.verify);
-//   const [currentLink, setCurrentLink] = useState(1);
-
-//   useEffect(() => {
-//     dispatch(verifyCandidate());
-//     dispatch(fetchCandidateId());
-//   }, [dispatch]);
-
-//   const isVerified = status === 'succeeded' && verificationResponse && verificationResponse.verified;
-
-//   return (
-//     <div className='custom-setting'>
-//       <h1>Settings</h1>
-//       <KycForm />
-//       {formResponse ? (
-//         <div>
-//           <p>Candidate ID: {formResponse.form_token}</p>
-//           <p>
-//             KYC Verified: {status === 'loading' ? (
-//               <span>Loading...</span>
-//             ) : verificationResponse && verificationResponse.verified ? (
-//               <FaCheck color="green" size={20} />
-//             ) : (
-//               <FaTimes color="red" size={20} />
-//             )}
-//           </p>
-//         </div>
-//       ) : (
-//         <p>No form data available</p>
-//       )}
-      
-
-      
-//     </div>
-//   );
-// };
-
-// export default Settings;

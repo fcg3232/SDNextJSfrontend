@@ -7,12 +7,12 @@ import { toast } from "react-toastify";
 const initialState = {
   token: localStorage.getItem("token"),
   name: "",
-  phone:"",
+  phone: "",
   email: "",
   _id: "",
-  Kycstatus:false,
+  Kycstatus: false,
   isAdmin: false,
-  isAccept:false,
+  isAccept: false,
   registerStatus: "",
   registerError: "",
   loginStatus: "",
@@ -21,8 +21,6 @@ const initialState = {
   // otpError: "",
   userLoaded: false,
 };
-
- 
 
 // export const otpGenerate = createAsyncThunk(
 //   "otp/otpGenerate",
@@ -41,14 +39,14 @@ const initialState = {
 
 export const registerUser = createAsyncThunk(
   "auth/registerUser",
-  async ({values, candidateId}, { rejectWithValue }) => {
+  async ({ values, candidateId }, { rejectWithValue }) => {
     try {
       const token = await axios.post(`${url}/register`, {
         name: values.name,
         phone: values.phone,
         email: values.email,
         password: values.password,
-        candidateId:candidateId
+        candidateId: candidateId,
       });
 
       localStorage.setItem("token", token.data);
@@ -89,11 +87,14 @@ export const getUser = createAsyncThunk(
   "auth/getUser",
   async (id, { rejectWithValue }) => {
     try {
-      const token = await axios.get(`${url}/user/${id}`, setHeaders());
-
-      localStorage.setItem("token", token.data);
-
-      return token.data;
+      const token = localStorage.getItem("token");
+      const user = jwtDecode(token);
+      console.log({ user });
+      const userData = await axios.get(
+        `${url}/users/find/${user._id}`,
+        setHeaders()
+      );
+      return userData.data;
     } catch (error) {
       console.log(error.response);
       toast.error(error.response?.data, {
@@ -113,15 +114,16 @@ const authSlice = createSlice({
 
       if (token) {
         const user = jwtDecode(token);
+        console.log({ user });
         return {
           ...state,
           token,
           name: user.name,
-          phone:user.phone,
+          phone: user.phone,
           email: user.email,
           _id: user._id,
           isAdmin: user.isAdmin,
-          isAccept:user.isAccept,
+          isAccept: user.isAccept,
           userLoaded: true,
         };
       } else return { ...state, userLoaded: true };
@@ -133,11 +135,11 @@ const authSlice = createSlice({
         ...state,
         token: "",
         name: "",
-        phone:"",
+        phone: "",
         email: "",
         _id: "",
         isAdmin: false,
-        isAccept:false,
+        isAccept: false,
         registerStatus: "",
         registerError: "",
         loginStatus: "",
@@ -156,11 +158,11 @@ const authSlice = createSlice({
           ...state,
           token: action.payload,
           name: user.name,
-          phone:user.phone,
+          phone: user.phone,
           email: user.email,
           _id: user._id,
           isAdmin: user.isAdmin,
-          isAccept:user.isAccept,
+          isAccept: user.isAccept,
           registerStatus: "success",
         };
       } else return state;
@@ -203,11 +205,11 @@ const authSlice = createSlice({
           ...state,
           token: action.payload,
           name: user.name,
-          phone:user.phone,
+          phone: user.phone,
           email: user.email,
           _id: user._id,
           isAdmin: user.isAdmin,
-          isAccept:user.isAccept,
+          isAccept: user.isAccept,
           loginStatus: "success",
         };
       } else return state;
@@ -227,17 +229,9 @@ const authSlice = createSlice({
     });
     builder.addCase(getUser.fulfilled, (state, action) => {
       if (action.payload) {
-        const user = jwtDecode(action.payload);
         return {
           ...state,
-          token: action.payload,
-          name: user.name,
-          phone:user.phone,
-          email: user.email,
-          _id: user._id,
-          isAdmin: user.isAdmin,
-          isAccept:user.isAccept,
-          getUserStatus: "success",
+          ...action.payload,
         };
       } else return state;
     });

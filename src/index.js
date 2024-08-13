@@ -19,6 +19,7 @@ import { limitOrderOfferFetch } from "./slices/LimitOrderSlice";
 // import {UserlimitOrder} from "./slices/LimitOrderSlice";
 import { loadBlockchain } from "./slices/web3ContractSlice";
 import { FormProvider } from "../src/slices/KycContext";
+import { getUser } from "./slices/authSlice";
 
 store.dispatch(loadBlockchain());
 store.dispatch(productsFetch());
@@ -27,8 +28,8 @@ store.dispatch(propertyFetch());
 store.dispatch(blogFetch());
 store.dispatch(propertyLLCFetch());
 store.dispatch(berbixdataFetch());
-store.dispatch(usersFetch());
-store.dispatch(usersFetchbyID());
+// store.dispatch(usersFetch());
+store.dispatch(getUser());
 store.dispatch(buyerOfferFetch());
 store.dispatch(sellerOfferFetch());
 store.dispatch(limitOrderOfferFetch());
