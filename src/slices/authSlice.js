@@ -85,7 +85,7 @@ export const loginUser = createAsyncThunk(
 
 export const getUser = createAsyncThunk(
   "auth/getUser",
-  async (id, { rejectWithValue }) => {
+  async (navigation, { rejectWithValue }) => {
     try {
       const token = localStorage.getItem("token");
       const user = jwtDecode(token);
@@ -94,6 +94,9 @@ export const getUser = createAsyncThunk(
         `${url}/users/find/${user._id}`,
         setHeaders()
       );
+      if (navigation && !userData.data.kycVerified) {
+        navigation("/settings");
+      }
       return userData.data;
     } catch (error) {
       console.log(error.response);
@@ -229,6 +232,7 @@ const authSlice = createSlice({
     });
     builder.addCase(getUser.fulfilled, (state, action) => {
       if (action.payload) {
+        console.log({ userChecK: action.payload });
         return {
           ...state,
           ...action.payload,

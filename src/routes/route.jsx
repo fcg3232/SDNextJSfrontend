@@ -8,6 +8,7 @@ import {
   useLocation,
   useParams,
   useNavigate,
+  Router,
 } from "react-router-dom";
 // import { Route, Routes, useLocation, useNavigate, useParams, BrowserRouter } from 'react-router-dom';
 import NotFound from "../pages/NotFound";
@@ -89,20 +90,22 @@ function Loading() {
 
 function PrivateRoutes() {
   const dispatch = useDispatch();
+  const user = useSelector((state) => state.auth);
   const { verificationResponse } = useSelector((state) => state.verify);
   const isUserLoggedIn = localStorage.getItem("token");
-
+  const navigation = useNavigate();
   useEffect(() => {
     dispatch(loadUser(isUserLoggedIn));
-    dispatch(getUser());
+    dispatch(getUser(navigation));
   }, [dispatch]);
+
   return (
     <>
       <ToastContainer />
       <div className="page-wraper">
         {/* <Header /> */}
         <Routes>
-          {verificationResponse?.verified ? (
+          {user?.kycVerified ? (
             <>
               <Route
                 path="/"
@@ -141,6 +144,14 @@ function PrivateRoutes() {
                 <Route path="verification" exact element={<Verification />} />
                 <Route path="swap" exact element={<SwapWallets />} />
               </Route>
+              <Route
+                path="settings"
+                element={
+                  <Suspense fallback={<Loading />}>
+                    <Settings />
+                  </Suspense>
+                }
+              />
               {/* <Route path="/start" element={<Start />}>
 						<
 					</Route> */}
@@ -148,14 +159,14 @@ function PrivateRoutes() {
           ) : (
             <>
               <Route
-                path="Settings"
+                path="settings"
                 element={
                   <Suspense fallback={<Loading />}>
                     <Settings />
                   </Suspense>
                 }
               />
-              <Route path="kycForm" exact element={<KycForm />} />
+              {/* <Route path="kycForm" exact element={<KycForm />} /> */}
             </>
           )}
         </Routes>

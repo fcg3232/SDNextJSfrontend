@@ -53,6 +53,8 @@
 // export default verifySlice.reducer;
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
+import { getUser } from "./authSlice";
+import { setHeaders, url } from "./api";
 
 const initialState = {
   verificationResponse: null,
@@ -62,10 +64,11 @@ const initialState = {
 
 export const verifyCandidate = createAsyncThunk(
   "verify/verifyCandidate",
-  async (_, { rejectWithValue }) => {
+  async (_, { rejectWithValue, getState, dispatch }) => {
+    const globalState = getState();
     try {
       const res = await axios.get(
-        "https://kyc-api.amlbot.com/verifications/a61c4d2f09c2e84902194241af94758e11a4",
+        `https://kyc-api.amlbot.com/verifications/${globalState.auth?.kycVerificationId}`,
         {
           headers: {
             Accept: "application/json",
@@ -73,7 +76,7 @@ export const verifyCandidate = createAsyncThunk(
           },
         }
       );
-      return res.data;
+      return { data: res.data, user: globalState.auth, dispatch };
     } catch (error) {
       console.error("Error fetching candidate verification:", error);
       return rejectWithValue(
@@ -89,8 +92,16 @@ const verifySlice = createSlice({
   reducers: {},
   extraReducers: (builder) => {
     builder
-      .addCase(verifyCandidate.fulfilled, (state, action) => {
-        state.verificationResponse = action.payload;
+      .addCase(verifyCandidate.fulfilled, async (state, action) => {
+        state.verificationResponse = action.payload.data;
+        await axios.patch(
+          `${url}/users/${action.payload.user?._id}`,
+          {
+            kycVerified: true,
+          },
+          setHeaders()
+        );
+        action.payload.dispatch(getUser());
         state.status = "succeeded";
         state.error = null;
       })
