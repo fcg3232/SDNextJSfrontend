@@ -94,8 +94,12 @@ export const getUser = createAsyncThunk(
         `${url}/users/find/${user._id}`,
         setHeaders()
       );
-      if (navigation && !userData.data.kycVerified) {
-        window.location.replace(window.location.host + "/settings");
+      if (
+        navigation &&
+        !userData.data.kycVerified &&
+        window.location.pathname !== "/settings"
+      ) {
+        window.location.replace(window.location.origin + "/settings");
       }
       return userData.data;
     } catch (error) {
