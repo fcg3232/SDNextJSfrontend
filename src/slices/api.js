@@ -1,4 +1,4 @@
-export const url = "http://api.secondarydao.com/api";
+export const url = "https://api.secondarydao.com/api";
 // export const url = "http://localhost:5001/api";
 
 export const setHeaders = () => {
