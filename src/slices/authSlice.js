@@ -213,6 +213,8 @@ const authSlice = createSlice({
           _id: user._id,
           isAdmin: user.isAdmin,
           isAccept: user.isAccept,
+          kycVerified: !!user.kycVerified,
+          kycVerificationId: user.kycVerificationId,
           loginStatus: "success",
         };
       } else return state;

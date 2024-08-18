@@ -48,9 +48,13 @@ const Login = () => {
     // }
     if (auth._id && !auth.isAdmin) {
       // navigate("/account");
-      navigate("/account");
+      if (auth.kycVerified) {
+        navigate("/account");
+      } else {
+        navigate("/settings");
+      }
     }
-  }, [auth._id, navigate]);
+  }, [auth._id]);
 
   return (
     <>
