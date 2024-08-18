@@ -7,8 +7,8 @@ import * as yup from "yup";
 import Footer from "../layouts/Footer";
 import Header from "../layouts/Header";
 import { loginUser } from "../slices/authSlice";
-import {verifyCandidate} from '../slices/verificationSlice';
-import { fetchCandidateId } from '../slices/KycContext'
+import { verifyCandidate } from "../slices/verificationSlice";
+import { fetchCandidateId } from "../slices/KycContext";
 
 const LogInValidationSchema = yup.object({
   email: yup.string().email().required("Please Enter Your Email"),
@@ -24,18 +24,18 @@ const Login = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const auth = useSelector((state) => state.auth);
-  const {verificationResponse} = useSelector((state) => state.verify);
-  console.log(verificationResponse, 'sasas');
-  
+  const { verificationResponse } = useSelector((state) => state.verify);
+  console.log(verificationResponse, "sasas");
 
-  const { values, errors, touched, handleSubmit, handleChange, handleBlur } = useFormik({
-    initialValues: initialValues,
-    onSubmit: (values) => {
-      dispatch(loginUser(values));
-      dispatch(verifyCandidate())
+  const { values, errors, touched, handleSubmit, handleChange, handleBlur } =
+    useFormik({
+      initialValues: initialValues,
+      onSubmit: (values) => {
+        dispatch(loginUser(values));
+        dispatch(verifyCandidate());
       },
       validationSchema: LogInValidationSchema,
-  });
+    });
 
   useEffect(() => {
     // if (auth.isAdmin) {
@@ -48,8 +48,7 @@ const Login = () => {
     // }
     if (auth._id && !auth.isAdmin) {
       // navigate("/account");
-      navigate("/account/kycForm");
-
+      navigate("/account");
     }
   }, [auth._id, navigate]);
 
@@ -88,7 +87,8 @@ const Login = () => {
                         <li>
                           <i className="fas fa-map-marker-alt"></i>
                           <span>
-                            6 State RD<br /> Suite 117 <br />
+                            6 State RD
+                            <br /> Suite 117 <br />
                             Mechanicsburg, PA 17050-7957
                           </span>
                         </li>
