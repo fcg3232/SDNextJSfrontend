@@ -7,9 +7,6 @@ import { Fragment } from "react";
 import { AppRoutes } from "./routes/protectedRoute";
 
 function App() {
-  const isUserLoggedIn = localStorage.getItem("token");
-  console.log("isUserLoggedIn", isUserLoggedIn);
-
   return (
     <div className="App">
       <Fragment>

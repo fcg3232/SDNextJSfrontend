@@ -71,8 +71,8 @@ export const loginUser = createAsyncThunk(
         password: values.password,
       });
 
-      localStorage.setItem("token", token.data);
-      return token.data;
+      localStorage.setItem("token", token.data.token);
+      return token.data.token;
     } catch (error) {
       console.log(error.response);
       toast.error(error.response?.data, {
@@ -95,7 +95,7 @@ export const getUser = createAsyncThunk(
         setHeaders()
       );
       if (navigation && !userData.data.kycVerified) {
-        navigation("/settings");
+        window.location.replace(window.location.host + "/settings");
       }
       return userData.data;
     } catch (error) {
@@ -127,6 +127,8 @@ const authSlice = createSlice({
           _id: user._id,
           isAdmin: user.isAdmin,
           isAccept: user.isAccept,
+          kycVerified: !!user.kycVerified,
+          kycVerificationId: user.kycVerificationId,
           userLoaded: true,
         };
       } else return { ...state, userLoaded: true };
@@ -147,6 +149,8 @@ const authSlice = createSlice({
         registerError: "",
         loginStatus: "",
         loginError: "",
+        kycVerified: "",
+        kycVerificationId: "",
       };
     },
   },
@@ -166,6 +170,8 @@ const authSlice = createSlice({
           _id: user._id,
           isAdmin: user.isAdmin,
           isAccept: user.isAccept,
+          kycVerified: !!user.kycVerified,
+          kycVerificationId: user.kycVerificationId,
           registerStatus: "success",
         };
       } else return state;
@@ -238,6 +244,7 @@ const authSlice = createSlice({
         return {
           ...state,
           ...action.payload,
+          getUserStatus: "fulfilled",
         };
       } else return state;
     });

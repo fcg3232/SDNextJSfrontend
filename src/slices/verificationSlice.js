@@ -111,7 +111,7 @@ const verifySlice = createSlice({
       .addCase(verifyCandidate.rejected, (state, action) => {
         state.verificationResponse = null;
         state.status = "failed";
-        state.error = action.payload;
+        state.error = action.payload.data;
       });
   },
 });

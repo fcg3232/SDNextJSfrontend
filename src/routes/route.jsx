@@ -89,15 +89,7 @@ function Loading() {
 }
 
 function PrivateRoutes() {
-  const dispatch = useDispatch();
   const user = useSelector((state) => state.auth);
-  const { verificationResponse } = useSelector((state) => state.verify);
-  const isUserLoggedIn = localStorage.getItem("token");
-  const navigation = useNavigate();
-  useEffect(() => {
-    dispatch(loadUser(isUserLoggedIn));
-    dispatch(getUser(navigation));
-  }, [dispatch]);
 
   return (
     <>
@@ -166,7 +158,7 @@ function PrivateRoutes() {
                   </Suspense>
                 }
               />
-              {/* <Route path="kycForm" exact element={<KycForm />} /> */}
+              <Route path="/*" element={<Navigate to="/settings" />} />
             </>
           )}
         </Routes>

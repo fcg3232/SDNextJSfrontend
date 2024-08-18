@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 import { fetchCandidateId } from "../../slices/KycContext";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { FaCheck, FaTimes } from "react-icons/fa";
 import { useDispatch, useSelector } from "react-redux";
 import { verifyCandidate } from "../../slices/verificationSlice";
@@ -28,7 +28,11 @@ const Settings = () => {
   return (
     <Section>
       <div className="custom-setting">
-        {!user?.kycVerified && (
+        {user?.kycVerified ? (
+          <Link to="/account" className="bg-[#7E87BF] border-none p-3">
+            Continue to Dashboard
+          </Link>
+        ) : (
           <button
             onClick={handleVerification}
             className="bg-[#7E87BF] border-none p-3"

@@ -32,20 +32,13 @@ const Login = () => {
       initialValues: initialValues,
       onSubmit: (values) => {
         dispatch(loginUser(values));
-        dispatch(verifyCandidate());
+        // dispatch(verifyCandidate());
       },
       validationSchema: LogInValidationSchema,
     });
 
   useEffect(() => {
-    // if (auth.isAdmin) {
-    //     navigate(
-    //         <href="https://tasty-earrings-bee.cyclic.app/"/>
-    //     );
-    // }
-    // else if (auth._id) {
-    //     navigate("/account/assertsOverview");
-    // }
+    console.log({ auth });
     if (auth._id && !auth.isAdmin) {
       // navigate("/account");
       if (auth.kycVerified) {

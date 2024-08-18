@@ -22,11 +22,10 @@ export default function UserSideBar() {
   const [navbarState, setNavbarState] = useState(false);
   const html = document.querySelector("html");
   html.addEventListener("click", () => setNavbarState(false));
- 
+
   useEffect(() => {
     dispatch(loadUser(null));
-    }, []);
-
+  }, []);
 
   useEffect(() => {
     const sr = scrollreveal({
@@ -79,7 +78,6 @@ export default function UserSideBar() {
           </div>
           <div className="links">
             <ul>
-   
               <li
                 className={currentLink === 1 ? "active" : "none"}
                 onClick={() => setCurrentLink(1)}
@@ -127,16 +125,6 @@ export default function UserSideBar() {
                   {/* <Link to={"/login"}></Link> */}
                   <span> FAQs</span>
                 </a>
-              </li>
-              <li
-                className={currentLink === 6 ? "active" : "none"}
-                onClick={() => setCurrentLink(6)}
-              >
-                <Link to={"Settings"}>
-                  <IoSettings />
-                  {/* <Link to={"/login"}></Link> */}
-                  <span> Settings</span>
-                </Link>
               </li>
 
               <li
