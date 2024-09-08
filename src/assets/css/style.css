@@ -12679,7 +12679,7 @@ strong,
 }
 
 .modal-backdrop {
-  z-index: 99999;
+  z-index: 0;
 }
 
 .modal {

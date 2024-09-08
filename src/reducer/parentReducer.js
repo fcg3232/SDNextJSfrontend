@@ -31,8 +31,6 @@ import { sellersOrdrApi } from "../slices/sellersApi";
 import { sellersOrderReducer } from "../slices/sellersSlice";
 import { limitOrderOfferReducer } from "../slices/LimitOrderSlice";
 import { limitOrderApi } from "../slices/limitOrderApi";
-import formReducer from "../slices/KycContext"
-import verifyReducer from '../slices/verificationSlice'
 
 const parentReducer = combineReducers({
     resetPassword: resetPasswordReducer,
@@ -66,8 +64,6 @@ const parentReducer = combineReducers({
     [buyersOrdrApi.reducerPath]: buyersOrdrApi.reducer,
     [sellersOrdrApi.reducerPath]: sellersOrdrApi.reducer,
     [limitOrderApi.reducerPath]: limitOrderApi.reducer,
-    form: formReducer,
-    verify: verifyReducer,
     // [usersApi.reducerPath]: usersApi.reducer,
 })
 

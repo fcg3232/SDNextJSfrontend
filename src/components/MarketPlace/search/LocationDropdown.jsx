@@ -16,9 +16,10 @@ const LocationDropdown = () => {
   return (
     <StyledForm>
       <select
-        className="bg-transparent"
+        // className="bg-transparent"
+        className="tagcloud"
         style={{
-          borderRadius: "12px",
+          // borderRadius: "12px",
           color: "#371178",
           fontStyle: "normal",
           fontWeight: "500",
@@ -39,7 +40,7 @@ export default LocationDropdown;
 const StyledForm = styled.form`
   display: flex;
   flex-direction: column;
-  max-width: 300px;
+  max-width: 200px;
 
   select,
   input {
@@ -48,7 +49,7 @@ const StyledForm = styled.form`
     outline: none;
     border-radius: 5px;
     border: 1px solid rgb(182, 182, 182);
-    margin: 0.3rem 0.7rem;
+    margin: 0.3rem 0;
 
     &:focus {
       border: 2px solid rgb(0, 208, 255);

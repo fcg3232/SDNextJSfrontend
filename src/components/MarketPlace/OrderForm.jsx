@@ -195,14 +195,14 @@ const OrderForm = () => {
 
   const CalculateValue = (_tokensPrice, _quantity) => {
     if (tokenType == 0) {
-      let tokens = ((_tokensPrice * _quantity * 10 ** 14) / (USDTprice)).toFixed(0).toString();
-      let fee = ((tokens / (10 ** 10)) * buySell).toFixed(0).toString();
+      let tokens = ((_tokensPrice * (_quantity)*1e6) / (USDTprice)).toFixed(0).toString();
+      let fee = ((tokens/1e10) * buySell).toFixed(0).toString();
       // setCalToken(Number(tokens) + Number(fee))
       const num = Number(tokens) + Number(fee)
       return num;
     } else {
-      let tokens = ((_tokensPrice * _quantity * 10 ** 14) / (USDCprice)).toFixed(0).toString();
-      let fee = ((tokens / (10 ** 10)) * buySell).toFixed(0).toString();
+      let tokens = ((_tokensPrice * (_quantity)*1e6) / (USDCprice)).toFixed(0).toString();
+      let fee = ((tokens / (1e10)) * buySell).toFixed(0).toString();
       // setCalToken(Number(tokens) + Number(fee))
       const num = Number(tokens) + Number(fee)
       return num;
@@ -211,7 +211,6 @@ const OrderForm = () => {
   const checkNumbers = useMemo(() => {
     return CalculateValue(tokensPrice, quantity)
   }, [tokensPrice, quantity])
-
 
   // update account
   useEffect(() => {
@@ -484,12 +483,12 @@ const OrderForm = () => {
                   <span className="input-group-text">
                     <span className="text-warning">
                       {/* {Number(CalToken / 1e6).toFixed(3)}</span> {""}-USDT</span> */}
-                      {Number(checkNumbers / 1e14).toFixed(3)}</span> {""}-USDT</span>
+                      {Number(checkNumbers / 1e6).toFixed(3)}</span> {""}-USDT</span>
                 ) : (
                   <span className="input-group-text">
                     <span className="text-warning">
                       {/* {Number(CalToken / 1e6).toFixed(3)}</span> {""}-USDC</span> */}
-                      {Number(checkNumbers / 1e14).toFixed(3)}</span> {""}-USDC</span>
+                      {Number(checkNumbers / 1e6).toFixed(3)}</span> {""}-USDC</span>
                 )}
               </div>
             </div>

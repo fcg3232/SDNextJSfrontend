@@ -25,7 +25,7 @@ export default function UserSideBar() {
 
   useEffect(() => {
     dispatch(loadUser(null));
-  }, []);
+  }, [dispatch]);
 
   useEffect(() => {
     const sr = scrollreveal({
@@ -44,7 +44,6 @@ export default function UserSideBar() {
       .links>ul>li:nth-of-type(4),
       .links>ul>li:nth-of-type(5),
       .links>ul>li:nth-of-type(6),
-      .links>ul>li:nth-of-type(7),
       .logout
       `,
       {
@@ -126,15 +125,14 @@ export default function UserSideBar() {
                   <span> FAQs</span>
                 </a>
               </li>
-
               <li
-                className={currentLink === 7 ? "active" : "none"}
-                onClick={() => setCurrentLink(7)}
+                className={currentLink === 6 ? "active" : "none"}
+                onClick={() => setCurrentLink(6)}
               >
-                <a href="account/swap">
+                <a href="#">
                   <IoSettings />
                   {/* <Link to={"/login"}></Link> */}
-                  <span> SWAP Wallet</span>
+                  <span> Settings</span>
                 </a>
               </li>
             </ul>

@@ -6,11 +6,14 @@ import { toast } from "react-toastify";
 
 const initialState = {
   token: localStorage.getItem("token"),
-  name: "",
+  first_name: "",
+  last_name: "",
   phone: "",
   email: "",
+  dateofBirth: "",
+  residence_country: "",
+  nationality: "",
   _id: "",
-  Kycstatus: false,
   isAdmin: false,
   isAccept: false,
   registerStatus: "",
@@ -21,6 +24,8 @@ const initialState = {
   // otpError: "",
   userLoaded: false,
 };
+
+
 
 // export const otpGenerate = createAsyncThunk(
 //   "otp/otpGenerate",
@@ -39,14 +44,17 @@ const initialState = {
 
 export const registerUser = createAsyncThunk(
   "auth/registerUser",
-  async ({ values, candidateId }, { rejectWithValue }) => {
+  async (values, { rejectWithValue }) => {
     try {
       const token = await axios.post(`${url}/register`, {
-        name: values.name,
+        first_name: values.first_name,
+        last_name: values.last_name,
         phone: values.phone,
         email: values.email,
+        dateofBirth: values.dateofBirth,
+        residence_country: values.residence_country,
+        nationality: values.nationality,
         password: values.password,
-        candidateId: candidateId,
       });
 
       localStorage.setItem("token", token.data);
@@ -71,8 +79,8 @@ export const loginUser = createAsyncThunk(
         password: values.password,
       });
 
-      localStorage.setItem("token", token.data.token);
-      return token.data.token;
+      localStorage.setItem("token", token.data);
+      return token.data;
     } catch (error) {
       console.log(error.response);
       toast.error(error.response?.data, {
@@ -85,23 +93,13 @@ export const loginUser = createAsyncThunk(
 
 export const getUser = createAsyncThunk(
   "auth/getUser",
-  async (navigation, { rejectWithValue }) => {
+  async (id, { rejectWithValue }) => {
     try {
-      const token = localStorage.getItem("token");
-      const user = jwtDecode(token);
-      console.log({ user });
-      const userData = await axios.get(
-        `${url}/users/find/${user._id}`,
-        setHeaders()
-      );
-      if (
-        navigation &&
-        !userData.data.kycVerified &&
-        window.location.pathname !== "/settings"
-      ) {
-        window.location.replace(window.location.origin + "/settings");
-      }
-      return userData.data;
+      const token = await axios.get(`${url}/users/find/${id}`, setHeaders());
+
+      localStorage.setItem("token", token.data);
+
+      return token.data;
     } catch (error) {
       console.log(error.response);
       toast.error(error.response?.data, {
@@ -121,18 +119,19 @@ const authSlice = createSlice({
 
       if (token) {
         const user = jwtDecode(token);
-        console.log({ user });
         return {
           ...state,
           token,
-          name: user.name,
+          first_name: user.first_name,
+          last_name: user.last_name,
           phone: user.phone,
           email: user.email,
+          dateofBirth: user.dateofBirth,
+          residence_country: user.residence_country,
+          nationality: user.nationality,
           _id: user._id,
           isAdmin: user.isAdmin,
           isAccept: user.isAccept,
-          kycVerified: !!user.kycVerified,
-          kycVerificationId: user.kycVerificationId,
           userLoaded: true,
         };
       } else return { ...state, userLoaded: true };
@@ -143,9 +142,13 @@ const authSlice = createSlice({
       return {
         ...state,
         token: "",
-        name: "",
+        first_name: "",
+        last_name: "",
         phone: "",
         email: "",
+        dateofBirth: "",
+        residence_country: "",
+        nationality: "",
         _id: "",
         isAdmin: false,
         isAccept: false,
@@ -153,8 +156,6 @@ const authSlice = createSlice({
         registerError: "",
         loginStatus: "",
         loginError: "",
-        kycVerified: "",
-        kycVerificationId: "",
       };
     },
   },
@@ -168,14 +169,16 @@ const authSlice = createSlice({
         return {
           ...state,
           token: action.payload,
-          name: user.name,
+          first_name: user.first_name,
+          last_name: user.last_name,
           phone: user.phone,
           email: user.email,
+          dateofBirth: user.dateofBirth,
+          residence_country: user.residence_country,
+          nationality: user.nationality,
           _id: user._id,
           isAdmin: user.isAdmin,
           isAccept: user.isAccept,
-          kycVerified: !!user.kycVerified,
-          kycVerificationId: user.kycVerificationId,
           registerStatus: "success",
         };
       } else return state;
@@ -217,14 +220,16 @@ const authSlice = createSlice({
         return {
           ...state,
           token: action.payload,
-          name: user.name,
+          first_name: user.first_name,
+          last_name: user.last_name,
           phone: user.phone,
           email: user.email,
+          dateofBirth: user.dateofBirth,
+          residence_country: user.residence_country,
+          nationality: user.nationality,
           _id: user._id,
           isAdmin: user.isAdmin,
           isAccept: user.isAccept,
-          kycVerified: !!user.kycVerified,
-          kycVerificationId: user.kycVerificationId,
           loginStatus: "success",
         };
       } else return state;
@@ -244,11 +249,21 @@ const authSlice = createSlice({
     });
     builder.addCase(getUser.fulfilled, (state, action) => {
       if (action.payload) {
-        console.log({ userChecK: action.payload });
+        const user = jwtDecode(action.payload);
         return {
           ...state,
-          ...action.payload,
-          getUserStatus: "fulfilled",
+          token: action.payload,
+          first_name: user.first_name,
+          last_name: user.last_name,
+          phone: user.phone,
+          email: user.email,
+          dateofBirth: user.dateofBirth,
+          residence_country: user.residence_country,
+          nationality: user.nationality,
+          _id: user._id,
+          isAdmin: user.isAdmin,
+          isAccept: user.isAccept,
+          getUserStatus: "success",
         };
       } else return state;
     });

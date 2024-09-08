@@ -96,7 +96,7 @@ const Start = () => {
       })
       .catch((err) => console.log(err.message));
   };
-  console.log("Is Accept:", checkTerm);
+ 
   return (
     <div>
       {

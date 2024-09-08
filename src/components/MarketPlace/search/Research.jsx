@@ -5,8 +5,11 @@ import LocationDropdown from './LocationDropdown';
 // import { RiSearch2Line } from "react-icons/ri";
 import { Button, Dropdown, Nav, Tab } from 'react-bootstrap';
 import ReactSlider from 'react-slider'
-
+import { useAccount, useConnect, useDisconnect } from 'wagmi'
 const Research = () => {
+    const account = useAccount();
+    const { connectors, connect, status, error } = useConnect();
+    const { disconnect } = useDisconnect();
     const [headerFix, setheaderFix] = React.useState(false);
     useEffect(() => {
         window.addEventListener("scroll", () => {
@@ -46,7 +49,7 @@ const Research = () => {
                                     }}
                                 >Current Projected IRR</span>
                             </li>
-                            <li
+                            {/* <li
                                 style={{
                                     width: "130px"
                                 }}
@@ -65,22 +68,20 @@ const Research = () => {
                                         fontSize: "12px",
                                     }}
                                 >Current CoC Return</span>
-                            </li>
-                            <li>
-                                {/* <div className="card h-auto">
-											<div className="card-body  bg-primary px-0 pt-1"> */}
+                            </li> */}
+                            {/* <li>
                                 <Tab.Container defaultActiveKey="Navbuy">
                                     <div className="buy-sell">
-                                        {/* <Nav className="nav nav-tabs" eventKey="nav-tab2" role="tablist">
+                                        <Nav className="nav nav-tabs" eventKey="nav-tab2" role="tablist">
                                             <Nav.Link as="button" className="nav-link" eventKey="Navbuy" type="button">All</Nav.Link>
                                             <Nav.Link as="button" className="nav-link" eventKey="Navsell" type="button">New</Nav.Link>
-                                        </Nav> */}
-                                             <Nav className="nav nav-tabs" role="tablist">
-                                            <Nav.Link as="button" className="nav-link"  type="button">All</Nav.Link>
-                                            <Nav.Link as="button" className="nav-link"  type="button">New</Nav.Link>
+                                        </Nav>
+                                        <Nav className="nav nav-tabs" role="tablist">
+                                            <Nav.Link as="button" className="nav-link" type="button">All</Nav.Link>
+                                            <Nav.Link as="button" className="nav-link" type="button">New</Nav.Link>
                                         </Nav>
                                     </div>
-                                    {/* <Tab.Content  >
+                                    <Tab.Content  >
 															<Tab.Pane eventKey="Navbuy" >
 																<Tab.Container defaultActiveKey="Navbuymarket">
 																	<div className="limit-sell">
@@ -110,11 +111,23 @@ const Research = () => {
 																	</div>
 																</Tab.Container>
 															</Tab.Pane>
-														</Tab.Content> */}
+														</Tab.Content>
 
                                 </Tab.Container>
-                                {/* </div>
-										</div> */}
+                                </div>
+										</div>
+                            </li> */}
+                            <li>
+                                {(JSON.stringify(account.addresses))?.substring(0, 14) + " ...."}
+                            </li>
+                            <li>
+                                {account.status === 'connected' && (
+                                    <button type="button" onClick={() => disconnect()}
+                                        className="btn space-lg btn-gradient btn-shadow btn-primary"
+                                    >
+                                        Disconnect
+                                    </button>
+                                )}
                             </li>
                             {/* <li className='mb-3'>
                                 <div className="limit-sell"

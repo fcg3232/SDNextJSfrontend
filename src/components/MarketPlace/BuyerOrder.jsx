@@ -133,7 +133,7 @@ const BuyerOrder = () => {
         return CalculateValue(tokensPrice,quantity)
       },[tokensPrice,quantity])
     
-    
+
 
     // useEffect(() => {
     //     if (window.ethereum) {

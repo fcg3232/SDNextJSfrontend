@@ -7,8 +7,6 @@ import * as yup from "yup";
 import Footer from "../layouts/Footer";
 import Header from "../layouts/Header";
 import { loginUser } from "../slices/authSlice";
-import { verifyCandidate } from "../slices/verificationSlice";
-import { fetchCandidateId } from "../slices/KycContext";
 
 const LogInValidationSchema = yup.object({
   email: yup.string().email().required("Please Enter Your Email"),
@@ -24,30 +22,28 @@ const Login = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const auth = useSelector((state) => state.auth);
-  const { verificationResponse } = useSelector((state) => state.verify);
-  console.log(verificationResponse, "sasas");
 
-  const { values, errors, touched, handleSubmit, handleChange, handleBlur } =
-    useFormik({
-      initialValues: initialValues,
-      onSubmit: (values) => {
-        dispatch(loginUser(values));
-        // dispatch(verifyCandidate());
+  const { values, errors, touched, handleSubmit, handleChange, handleBlur } = useFormik({
+    initialValues: initialValues,
+    onSubmit: (values) => {
+      dispatch(loginUser(values));
       },
       validationSchema: LogInValidationSchema,
-    });
+  });
 
   useEffect(() => {
-    console.log({ auth });
-    if (auth._id && !auth.isAdmin) {
-      // navigate("/account");
-      if (auth.kycVerified) {
-        navigate("/account");
-      } else {
-        navigate("/settings");
-      }
+    // if (auth.isAdmin) {
+    //     navigate(
+    //         <href="https://tasty-earrings-bee.cyclic.app/"/>
+    //     );
+    // }
+    // else if (auth._id) {
+    //     navigate("/account/assertsOverview");
+    // }
+    if (auth._id) {
+      navigate("/account");
     }
-  }, [auth._id]);
+  }, [auth._id, navigate]);
 
   return (
     <>
@@ -55,7 +51,7 @@ const Login = () => {
       <div className="page-content bg-black">
         <section className="content-inner contact-form-wraper style-1">
           <div className="container">
-            <div className="row align-items-center">
+            <div className="row align-items-center mt-5">
               <div className="col-xl-5 col-lg-5 m-b30 mt-5">
                 <div className="info-box">
                   <div className="info">
@@ -84,8 +80,7 @@ const Login = () => {
                         <li>
                           <i className="fas fa-map-marker-alt"></i>
                           <span>
-                            6 State RD
-                            <br /> Suite 117 <br />
+                            6 State RD<br /> Suite 117 <br />
                             Mechanicsburg, PA 17050-7957
                           </span>
                         </li>
@@ -183,7 +178,7 @@ const Login = () => {
                             ) : null}
                             <Link to={"/enteremail"}>
                               <span>
-                                <p className="font-18">Forgot Password</p>
+                                <p className="font-18">Forget Password</p>
                               </span>
                             </Link>
                           </div>

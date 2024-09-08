@@ -19,14 +19,14 @@ export const usersFetch = createAsyncThunk("users/usersFetch", async () => {
   }
 });
 
-export const usersFetchbyID = createAsyncThunk("users/usersFetchbyID", async (id) => {
-  try {
-    const response = await axios.get(`${url}/users/find/${id}`, setHeaders());
-    return response.data;
-  } catch (error) {
-    console.log(error);
-  }
-});
+// export const usersFetchbyID = createAsyncThunk("users/usersFetchbyID", async (id) => {
+//   try {
+//     const response = await axios.get(`${url}/users/find/${id}`, setHeaders());
+//     return response.data;
+//   } catch (error) {
+//     console.log(error);
+//   }
+// });
 
 
 export const userDelete = createAsyncThunk("users/userDelete", async (id) => {
@@ -57,16 +57,16 @@ const usersSlice = createSlice({
     [usersFetch.rejected]: (state, action) => {
       state.status = "rejected";
     },
-    [usersFetchbyID.pending]: (state, action) => {
-      state.status = "pending";
-    },
-    [usersFetchbyID.fulfilled]: (state, action) => {
-      state.list = action.payload;
-      state.status = "success";
-    },
-    [usersFetchbyID.rejected]: (state, action) => {
-      state.status = "rejected";
-    },
+    // [usersFetchbyID.pending]: (state, action) => {
+    //   state.status = "pending";
+    // },
+    // [usersFetchbyID.fulfilled]: (state, action) => {
+    //   state.list = action.payload;
+    //   state.status = "success";
+    // },
+    // [usersFetchbyID.rejected]: (state, action) => {
+    //   state.status = "rejected";
+    // },
     [userDelete.pending]: (state, action) => {
       state.deleteStatus = "pending";
     },

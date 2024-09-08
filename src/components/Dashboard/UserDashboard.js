@@ -146,24 +146,6 @@ const UserDashboard = () => {
   const [modalShow, setModalShow] = useState(false);
   const auth = useSelector((state) => state.auth);
 
-  // console.log("find seller ID", loading )
-  // console.log("find buyer ID", onlybuy)
-
-  // console.log("find buyer Ord", findbuyerOrd)
-  // console.log("find Seller Ord", findsellerOrd)
-
-  // console.log("sent tokens", sentToken)
-  // console.log("setsent pT Tokens", sentPT)
-
-  // console.log(" buyer PT", BuyPT)
-  // console.log(" Seller PT", SellPT)
-  // console.log(" All Match Ord", AllMatchOrd)
-
-
-  // console.log("accounts[0]", accounts[0])
-  // console.log("check buyer order", buyerOrd)
-  // console.log("check Seller order", sellerOrd)
-
   const PriceData = [
     { icon: logs, Name: 'SEDT', Price: "51.00" },
     { icon: usdt, Name: 'USDT', Price: Number(USDTprice / 1e8).toFixed(2) },
@@ -234,12 +216,21 @@ const UserDashboard = () => {
   useEffect(() => {
     async function fetchData() {
       try {
-        const res = await axios.get(`${url}/sellerOrder/findID/${accounts[0]}`)
-        if (findsellerOrd.length == 0) {
-          setfindsellerOrd(res.data);
-        }
+        await axios.get(`${url}/sellerOrder/findID/${accounts[0]}`)
+          .then(res => {
+            if(res.data.length == 0){
+              let dat = [];
+              for (let i = 0; i <= sellerOrd.length - 1; i++) {
+                dat.push(sellerOrd[i]);
+                setsentPT(dat);
+              }
+            }
+            if (findsellerOrd.length == 0) {
+              setfindsellerOrd(res.data);
+            }
+          })
       } catch (err) {
-        // console.log(err);
+        console.log(err);
       }
     }
     fetchData();
@@ -248,10 +239,19 @@ const UserDashboard = () => {
   useEffect(() => {
     async function fetchData() {
       try {
-        const res = await axios.get(`${url}/buyerOrder/findID/${accounts[0]}`);
-        if (findbuyerOrd.length == 0) {
-          setfindbuyerOrd(res.data);
-        }
+        await axios.get(`${url}/buyerOrder/findID/${accounts[0]}`)
+        .then(res => {
+          if(res.data.length == 0){
+            let dat = [];
+            for (let i = 0; i <= buyerOrd.length - 1; i++) {
+              dat.push(buyerOrd[i]);
+              setsentToken(dat);
+            }
+          }
+          if (findbuyerOrd.length == 0) {
+            setfindbuyerOrd(res.data);
+          }
+        })
 
       } catch (err) {
         // console.log(err);
@@ -300,80 +300,80 @@ const UserDashboard = () => {
   // }, [SellPT]);
 
 
-  useEffect(() => {
-    async function fetchData() {
-      try {
-        if (sentPT.length == 0) {
-        let dat = [];
-        for (let i = 0; i <= sellerOrd.length - 1; i++) {
-          for (let j = 0; j <= findsellerOrd.length - 1; j++) {
-            if (sellerOrd[i].orderId != findsellerOrd[j]._id) {
-              if (findsellerOrd.length == 0) {
-                setLoading(true);
-                dat.push(sellerOrd[i]);
-                setsentPT(dat);
-              }
-            }
-          }
-          // if (findsellerOrd == null) {
-          //   dat.push(sellerOrd[i]);
-          //   setsentPT(dat);
-          // } else {
-          //   for (let j = 0; j <= findsellerOrd.length - 1; j++) {
-          //     if (sellerOrd[i].orderId != findsellerOrd[j]._id) {
-          //       if (findsellerOrd.length == 0) {
-          //         setLoading(true);
-          //         dat.push(sellerOrd[i]);
-          //         setsentPT(dat);
-          //       }
-          //     }
-          //   }
-          // }
-          }
-          // if (onlysell.length == 0) {
-          //   let onlydat = [];
-          //   // || sellerOrd[i].SellersAddress != findsellerOrd[j].SellersAddress
-          //   if (findsellerOrd.length == 0 ) {
-          //     onlydat.push(sellerOrd[i]);
-          //     setonlysell(dat);
-          //   }
-          // }
-        }
-        // }
-      } catch (err) {
-        // console.log(err);
-      }
-    }
-    fetchData();
-  });
+  // useEffect(() => {
+  //   async function fetchData() {
+  //     try {
+  //       if (sentPT.length == 0) {
+  //         let dat = [];
+  //         for (let i = 0; i <= sellerOrd.length - 1; i++) {
+  //           for (let j = 0; j <= findsellerOrd.length - 1; j++) {
+  //             if (sellerOrd[i].orderId != findsellerOrd[j]._id) {
+  //               if (findsellerOrd.length == 0) {
+  //                 setLoading(true);
+  //                 dat.push(sellerOrd[i]);
+  //                 setsentPT(dat);
+  //               }
+  //             }
+  //           }
+  //           // if (findsellerOrd == null) {
+  //           //   dat.push(sellerOrd[i]);
+  //           //   setsentPT(dat);
+  //           // } else {
+  //           //   for (let j = 0; j <= findsellerOrd.length - 1; j++) {
+  //           //     if (sellerOrd[i].orderId != findsellerOrd[j]._id) {
+  //           //       if (findsellerOrd.length == 0) {
+  //           //         setLoading(true);
+  //           //         dat.push(sellerOrd[i]);
+  //           //         setsentPT(dat);
+  //           //       }
+  //           //     }
+  //           //   }
+  //           // }
+  //         }
+  //         // if (onlysell.length == 0) {
+  //         //   let onlydat = [];
+  //         //   // || sellerOrd[i].SellersAddress != findsellerOrd[j].SellersAddress
+  //         //   if (findsellerOrd.length == 0 ) {
+  //         //     onlydat.push(sellerOrd[i]);
+  //         //     setonlysell(dat);
+  //         //   }
+  //         // }
+  //       }
+  //       // }
+  //     } catch (err) {
+  //       // console.log(err);
+  //     }
+  //   }
+  //   fetchData();
+  // });
 
-  useEffect(() => {
-    async function fetchData() {
-      try {
-        if (sentToken.length == 0) {
-          let dat = [];
-          for (let i = 0; i <= buyerOrd.length - 1; i++) {
-            for (let j = 0; j <= findbuyerOrd.length - 1; j++) {
-              if (buyerOrd[i].orderId != findbuyerOrd[j]._id) {
-                dat.push(buyerOrd[i]);
-                setsentToken(dat);
-              }
-              // if (onlybuy.length == 0) {
-              //   let onlydat = [];
-              //   if (buyerOrd[i].BuyersAddress != findbuyerOrd[j].BuyersAddress) {
-              //     onlydat.push(buyerOrd[i]);
-              //     setonlybuy(dat);
-              //   }
-              // }
-            }
-          }
-        }
-      } catch (err) {
-        // console.log(err);
-      }
-    }
-    fetchData();
-  });
+  // useEffect(() => {
+  //   async function fetchData() {
+  //     try {
+  //       if (sentToken.length == 0) {
+  //         let dat = [];
+  //         for (let i = 0; i <= buyerOrd.length - 1; i++) {
+  //           for (let j = 0; j <= findbuyerOrd.length - 1; j++) {
+  //             if (buyerOrd[i].orderId != findbuyerOrd[j]._id) {
+  //               dat.push(buyerOrd[i]);
+  //               setsentToken(dat);
+  //             }
+  //             // if (onlybuy.length == 0) {
+  //             //   let onlydat = [];
+  //             //   if (buyerOrd[i].BuyersAddress != findbuyerOrd[j].BuyersAddress) {
+  //             //     onlydat.push(buyerOrd[i]);
+  //             //     setonlybuy(dat);
+  //             //   }
+  //             // }
+  //           }
+  //         }
+  //       }
+  //     } catch (err) {
+  //       // console.log(err);
+  //     }
+  //   }
+  //   fetchData();
+  // });
 
   useEffect(() => {
     async function fetchData() {
@@ -558,7 +558,7 @@ const UserDashboard = () => {
                   </div>
                   <div className="previews-info-list" >
                     <div className="price data">
-                      <span>Total Properties Value</span>
+                      <span>Total Properties Vlaue</span>
                       <h4>2341 <sub>$</sub></h4>
                     </div>
                     <div className="price data">

@@ -333,13 +333,15 @@ const Sidebar = () => {
 
   const CalculateValues = (_clickPrice, _tokenQuant) => {
     if (tokenType == 0) {
-      let tokens = ((Number(_clickPrice) * Number(_tokenQuant)) / (USDTprice));
+      let tokens = ((_clickPrice * (_tokenQuant)*1e6) / (USDTprice)).toFixed(0).toString();
+      // let tokens = ((Number(_clickPrice) * Number(_tokenQuant)) / (USDTprice));
       // let fee = ((tokens / (10 ** 10)) * buySell).toFixed(0).toString();
       // setCalTokens(Number(tokens))
       const num = Number(tokens);
       return num;
     } else {
-      let tokens = ((Number(_clickPrice) * Number(_tokenQuant)) / (USDCprice));
+      let tokens = ((_clickPrice * (_tokenQuant)*1e6) / (USDCprice)).toFixed(0).toString();
+      // let tokens = ((Number(_clickPrice) * Number(_tokenQuant)) / (USDCprice));
       // let fee = ((tokens / (10 ** 10)) * buySell).toFixed(0).toString();
       // setCalTokens(Number(tokens));
       const num = Number(tokens);
@@ -348,19 +350,23 @@ const Sidebar = () => {
   }
   const CalculateValue = (_clickPrice, _tokenQuant) => {
     if (tokenTypeAcc == 0) {
-      let tokens = ((Number(_clickPrice) * Number(_tokenQuant)) / (USDTprice));
+      let tokens = ((_clickPrice * (_tokenQuant)*1e6) / (USDTprice)).toFixed(0).toString();
+      // let tokens = ((Number(_clickPrice) * Number(_tokenQuant)) / (USDTprice));
       // let fee = ((tokens / (10 ** 10)) * buySell).toFixed(0).toString();
       // setCalTokens(Number(tokens))
       const num = Number(tokens);
       return num;
     } else {
-      let tokens = ((Number(_clickPrice) * Number(_tokenQuant)) / (USDCprice));
+      let tokens = ((_clickPrice * (_tokenQuant)*1e6) / (USDCprice)).toFixed(0).toString();
+      // let tokens = ((Number(_clickPrice) * Number(_tokenQuant)) / (USDCprice));
       // let fee = ((tokens / (10 ** 10)) * buySell).toFixed(0).toString();
       // setCalTokens(Number(tokens));
       const num = Number(tokens);
       return num;
     }
   }
+ 
+
   const checkNumbers = useMemo(() => {
     return CalculateValue(clickPrice, tokenQuant)
   }, [clickPrice, tokenQuant])
@@ -368,6 +374,12 @@ const Sidebar = () => {
   const calculatedNum = useMemo(() => {
     return CalculateValues(clickPrice, tokenQuant)
   }, [clickPrice, tokenQuant])
+
+  console.log("clickPrice",clickPrice)
+  console.log("tokenQuant",tokenQuant)
+  console.log("USDTprice",USDTprice)
+  console.log("checkNumbers",checkNumbers)
+  console.log("calculatedNum",calculatedNum)
 
   useEffect(() => {
     window.localStorage.setItem("accounts[0]", accounts[0]);
@@ -805,6 +817,34 @@ const Sidebar = () => {
                 <Tab.Content>
                   <Tab.Pane eventKey="Openorder" >
                     <div className="list-table danger mt-4">
+                      {/* {sellerInfo.map((item, index) => (
+                        <div className="card list-table  overflow-hidden " key={index}>
+                          <div className="card-body  previews-info-list">
+                            <span>
+                              <p className="mb-2 fs-13"
+                                style={{ fontSize: "10px" }}
+                              ><i className="fa fa-caret-up scale5 me-2 text-success" aria-hidden="true"></i>
+                                Accepet Crypto <span className='text-success'> USDT</span>
+                              </p>
+                              <h4 className="heading mb-0">{Number(item[index].Price / 1e8).toFixed(2)}<span>(USD) </span></h4>
+                              <h4 className="fs-13"
+                                style={{ fontSize: "15px" }}
+                              >Tokens: {""} <span className='text-primary' style={{ fontSize: "25px" }}
+                              >{""} {Number(item[index].TokenQuantity / 1e18).toFixed(2)} </span><span style={{ fontSize: "9px" }}> For Sell</span></h4>
+                            </span>
+
+                            <span className="text-end">
+                              <p className="mb-1" style={{ fontSize: "10px" }}>
+                                Expire in:<br /> {convertTime(item[index].ExpiryTime - Math.round(+new Date() / 1000))}
+                              </p>
+                              <button className="btn btn-success text-end btn-sm"
+                                onClick={() => ModleDatas(item[index].sellerAddress, index, Number(item[index].Price / 1e8).toFixed(2), Number(item[index].TokenQuantity / 1e18).toFixed(2), item[index].sellerAddress)}
+                              >Buy
+                              </button>
+                            </span>
+                          </div>
+                        </div>
+                      ))} */}
                       {sellerOffer.length != 0 ? (
                         <>
                           {sellerOffer && sellerOffer.map((item, index) => (
@@ -990,7 +1030,7 @@ const Sidebar = () => {
                     onChange={(e) => settokenQuant(e.target.value)}
                     placeholder={"Enter Quantity"}
                   />
-                  <span className="input-group-text">{Number(checkNumbers).toFixed(3)}
+                  <span className="input-group-text">{Number(checkNumbers/1e6).toFixed(3)}
                     {tokenTypeAcc == 0 ?
                       (<a className="text-black"> -USDT</a>) : (
                         <a className="text-black"> -USDC</a>
@@ -1062,7 +1102,7 @@ const Sidebar = () => {
                     onChange={(e) => settokenQuant(e.target.value)}
                     placeholder={"Enter Quantity"}
                   />
-                  <span className="input-group-text">{Number(calculatedNum).toFixed(2)}
+                  <span className="input-group-text">{Number(calculatedNum/1e6).toFixed(2)}
                     {tokenType == 0 ?
                       (<a className="text-black"> -USDT</a>) : (
                         tokenType == 1 ?

@@ -8,8 +8,9 @@ import styled from "styled-components";
 // import Transfers from "./Transfers";
 import scrollreveal from "scrollreveal";
 import UserDashboard from "./UserDashboard";
-// import NotAllow from "./NotAllow";
+import NotAllow from "./NotAllow";
 import Start from "./Start";
+import Kyc from "./Kyc";
 export default function Dashboard() {
   useEffect(() => {
     const sr = scrollreveal({
@@ -34,8 +35,9 @@ export default function Dashboard() {
     <Section>
       {/* <Navbar /> */}
       <div className="grid">
-        <UserDashboard/>
+        {/* <UserDashboard/> */}
         {/* <NotAllow /> */}
+        <Kyc/>
 
         {/* <Start /> */}
 

@@ -6,6 +6,7 @@ import { url } from "../../slices/api";
 // import BerbixVerify from "berbix-react";
 // import BerbixVerify from '../berbix';
 import Start from "./Start";
+import Kyc from "./Kyc";
 
 const NotAllow = () => {
   const params = useParams();
@@ -72,7 +73,8 @@ const NotAllow = () => {
       }
         </>
       )} */}
-      <Start />
+      {/* <Start /> */}
+      <Kyc/>
       <div className="mb-5"></div>
     </div>
   );

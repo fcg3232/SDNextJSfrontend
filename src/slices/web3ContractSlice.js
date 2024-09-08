@@ -9,16 +9,17 @@ import WalletConnectProvider from '@walletconnect/web3-provider/dist/umd/index.m
 // import QRCodeModal from '@walletconnect/qrcode-modal/dist/umd/index.min.js';
 // import axios from "axios";
 // import { url, setHeaders } from "./api";
-import  CONTRACT_ABI  from '../contract/SecondaryDAO.json';
+import CONTRACT_ABI from '../contract/SecondaryDAO.json';
 import WhiteList_ABI from '../contract/WhiteList.json';
 import USDT_ABI from '../contract/USDT.json';
 import USDC_ABI from '../contract/USDC.json';
 
 const USDTADDRESS = "0x5417928Ef1Ab9e341E92872b3995ed03cb3f7e34";
 const USDCADDRESS = "0x67B77178515655715C0fD328B057aD318B76B6Bb";
-const CONTRACT_ADDRESS="0xe0755986fEc9012c76Cb8ad9C4905286bc1EDA3c";
-const WhiteList_ADDRESS="0x6f463fd67F7e6742bA8C636879De8001df52FA2b";
-
+const CONTRACT_ADDRESS = "0xe0755986fEc9012c76Cb8ad9C4905286bc1EDA3c";
+const WhiteList_ADDRESS = "0x6f463fd67F7e6742bA8C636879De8001df52FA2b";
+const Infura = 'https://arbitrum-sepolia.infura.io/v3/61679e33f48747afac34c6aabc66e5c4'
+// https://sepolia-rollup.arbitrum.io/rpc
 export const initialState = {
     status: null,
     web3: null,
@@ -26,7 +27,7 @@ export const initialState = {
     // socketContract: null,
     accounts: [],
     web3loadingerror: null,
-    propContracts:[],
+    propContracts: [],
     UsdtContract: null,
     UsdcContract: null,
     EscrowContract: null,
@@ -36,35 +37,37 @@ export const initialState = {
 export const loadBlockchain = createAsyncThunk("loadBlockchain", async (_, thunkAPI) => {
     try {
         if (Web3.givenProvider && Web3.givenProvider.chainId === Web3.utils.toHex(421614)) {
-            const Provider = Web3.givenProvider;
-            await Web3.givenProvider.enable();
-            const web3 = new Web3(Web3.givenProvider);
-            // console.log('web3', web3)
-            const contract = new web3.eth.Contract(CONTRACT_ABI, CONTRACT_ADDRESS)
-            const accounts = await web3.eth.getAccounts();
-            localStorage.setItem("accounts", accounts);
-            // console.log(`Wallet address ${accounts} stored on local storage.`);
-            const balance = await web3.eth.getBalance(accounts[0]);
-            const UsdtContract = new web3.eth.Contract(USDT_ABI, USDTADDRESS);
-            const UsdcContract = new web3.eth.Contract(USDC_ABI, USDCADDRESS);
-            const whiteListContract = new web3.eth.Contract(WhiteList_ABI, WhiteList_ADDRESS);
-            //web3 Socket
-            // const web3Socket = new Web3(new Web3.providers.WebsocketProvider(
-            //     `wss://goerli.infura.io/ws/v3/b0b0d100567e4e59bb2bab1a2c353381`
-            // ))
+        // const web3 = new Web3(new Web3.providers.HttpProvider(Infura));
+        // const Provider = Web3.givenProvider;
+        await Web3.givenProvider.enable();
+        const web3 = new Web3(Web3.givenProvider);
+        // console.log('web3', web3)
+        const contract = new web3.eth.Contract(CONTRACT_ABI, CONTRACT_ADDRESS)
+        const accounts = await web3.eth.getAccounts();
+        localStorage.setItem("accounts", accounts);
+        console.log('accounts', accounts)
+        // console.log(`Wallet address ${accounts} stored on local storage.`);
+        const balance = await web3.eth.getBalance(accounts[0]);
+        const UsdtContract = new web3.eth.Contract(USDT_ABI, USDTADDRESS);
+        const UsdcContract = new web3.eth.Contract(USDC_ABI, USDCADDRESS);
+        const whiteListContract = new web3.eth.Contract(WhiteList_ABI, WhiteList_ADDRESS);
+        //web3 Socket
+        // const web3Socket = new Web3(new Web3.providers.WebsocketProvider(
+        //     `wss://goerli.infura.io/ws/v3/b0b0d100567e4e59bb2bab1a2c353381`
+        // ))
 
-            // const socketContract = new web3Socket.eth.Contract(CONTRACT_ABI, CONTRACT_ADDRESS)
-            return {
-                web3,
-                balance,
-                accounts,
-                Provider,
-                contract,
-                UsdtContract,
-                UsdcContract,
-                whiteListContract,
-                // socketContract,
-            }
+        // const socketContract = new web3Socket.eth.Contract(CONTRACT_ABI, CONTRACT_ADDRESS)
+        return {
+            web3,
+            balance,
+            accounts,
+            // Provider,
+            contract,
+            UsdtContract,
+            UsdcContract,
+            whiteListContract,
+            // socketContract,
+        }
         }
         else {
             try {
@@ -73,25 +76,25 @@ export const loadBlockchain = createAsyncThunk("loadBlockchain", async (_, thunk
                     params: [{ chainId: Web3.utils.toHex(421614) }]
                 });
             } catch (error) {
-                if(error.code === 4902 ){
-                await window.ethereum.request({
-                    method: 'wallet_addEthereumChain',
-                    params: [
-                      {
-                        chainId: Web3.utils.toHex(421614),
-                        chainName: "Arbitrum Sepolia Testnet",
-                        // rpcUrls: ["https://arbitrum-sepolia.blockpi.network/v1/rpc/public"],
-                        rpcUrls: ["https://sepolia-rollup.arbitrum.io/rpc"],
-                        nativeCurrency: {
-                            name:"ETH",
-                            symbol:"ETH",
-                            decimals: 18,
-                        },
-                        blockExplorerUrls: ["https://sepolia.arbiscan.io/"],
-                        // blockExplorerUrls: ["https://sepolia-explorer.arbitrum.io"],
-                      },
-                    ],
-                  });
+                if (error.code === 4902) {
+                    await window.ethereum.request({
+                        method: 'wallet_addEthereumChain',
+                        params: [
+                            {
+                                chainId: Web3.utils.toHex(421614),
+                                chainName: "Arbitrum Sepolia Testnet",
+                                // rpcUrls: ["https://arbitrum-sepolia.blockpi.network/v1/rpc/public"],
+                                rpcUrls: ["https://sepolia-rollup.arbitrum.io/rpc"],
+                                nativeCurrency: {
+                                    name: "ETH",
+                                    symbol: "ETH",
+                                    decimals: 18,
+                                },
+                                blockExplorerUrls: ["https://sepolia.arbiscan.io/"],
+                                // blockExplorerUrls: ["https://sepolia-explorer.arbitrum.io"],
+                            },
+                        ],
+                    });
                 }
             }
             return {
@@ -156,14 +159,14 @@ export const loadBlockchain = createAsyncThunk("loadBlockchain", async (_, thunk
 
 
 
-export const loadWalletConnect = createAsyncThunk( "loadWalletConnect", async (_, thunkAPI) => {
+export const loadWalletConnect = createAsyncThunk("loadWalletConnect", async (_, thunkAPI) => {
     try {
         const provider = new WalletConnectProvider({
             rpc: {
-              5: "https://goerli.infura.io/v3/b0b0d100567e4e59bb2bab1a2c353381",
+                5: "https://goerli.infura.io/v3/b0b0d100567e4e59bb2bab1a2c353381",
             },
             chainId: 5,
-          });
+        });
 
 
         if (provider) {
@@ -222,7 +225,7 @@ export const loadWalletConnect = createAsyncThunk( "loadWalletConnect", async (_
 //             const web3 = new Web3(Web3.givenProvider);
 //             console.log('web3', web3)
 //             const propContracts = new web3.eth.Contract(CONTRACT_ABIS, data.uid);
-        
+
 //         return {
 //             propContracts,
 //         };
@@ -238,12 +241,12 @@ export const loadWalletConnect = createAsyncThunk( "loadWalletConnect", async (_
 //   );
 
 
-export const updatAccount = createAsyncThunk( "updatAccount", async (data, thunkAPI) => {
+export const updatAccount = createAsyncThunk("updatAccount", async (data, thunkAPI) => {
     try {
-         let accounts = data
-            return {
-                accounts,
-            }
+        let accounts = data
+        return {
+            accounts,
+        }
     } catch (error) {
         console.log('error', error)
 

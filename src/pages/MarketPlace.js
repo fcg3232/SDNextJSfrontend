@@ -10,9 +10,13 @@ import LandPage from '../components/MarketPlace/LandPage';
 import ListProperty from '../components/MarketPlace/ListProperty';
 import Footer from '../layouts/Footer';
 import Header from '../layouts/Header';
+import Filter from '../layouts/Filter';
 import CountdownTimer from '../components/MarketPlace/countdownTimer';
-
+import { useAccount, useConnect, useDisconnect } from 'wagmi'
 const MarketPlace = () => {
+    const account = useAccount();
+    const { connectors, connect, status, error } = useConnect();
+    const { disconnect } = useDisconnect();
     const [timeLeft, setTimeLeft] = useState(CountdownTimer());
     const { web3, contract, accounts, socketContract } = useAppSelector((state) => state.web3Connect);
     // const { items: data, status } = useAppSelector((state) => state.products);
@@ -27,12 +31,16 @@ const MarketPlace = () => {
     return (
         <div>
             <Header />
-            {web3 ?
+            {
+            account.status === 'connected'
+            // web3 
+            ?
                 (
                     <div >
                         <PageLayout desc={false} pageTitle="MarketPLace" />
-                        <Research />
-                        <div className='text-center row' style={{ 
+                        {/* <Research /> */}
+                        {/* <Filter /> */}
+                        {/* <div className='text-center row' style={{ 
                              marginLeft: "10px" , backgroundColor:"white"
                             }}>
                             <nav className="col cltext-center">
@@ -65,7 +73,7 @@ const MarketPlace = () => {
                                 <img src={logoo} width="30px" height="30px" className="App-logo" alt="logo" />
                                 <span>SecondaryDAO</span>
                             </div>
-                        </div>
+                        </div> */}
                         <ListProperty />
                     </div>
                 ) :

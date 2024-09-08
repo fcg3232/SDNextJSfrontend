@@ -26,10 +26,6 @@ const Verification = () => {
         fetchProduct();
     }, [params.id, clientID]);
 
-    console.log("items",datas)
-    console.log("clientID", clientID)
-    console.log("user ID",user._id)
-
     
     return (
         <Section>

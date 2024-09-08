@@ -13,10 +13,10 @@ const CountryDropdown = () => {
 
   return (
     <StyledForm>
-      <select
-        className="bg-transparent"
+      <select className="tagcloud"
+        // className="bg-transparent"
         style={{
-          borderRadius: "12px",
+          // borderRadius: "12px",
           color: "#371178",
           fontStyle: "normal",
           fontWeight: "500",
@@ -95,7 +95,7 @@ export default CountryDropdown;
 const StyledForm = styled.form`
   display: flex;
   flex-direction: column;
-  max-width: 300px;
+  max-width: 170px;
 
   select,
   input {
