@@ -36,45 +36,45 @@ const LandPage = () => {
   const { disconnect } = useDisconnect()
   const [contactModal, setContactModal] = useState(false);
   // const { connect, connectors, error, isLoading, pendingConnector } = useConnect()
-  const core = new Core({
-    projectId: '6467c18267b081ccdb07148fff803e6f'
-  })
+  // const core = new Core({
+  //   projectId: '6467c18267b081ccdb07148fff803e6f'
+  // })
 
-  const metadata = {
-    name: 'SecondaryDAO',
-    description: 'AppKit Example',
-    url: 'https://web3modal.com', // origin must match your domain & subdomain
-    icons: ['https://avatars.githubusercontent.com/u/37784886']
-  }
+  // const metadata = {
+  //   name: 'SecondaryDAO',
+  //   description: 'AppKit Example',
+  //   url: 'https://web3modal.com', // origin must match your domain & subdomain
+  //   icons: ['https://avatars.githubusercontent.com/u/37784886']
+  // }
 
-  const web3wallet = async () => {
-    await Web3Wallet.init({
-      core,
-      metadata
-    })
-  }
+  // const web3wallet = async () => {
+  //   await Web3Wallet.init({
+  //     core,
+  //     metadata
+  //   })
+  // }
 
 
-  const handleblockchain = () => {
-    dispatch(loadBlockchain());
-    setIsConnected(true);
-  };
+  // const handleblockchain = () => {
+  //   dispatch(loadBlockchain());
+  //   setIsConnected(true);
+  // };
 
-  const handleWalletConnect = () => {
-    dispatch(loadWalletConnect());
-    setIsConnected(true);
-  };
+  // const handleWalletConnect = () => {
+  //   dispatch(loadWalletConnect());
+  //   setIsConnected(true);
+  // };
 
   // Account Switching
-  useEffect(() => {
-    if (window.ethereum) {
-      window.ethereum.on("accountsChanged", async (data) => {
-        dispatch(updatAccount(data));
-        window.localStorage.setItem("data", data);
-        console.log("updated Account", data);
-      });
-    }
-  });
+  // useEffect(() => {
+  //   if (window.ethereum) {
+  //     window.ethereum.on("accountsChanged", async (data) => {
+  //       dispatch(updatAccount(data));
+  //       window.localStorage.setItem("data", data);
+  //       console.log("updated Account", data);
+  //     });
+  //   }
+  // });
 
   return (
     // <div>
@@ -250,8 +250,8 @@ const LandPage = () => {
               </Button>
             </div> */}
 
-              {connectors.map((connector) => (
-                <div className="tagcloud mt-4">
+              {connectors.map((connector,index) => (
+                <div className="tagcloud mt-4" key={index}>
                   <Button
                     type="button"
                     style={{

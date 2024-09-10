@@ -18,8 +18,6 @@ import propLLCReducer from "../slices/llcSlice";
 import { blogApi } from "../slices/blogApi";
 import { blogdbReducer } from "../slices/blogSlice";
 import { propAddressReducers } from "../slices/propertyAddressSlice";
-import berbixdataReducers from "../slices/berbixSlice";
-import { berbixApi } from "../slices/berbixApi";
 import { otpGenerateApi } from "../slices/otpGenerateApi";
 import {otpGenerateReducer} from "../slices/otpGenerate";
 import resetPasswordReducer from "../slices/resetPassword";
@@ -35,7 +33,6 @@ import { limitOrderApi } from "../slices/limitOrderApi";
 const parentReducer = combineReducers({
     resetPassword: resetPasswordReducer,
     sendemail: otpGenerateReducer,
-    berbixdata: berbixdataReducers,
     web3Connect: web3Reducer,
     PropAddress: propAddressReducers,
     AdminAddress: adminReducers,
@@ -58,7 +55,6 @@ const parentReducer = combineReducers({
     [propertiesdbApi.reducerPath]: propertiesdbApi.reducer,
     [propLLCApi.reducerPath]: propLLCApi.reducer,
     [blogApi.reducerPath]: blogApi.reducer,
-    [berbixApi.reducerPath]: berbixApi.reducer,
     [otpGenerateApi.reducerPath]: otpGenerateApi.reducer,
     [resetPasswordApi.reducerPath]: resetPasswordApi.reducer,
     [buyersOrdrApi.reducerPath]: buyersOrdrApi.reducer,
