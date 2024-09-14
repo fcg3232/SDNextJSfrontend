@@ -30,7 +30,7 @@ const MarketPlace = () => {
             {web3 ?
                 (
                     <div >
-                        <PageLayout desc={false} pageTitle="MarketPLace" />
+                        <PageLayout desc={false} pageTitle="MarketPlace" />
                         <Research />
                         <div className='text-center row' style={{ 
                              marginLeft: "10px" , backgroundColor:"white"
