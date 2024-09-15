@@ -39,9 +39,15 @@ const Kyc = () => {
   useEffect(() => {
     const fetchuser = async () => {
       try {
-        const res = await axios.get(`${url}/users/find/${user._id}`);
-        // const res = dispatch(usersFetchbyID(user._id))
-        setusers(res.data);
+        if (user._id) {
+          const res = await axios.get(`${url}/users/find/${user._id}`);
+          // const res = dispatch(usersFetchbyID(user._id))
+          setcheckTerm(res.data.isAccept);
+          if (checkTerm === false) {
+            setModalShow(true);
+          }
+          setusers(res.data);
+        }
       } catch (err) {
         console.log(err);
       }
@@ -92,6 +98,8 @@ const Kyc = () => {
   console.log("date of birth", users.dateofBirth?.substring(0, 10));
   const formId = "8b32344e08c0454c312878540ce69ba5892c";
   const verify = () => {
+    // console.log("Verify function called", users);
+
     setLoading(true);
     if (users != null) {
       axios
@@ -126,6 +134,8 @@ const Kyc = () => {
                 "https://kyc-api.amlbot.com/forms/8b32344e08c0454c312878540ce69ba5892c/urls",
                 {
                   applicant_id: response.data?.applicant_id,
+                  redirect_url: `https://www.app.secondarydao.com/account`,
+                  // redirect_url: `${url}/account`,
                   // type: "DOCUMENT",
                   // form_id: formId,
                 },
@@ -155,13 +165,14 @@ const Kyc = () => {
                       setcheck(resGet.data.status);
                     });
                 }
+                if (res.data.form_url) {
+                  setLoading(false);
+                  window.location.href = res.data.form_url;
+                }
+                // console.log("responseresponseresponse", res);
               });
           }
           setappID(response.data.applicant_id);
-          if (response.data.url) {
-            window.location.href = response.data.url;
-          }
-          setLoading(false);
           setdone(true);
         })
         .catch((err) => console.log(err.message));
@@ -199,286 +210,147 @@ const Kyc = () => {
       .catch((err) => console.log(err.message));
   };
 
-  useEffect(() => {
-    const fetchProduct = async () => {
-      try {
-        const response = await axios.get(
-          `${url}/users/find/${user._id}`,
-          setHeaders()
-        );
-        setcheckTerm(response.data.isAccept);
-        if (checkTerm === false) {
-          setModalShow(true);
-        }
-      } catch (error) {
-        console.log(error);
-      }
-    };
-    fetchProduct();
-  }, [checkTerm]);
+  // useEffect(() => {
+  //   const fetchProduct = async () => {
+  //     try {
+  //       const response = await axios.get(
+  //         `${url}/users/find/${user._id}`,
+  //         setHeaders()
+  //       );
+  //       setcheckTerm(response.data.isAccept);
+  //       if (checkTerm === false) {
+  //         setModalShow(true);
+  //       }
+  //     } catch (error) {
+  //       console.log(error);
+  //     }
+  //   };
+  //   fetchProduct();
+  // }, [checkTerm]);
+
+  // const kycVerify = () => {
+  //   setLoading(true);
+  //   const url =
+  //     "https://kyc-api.amlbot.com/websdk/forms/8b32344e08c0454c312878540ce69ba5892c?key=a32b70f9003f9040e0086380cebe4c672465";
+  //   window.location.href = url;
+  //   setLoading(false);
+  //   setdone(true);
+  // };
 
   const kycVerify = () => {
     setLoading(true);
-    const url =
-      "https://kyc-api.amlbot.com/websdk/forms/8b32344e08c0454c312878540ce69ba5892c?key=a32b70f9003f9040e0086380cebe4c672465";
-    window.location.href = url;
-    setLoading(false);
-    setdone(true);
+    axios
+      .post(
+        "https://kyc-api.amlbot.com/applicants",
+        {
+          type: "PERSON",
+          first_name: users.first_name,
+          middle_name: "",
+          last_name: users.last_name,
+          dob: users.dateofBirth?.substring(0, 10),
+          residence_country: "PK",
+          nationality: "PK",
+          email: users.email,
+        },
+        {
+          headers: headers,
+        }
+      )
+      .then((response) => {
+        if (response) {
+          // Redirect to the correct KYC verification URL with the dynamic formId and key
+          // window.location.href = response.data.url;
+          console.log("applicants response", response);
+        } else {
+          console.error("Failed to fetch KYC form URL");
+          toast.error("Unable to start KYC verification. Please try again.");
+        }
+        // setLoading(false);
+        // setdone(true); // Mark the process as done
+      })
+      .catch((err) => {
+        console.error("Error fetching KYC form URL:", err);
+        toast.error("Error starting KYC verification.");
+        setLoading(false);
+      });
+
+    // Make a request to get the dynamic formId and key for the current user
+
+    axios
+      .get("https://kyc-api.amlbot.com/forms", {
+        headers: headers,
+      })
+      .then((response) => {
+        console.log("response =>", response);
+        // setLoading(false);
+        // setdone(true); // Mark the process as done
+      })
+      .catch((err) => {
+        console.error("Error fetching KYC form URL:", err);
+        toast.error("Error starting KYC verification.");
+        setLoading(false);
+      });
+
+    axios
+      .post(
+        "https://kyc-api.amlbot.com/forms/e5f8bd4206448846342947e5506ee2fdb62b/urls",
+        {
+          applicant_id: "52c35d47012ec9423f1bb2151ed02daa99ab",
+          external_applicant_id: "external-id", // Include this field as per docs
+          redirect_url: "https://your-site.com/success-kyc", // Include this field as per docs
+        }, // This is the payload
+        {
+          headers: headers,
+        }
+      )
+      .then((response) => {
+        if (response.data.form_url) {
+          // Redirect to the correct KYC verification URL with the dynamic formId and key
+          window.location.href = response.data.form_url;
+        } else {
+          console.error("Failed to fetch KYC form URL");
+          toast.error("Unable to start KYC verification. Please try again.");
+        }
+        setLoading(false);
+        setdone(true); // Mark the process as done
+      })
+      .catch((err) => {
+        console.error("Error fetching KYC form URL:", err);
+        toast.error("Error starting KYC verification.");
+        setLoading(false);
+      });
   };
+
+  console.log("user => ", user);
 
   return (
     <div>
-      {
-        <div className="text ">
-          {done != true ? (
-            <>
-              <h1 className="display-2 ml-5 text-center fw-bold text-Black">
-                Start <br />
-                KYC <span className="text-gradient">Verification....</span>
-                <br />
-                {/* <Link className="btn btn-primary" onClick={() => kycVerify()}>
-                  {loading ? "Loading..." : "Start verification"}
-                </Link> */}
-                {/* <a href="https://kyc-api.amlbot.com/websdk/forms/FORM_ID?key=8b32344e08c0454c312878540ce69ba5892c" target="_blank">KYC verification</a> */}
-                <a
-                  className="btn btn-primary"
-                  href="https://kyc-api.amlbot.com/websdk/forms/8b32344e08c0454c312878540ce69ba5892c?key=a32b70f9003f9040e0086380cebe4c672465"
-                  target="_blank"
-                  rel="noreferrer"
-                >
-                  KYC verificaton
-                </a>
-              </h1>
-            </>
-          ) : (
-            <>
-              <section>
-                <form
-                // onSubmit={handleSubmit}
-                >
-                  <div className="row">
-                    <div className="col-xl-9 col-lg-8">
-                      <div className="card">
-                        <div className="card-header">
-                          <h4 className="card-title">
-                            Verfication{" "}
-                            <span className="text-gradient">ID</span>
-                          </h4>
-                        </div>
-                        <div className="card-body">
-                          <div className="row">
-                            <div className="col-lg-6 mb-2">
-                              <div className="form-group mb-3">
-                                <label className="text-label">
-                                  Government ID
-                                </label>
-                                <input
-                                  id="imgUpload"
-                                  accept="image/*"
-                                  type="file"
-                                  onChange={handleProductImageUpload}
-                                  required
-                                />
-                              </div>
-                            </div>
-                            <div className="col-lg-6 mb-2">
-                              <div className="form-group mb-3">
-                                <h5
-                                  className="text-label"
-                                  style={{ fontSize: "15px" }}
-                                >
-                                  First Name:
-                                  <span
-                                    style={{ fontSize: "15px", color: "black" }}
-                                  >
-                                    {" "}
-                                    {users.first_name}
-                                  </span>
-                                </h5>
-                                <h5
-                                  className="text-label"
-                                  style={{ fontSize: "15px" }}
-                                >
-                                  Last Name:
-                                  <span
-                                    style={{ fontSize: "15px", color: "black" }}
-                                  >
-                                    {" "}
-                                    {users.last_name}
-                                  </span>
-                                </h5>
-                              </div>
-                            </div>
-                            <div className="col-lg-6 mb-2">
-                              <div className="form-group mb-3">
-                                <h5
-                                  className="text-label"
-                                  style={{ fontSize: "15px" }}
-                                >
-                                  Email:
-                                  <span
-                                    className="card-title"
-                                    style={{ fontSize: "15px", color: "black" }}
-                                  >
-                                    {" "}
-                                    {users.email}
-                                  </span>
-                                </h5>
-                                <h5
-                                  className="text-label"
-                                  style={{ fontSize: "15px" }}
-                                >
-                                  Date of Birth:
-                                  <span
-                                    style={{ fontSize: "15px", color: "black" }}
-                                  >
-                                    {" "}
-                                    {users.dateofBirth?.substring(0, 10)}
-                                  </span>
-                                </h5>
-                                <h5
-                                  className="text-label"
-                                  style={{ fontSize: "15px" }}
-                                >
-                                  Residence Country:
-                                  <span
-                                    style={{ fontSize: "15px", color: "black" }}
-                                  >
-                                    {" "}
-                                    {users.residence_country}
-                                  </span>
-                                </h5>
-                                <h5
-                                  className="text-label"
-                                  style={{ fontSize: "15px" }}
-                                >
-                                  Nationality:
-                                  <span
-                                    style={{ fontSize: "15px", color: "black" }}
-                                  >
-                                    {" "}
-                                    {users.nationality}
-                                  </span>
-                                </h5>
-                                <h5
-                                  className="text-label"
-                                  style={{ fontSize: "15px" }}
-                                >
-                                  Phone Number:
-                                  <span
-                                    style={{ fontSize: "15px", color: "black" }}
-                                  >
-                                    {" "}
-                                    {users.phone}
-                                  </span>
-                                </h5>
-                              </div>
-                            </div>
-                            <div className="col-lg-6 mb-2">
-                              <div className="form-group mb-3">
-                                <h5
-                                  className="text-label"
-                                  style={{ fontSize: "15px" }}
-                                >
-                                  Verification ID:
-                                  <span
-                                    style={{ fontSize: "15px", color: "black" }}
-                                  >
-                                    {" "}
-                                    {users.verification_id}
-                                  </span>
-                                </h5>
-                                <h5
-                                  className="text-label"
-                                  style={{ fontSize: "15px" }}
-                                >
-                                  Application ID:
-                                  <span
-                                    style={{ fontSize: "15px", color: "black" }}
-                                  >
-                                    {" "}
-                                    {users.applicant_id}
-                                  </span>
-                                </h5>
-                                <Link href="https://kyc-forms.amlbot.com/c580560f0ff6184f1a28b0480f87f783f79e">
-                                  Verify
-                                </Link>
-                                <br />
-                                <Link
-                                  className="btn btn-primary"
-                                  onClick={() => verifyID()}
-                                >
-                                  {loading ? "Loading..." : "verfied"}
-                                </Link>
-                              </div>
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                    <div className="col-xl-3 col-lg-4">
-                      <div className="card">
-                        <div className="card-header">
-                          <a
-                            className="card-title"
-                            style={{ fontSize: "20px" }}
-                          >
-                            Government ID
-                          </a>
-                        </div>
-                        <ImagePreview>
-                          {productImg ? (
-                            <>
-                              <img src={productImg} alt="error!" />
-                            </>
-                          ) : (
-                            <h4
-                              style={{
-                                marginLeft: "30px",
-                                marginRight: "20px",
-                                fontSize: "20px",
-                              }}
-                            >
-                              Image upload preview will appear here!
-                            </h4>
-                          )}
-                        </ImagePreview>
-                      </div>
-                    </div>
-                  </div>
+      {/* { */}
+      <div className="text ">
+        {/* {done != true ? ( */}
+        <>
+          <h1 className="display-2 ml-5 text-center fw-bold text-Black">
+            Start <br />
+            KYC <span className="text-gradient">Verification....</span>
+            <br />
+            {/* <Link className="btn btn-primary" onClick={() => kycVerify()}> */}
+            <button className="btn btn-primary" onClick={() => verify()}>
+              {loading ? "Loading..." : " KYC verification"}
+            </button>
+            {/* <a href="https://kyc-api.amlbot.com/websdk/forms/FORM_ID?key=8b32344e08c0454c312878540ce69ba5892c" target="_blank">KYC verification</a> */}
+            {/* <a
+              className="btn btn-primary"
+              href="https://kyc-api.amlbot.com/websdk/forms/8b32344e08c0454c312878540ce69ba5892c?key=a32b70f9003f9040e0086380cebe4c672465"
+              target="_blank"
+              rel="noreferrer"
+            >
+              KYC verification
+            </a> */}
+          </h1>
+        </>
+        {/* ----- REMOVED A CONDITION FORM HERE FOR TESTING, CONTENT CAN BE SEEN BELOW */}
+      </div>
 
-                  {/* <div className="col-6 col-sm-4 mb-2">
-									<div className="form-group">
-										<input className="form-control" type="string" value={} />
-									</div> */}
-                  <div className="row">
-                    <div className="text-end toolbar toolbar-bottom p-2">
-                      {/* <button type="submit" className="btn btn-primary sw-btn-next" >
-                          {createStatus === "pending" ? "Submitting"
-                            :
-                            <>
-                              {createStatus === "success" ? "Submitted" : "Submit"}
-                            </>
-                          }
-
-                        </button> */}
-                    </div>
-                  </div>
-                </form>
-              </section>
-              Next <br />
-              Verfiy <span className="text-gradient">ID</span>
-              {/* <p className="heading mb-0">Verification ID: {Verification}</p>
-
-              <p className="heading mb-0">Status: {check}</p> */}
-              {/* <Button className="transition ease-in-out delay-150 -translate-y-px-hover duration-300 scale-110-hover"
-                  onClick={() => navigate("verification")}>
-                  Verfiy
-                </Button> */}
-            </>
-          )}
-        </div>
-      }
       <Models show={modalShow} onHide={() => setModalShow(false)} />
 
       <div className="mb-5"></div>
@@ -498,8 +370,10 @@ const Models = (props) => {
   useEffect(() => {
     const fetchProduct = async () => {
       try {
-        const response = await axios.get(`${url}/TermsofCondition`);
-        setcheckTerm(response.data);
+        if (!checkTerm) {
+          const response = await axios.get(`${url}/TermsofCondition`);
+          setcheckTerm(response.data);
+        }
       } catch (error) {
         console.log(error);
       }
@@ -644,3 +518,232 @@ const ImagePreview = styled.div`
     max-height: 100%;
   }
 `;
+
+// ---------------- THIS CONDITION WAS USED ABOVE, REMOVED FOR TESTING
+// ) : (
+//   <>
+//     <section>
+//       <form
+//       // onSubmit={handleSubmit}
+//       >
+//         <div className="row">
+//           <div className="col-xl-9 col-lg-8">
+//             <div className="card">
+//               <div className="card-header">
+//                 <h4 className="card-title">
+//                   Verfication{" "}
+//                   <span className="text-gradient">ID</span>
+//                 </h4>
+//               </div>
+//               <div className="card-body">
+//                 <div className="row">
+//                   <div className="col-lg-6 mb-2">
+//                     <div className="form-group mb-3">
+//                       <label className="text-label">
+//                         Government ID
+//                       </label>
+//                       <input
+//                         id="imgUpload"
+//                         accept="image/*"
+//                         type="file"
+//                         onChange={handleProductImageUpload}
+//                         required
+//                       />
+//                     </div>
+//                   </div>
+//                   <div className="col-lg-6 mb-2">
+//                     <div className="form-group mb-3">
+//                       <h5
+//                         className="text-label"
+//                         style={{ fontSize: "15px" }}
+//                       >
+//                         First Name:
+//                         <span
+//                           style={{ fontSize: "15px", color: "black" }}
+//                         >
+//                           {" "}
+//                           {users.first_name}
+//                         </span>
+//                       </h5>
+//                       <h5
+//                         className="text-label"
+//                         style={{ fontSize: "15px" }}
+//                       >
+//                         Last Name:
+//                         <span
+//                           style={{ fontSize: "15px", color: "black" }}
+//                         >
+//                           {" "}
+//                           {users.last_name}
+//                         </span>
+//                       </h5>
+//                     </div>
+//                   </div>
+//                   <div className="col-lg-6 mb-2">
+//                     <div className="form-group mb-3">
+//                       <h5
+//                         className="text-label"
+//                         style={{ fontSize: "15px" }}
+//                       >
+//                         Email:
+//                         <span
+//                           className="card-title"
+//                           style={{ fontSize: "15px", color: "black" }}
+//                         >
+//                           {" "}
+//                           {users.email}
+//                         </span>
+//                       </h5>
+//                       <h5
+//                         className="text-label"
+//                         style={{ fontSize: "15px" }}
+//                       >
+//                         Date of Birth:
+//                         <span
+//                           style={{ fontSize: "15px", color: "black" }}
+//                         >
+//                           {" "}
+//                           {users.dateofBirth?.substring(0, 10)}
+//                         </span>
+//                       </h5>
+//                       <h5
+//                         className="text-label"
+//                         style={{ fontSize: "15px" }}
+//                       >
+//                         Residence Country:
+//                         <span
+//                           style={{ fontSize: "15px", color: "black" }}
+//                         >
+//                           {" "}
+//                           {users.residence_country}
+//                         </span>
+//                       </h5>
+//                       <h5
+//                         className="text-label"
+//                         style={{ fontSize: "15px" }}
+//                       >
+//                         Nationality:
+//                         <span
+//                           style={{ fontSize: "15px", color: "black" }}
+//                         >
+//                           {" "}
+//                           {users.nationality}
+//                         </span>
+//                       </h5>
+//                       <h5
+//                         className="text-label"
+//                         style={{ fontSize: "15px" }}
+//                       >
+//                         Phone Number:
+//                         <span
+//                           style={{ fontSize: "15px", color: "black" }}
+//                         >
+//                           {" "}
+//                           {users.phone}
+//                         </span>
+//                       </h5>
+//                     </div>
+//                   </div>
+//                   <div className="col-lg-6 mb-2">
+//                     <div className="form-group mb-3">
+//                       <h5
+//                         className="text-label"
+//                         style={{ fontSize: "15px" }}
+//                       >
+//                         Verification ID:
+//                         <span
+//                           style={{ fontSize: "15px", color: "black" }}
+//                         >
+//                           {" "}
+//                           {users.verification_id}
+//                         </span>
+//                       </h5>
+//                       <h5
+//                         className="text-label"
+//                         style={{ fontSize: "15px" }}
+//                       >
+//                         Application ID:
+//                         <span
+//                           style={{ fontSize: "15px", color: "black" }}
+//                         >
+//                           {" "}
+//                           {users.applicant_id}
+//                         </span>
+//                       </h5>
+//                       <Link href="https://kyc-forms.amlbot.com/c580560f0ff6184f1a28b0480f87f783f79e">
+//                         Verify
+//                       </Link>
+//                       <br />
+//                       <Link
+//                         className="btn btn-primary"
+//                         onClick={() => verifyID()}
+//                       >
+//                         {loading ? "Loading..." : "verfied"}
+//                       </Link>
+//                     </div>
+//                   </div>
+//                 </div>
+//               </div>
+//             </div>
+//           </div>
+//           <div className="col-xl-3 col-lg-4">
+//             <div className="card">
+//               <div className="card-header">
+//                 <a
+//                   className="card-title"
+//                   style={{ fontSize: "20px" }}
+//                 >
+//                   Government ID
+//                 </a>
+//               </div>
+//               <ImagePreview>
+//                 {productImg ? (
+//                   <>
+//                     <img src={productImg} alt="error!" />
+//                   </>
+//                 ) : (
+//                   <h4
+//                     style={{
+//                       marginLeft: "30px",
+//                       marginRight: "20px",
+//                       fontSize: "20px",
+//                     }}
+//                   >
+//                     Image upload preview will appear here!
+//                   </h4>
+//                 )}
+//               </ImagePreview>
+//             </div>
+//           </div>
+//         </div>
+
+//         {/* <div className="col-6 col-sm-4 mb-2">
+//         <div className="form-group">
+//           <input className="form-control" type="string" value={} />
+//         </div> */}
+//         <div className="row">
+//           <div className="text-end toolbar toolbar-bottom p-2">
+//             {/* <button type="submit" className="btn btn-primary sw-btn-next" >
+//                 {createStatus === "pending" ? "Submitting"
+//                   :
+//                   <>
+//                     {createStatus === "success" ? "Submitted" : "Submit"}
+//                   </>
+//                 }
+
+//               </button> */}
+//           </div>
+//         </div>
+//       </form>
+//     </section>
+//     Next <br />
+//     Verfiy <span className="text-gradient">ID</span>
+//     {/* <p className="heading mb-0">Verification ID: {Verification}</p>
+
+//     <p className="heading mb-0">Status: {check}</p> */}
+//     {/* <Button className="transition ease-in-out delay-150 -translate-y-px-hover duration-300 scale-110-hover"
+//         onClick={() => navigate("verification")}>
+//         Verfiy
+//       </Button> */}
+//   </>
+// )}

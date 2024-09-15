@@ -23,23 +23,23 @@ const Start = () => {
   const user = useSelector((state) => state.auth);
   const [checkTerm, setcheckTerm] = useState(false);
 
-  useEffect(() => {
-    const fetchProduct = async () => {
-      try {
-        const response = await axios.get(
-          `${url}/users/find/${user._id}`,
-          setHeaders()
-        );
-        setcheckTerm(response.data.isAccept);
-        if (checkTerm === false) {
-          setModalShow(true);
-        }
-      } catch (error) {
-        console.log(error);
-      }
-    };
-    fetchProduct();
-  }, [checkTerm]);
+  // useEffect(() => {
+  //   const fetchProduct = async () => {
+  //     try {
+  //       const response = await axios.get(
+  //         `${url}/users/find/${user._id}`,
+  //         setHeaders()
+  //       );
+  //       setcheckTerm(response.data.isAccept);
+  //       if (checkTerm === false) {
+  //         setModalShow(true);
+  //       }
+  //     } catch (error) {
+  //       console.log(error);
+  //     }
+  //   };
+  //   fetchProduct();
+  // }, [checkTerm]);
 
   // setModalShow(false)
   useEffect(() => {
@@ -96,7 +96,7 @@ const Start = () => {
       })
       .catch((err) => console.log(err.message));
   };
- 
+
   return (
     <div>
       {

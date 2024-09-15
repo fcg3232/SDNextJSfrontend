@@ -25,8 +25,6 @@ const initialState = {
   userLoaded: false,
 };
 
-
-
 // export const otpGenerate = createAsyncThunk(
 //   "otp/otpGenerate",
 //   async (values, { rejectWithValue }) => {
@@ -46,6 +44,7 @@ export const registerUser = createAsyncThunk(
   "auth/registerUser",
   async (values, { rejectWithValue }) => {
     try {
+      // console.log("values =>",values)
       const token = await axios.post(`${url}/register`, {
         first_name: values.first_name,
         last_name: values.last_name,
