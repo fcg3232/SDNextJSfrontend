@@ -95,11 +95,11 @@ const Kyc = () => {
     }
   };
 
-  console.log("date of birth", users.dateofBirth?.substring(0, 10));
+  // console.log("date of birth", users.dateofBirth?.substring(0, 10));
   const formId = "8b32344e08c0454c312878540ce69ba5892c";
   const verify = () => {
     // console.log("Verify function called", users);
-
+    // toast.error("Error starting KYC verification.");
     setLoading(true);
     if (users != null) {
       axios
@@ -175,7 +175,25 @@ const Kyc = () => {
           setappID(response.data.applicant_id);
           setdone(true);
         })
-        .catch((err) => console.log(err.message));
+        .catch((error) => {
+          setLoading(false);
+
+          if (
+            error.response &&
+            error.response.data &&
+            error.response.data.errors
+          ) {
+            // Loop through each error message and display it using toast.error
+            error.response.data.errors.forEach((err) => {
+              toast.error(`${err.parameter}: ${err.message}`);
+            });
+          } else {
+            // Fallback if there are no detailed error messages
+            toast.error("Error starting KYC verification.");
+          }
+
+          console.error("Error during KYC verification", error);
+        });
     }
   };
   const verifyID = () => {
@@ -321,7 +339,7 @@ const Kyc = () => {
       });
   };
 
-  console.log("user => ", user);
+  // console.log("user => ", user);
 
   return (
     <div>
