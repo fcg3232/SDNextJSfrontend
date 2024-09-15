@@ -44,7 +44,7 @@ const Kyc = () => {
           // const res = dispatch(usersFetchbyID(user._id))
           setcheckTerm(res.data.isAccept);
           if (checkTerm === false) {
-            setModalShow(true);
+            // setModalShow(true);
           }
           setusers(res.data);
         }
