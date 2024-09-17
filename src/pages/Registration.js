@@ -2,11 +2,13 @@ import React, { useEffect, useState } from "react";
 import { useFormik } from "formik";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
-import { getData } from "country-list";
+// import { getData } from "country-list";
 import Footer from "../layouts/Footer";
 import Header from "../layouts/Header";
 import { registerUser } from "../slices/authSlice";
 import * as yup from "yup";
+import axios from "axios";
+import Select from "react-select";
 
 const SignUpValidationSchema = yup.object({
   first_name: yup.string().required("Please Enter Your First Name"),
@@ -41,6 +43,7 @@ const Registration = () => {
   const [nationality, setNationality] = useState("");
   const [nationalityTouched, setNationalityTouched] = useState(false);
   const [residenceTouched, setResidenceTouched] = useState(false);
+  const [countries, setCountries] = useState([]);
 
   const { values, errors, touched, handleSubmit, handleChange, handleBlur } =
     useFormik({
@@ -69,12 +72,62 @@ const Registration = () => {
     }
   }, [auth._id, navigate]);
 
+  useEffect(() => {
+    const fetchCountries = async () => {
+      try {
+        const res = await axios.get(`https://kyc-api.amlbot.com/countries`, {
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: "Token e31169640d9147493929ab77c9128470b16d",
+          },
+        });
+        setCountries(res.data);
+      } catch (err) {
+        console.log(err);
+      }
+    };
+    if (countries.length === 0) {
+      fetchCountries();
+    }
+  }, []);
+
+  const countryOptions = countries?.map((country) => ({
+    value: country.country_code,
+    label: country.labels[0].label,
+  }));
+
+  const customStyles = {
+    control: (provided, state) => ({
+      ...provided,
+      height: 54,
+      minHeight: 54,
+      borderRadius: 8,
+      zIndex: 5,
+    }),
+    valueContainer: (provided) => ({
+      ...provided,
+      height: "100%",
+      padding: "0 16px",
+      zIndex: 5,
+    }),
+    input: (provided) => ({
+      ...provided,
+      margin: 0,
+      zIndex: 5,
+    }),
+    indicatorsContainer: (provided) => ({
+      ...provided,
+      height: "100%",
+      zIndex: 5,
+    }),
+  };
+
   return (
     <>
       <Header />
       <div className="page-content bg-black">
         <section className="content-inner contact-form-wraper style-1">
-          <div className="container">
+          <div className="container" style={{ minHeight: "93vh" }}>
             <div className="row align-items-center">
               {/* Contact Information Section */}
               <div className="col-xl-5 col-lg-5 m-b30 mt-5">
@@ -260,19 +313,22 @@ const Registration = () => {
 
                           {/* Residence Country */}
                           <div className="col-xl-6 mb-3 mb-md-4">
-                            <select
-                              onChange={(e) => setLocation(e.target.value)}
-                              value={location}
+                            <Select
+                              styles={customStyles}
+                              className="basic-single"
+                              classNamePrefix="select"
+                              defaultValue={countryOptions[0]}
+                              isSearchable={true}
+                              name="color"
+                              options={countryOptions}
+                              onChange={(selectedOption) => {
+                                setLocation(
+                                  selectedOption ? selectedOption.value : ""
+                                );
+                              }}
                               onBlur={() => setResidenceTouched(true)}
-                              className="form-control"
-                            >
-                              <option value="">Residence Country</option>
-                              {getData().map((country) => (
-                                <option key={country.code} value={country.code}>
-                                  {country.name}
-                                </option>
-                              ))}
-                            </select>
+                              placeholder="Residence Country"
+                            />
                             {residenceTouched && location === "" ? (
                               <p className="text-red mt-2 text-p">
                                 Please Enter Residency Country Name
@@ -284,19 +340,38 @@ const Registration = () => {
                         <div className="row">
                           {/* Nationality */}
                           <div className="col-xl-6 mb-3 mb-md-4">
-                            <select
+                            <Select
+                              styles={customStyles}
+                              className="basic-single"
+                              classNamePrefix="select"
+                              defaultValue={countryOptions[0]}
+                              isSearchable={true}
+                              name="color"
+                              options={countryOptions}
+                              onChange={(selectedOption) => {
+                                setNationality(
+                                  selectedOption ? selectedOption.value : ""
+                                );
+                              }}
+                              onBlur={() => setNationalityTouched(true)}
+                              placeholder="Nationality"
+                            />
+                            {/* <select
                               onChange={(e) => setNationality(e.target.value)}
                               value={nationality}
                               onBlur={() => setNationalityTouched(true)}
                               className="form-control"
                             >
                               <option value="">Nationality</option>
-                              {getData().map((country) => (
-                                <option key={country.code} value={country.code}>
-                                  {country.name}
+                              {countries.map((country) => (
+                                <option
+                                  key={country.country_code}
+                                  value={country.country_code}
+                                >
+                                  {country.labels[0].label}
                                 </option>
                               ))}
-                            </select>
+                            </select> */}
                             {nationalityTouched && nationality === "" ? (
                               <p className="text-red mt-2 text-p">
                                 Please Enter Nationality
@@ -325,12 +400,13 @@ const Registration = () => {
 
                         {/* Submit Button */}
                         <div className="row">
-                          <div className="col-xl-12 mb-3 mb-md-4">
+                          <div className="col-xl-12 mb-3 mb-md-4 mt-3">
                             <button
                               name="submit"
                               type="submit"
                               value="Submit"
                               className="btn btn-primary"
+                              style={{ position: "unset" }}
                             >
                               {auth.rigisterStatus === "pending"
                                 ? "Submitting..."
