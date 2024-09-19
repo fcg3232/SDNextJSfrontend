@@ -173,7 +173,7 @@ const Kyc = () => {
           "https://kyc-api.amlbot.com/forms/8b32344e08c0454c312878540ce69ba5892c/urls",
           {
             // applicant_id: response.data?.applicant_id,
-            redirect_url: `http://localhost:3000/account`,
+            redirect_url: `https://www.app.secondarydao.com/account/account`,
             external_applicant_id: user._id,
             // callback_url:
             //   "https://api.secondarydao.com/api/kyc/kyc-callback",
