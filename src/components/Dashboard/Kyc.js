@@ -28,7 +28,9 @@ const Kyc = () => {
   const user = useSelector((state) => state.auth);
   const [checkTerm, setcheckTerm] = useState(false);
   const [users, setusers] = useState([]);
-  const [usersData, setusersData] = useState([]);
+  const [userKycData, setUserKycData] = useState(null);
+  const [isKYCDataLoading, setIsKYCDataLoading] = useState(false);
+  const [applicantDataLoading, setApplicantDataLoading] = useState(false);
   const [productImg, setProductImg] = useState("");
 
   const headers = {
@@ -40,41 +42,81 @@ const Kyc = () => {
     const fetchuser = async () => {
       try {
         if (user._id) {
-          const res = await axios.get(`${url}/users/find/${user._id}`);
-          // const res = dispatch(usersFetchbyID(user._id))
-          setcheckTerm(res.data.isAccept);
-          if (checkTerm === false) {
-            // setModalShow(true);
+          setIsKYCDataLoading(true);
+          setApplicantDataLoading(true);
+
+          // First API call to get user data
+          // const res = await axios.get(`${url}/users/find/${user._id}`);
+          // setcheckTerm(res.data.isAccept);
+          // setusers(res.data);
+
+          // If user data contains applicant_id, make the KYC API call
+          try {
+            const kycRes = await axios.get(`${url}/kyc/find/${user._id}`, {
+              headers: headers,
+            });
+            setUserKycData(kycRes.data.kyc_data);
+            setApplicantDataLoading(false);
+            setIsKYCDataLoading(false);
+          } catch (err) {
+            setIsKYCDataLoading(false);
+
+            setApplicantDataLoading(false);
+            console.log("Error fetching KYC data:", err);
           }
-          setusers(res.data);
+          setIsKYCDataLoading(false);
         }
       } catch (err) {
-        console.log(err);
+        setIsKYCDataLoading(false);
+        console.log("Error fetching user data:", err);
       }
     };
+
     fetchuser();
   }, [user._id]);
 
-  useEffect(() => {
-    if (users.length != 0) {
-      const fetchuser = async () => {
-        try {
-          const res = await axios.get(
-            `https://kyc-api.amlbot.com/applicants/${users.applicant_id}`,
-            {
-              headers: headers,
-            }
-          );
-          // const res = dispatch(usersFetchbyID(user._id))
-          setusersData(res);
-        } catch (err) {
-          console.log(err);
-        }
-      };
+  // useEffect(() => {
+  //   if (users.length != 0) {
+  //     const fetchuser = async () => {
+  //       setApplicantDataLoading(true);
+  //       try {
+  //         const res = await axios.get(`${url}/kyc/find/${users.applicant_id}`, {
+  //           headers: headers,
+  //         });
+  //         // const res = dispatch(usersFetchbyID(user._id))
+  //         setUserKycData(res.data);
+  //         setApplicantDataLoading(false);
+  //       } catch (err) {
+  //         setApplicantDataLoading(false);
+  //         console.log(err);
+  //       }
+  //     };
 
-      fetchuser();
-    }
-  }, [users.applicant_id]);
+  //     fetchuser();
+  //   }
+  // }, [users.applicant_id]);
+
+  // useEffect(() => {
+  //   if (users.length != 0) {
+  //     const fetchCurrentKyc = async () => {
+  //       setApplicantDataLoading(true);
+  //       try {
+  //         const res = await axios.get(`${url}/kyc/find/${users.applicant_id}`, {
+  //           headers: headers,
+  //         });
+  //         // const res = dispatch(usersFetchbyID(user._id))
+  //         // setusersData(res.data);
+  //         console.log("applicant KYC record", res);
+  //         setApplicantDataLoading(false);
+  //       } catch (err) {
+  //         setApplicantDataLoading(false);
+  //         console.log(err);
+  //       }
+  //     };
+
+  //     fetchCurrentKyc();
+  //   }
+  // }, [users.applicant_id]);
 
   const handleProductImageUpload = (e) => {
     const file = e.target.files[0];
@@ -94,87 +136,108 @@ const Kyc = () => {
       setProductImg("");
     }
   };
-
-  // console.log("date of birth", users.dateofBirth?.substring(0, 10));
+  // console.log("user._id", user._id);
   const formId = "8b32344e08c0454c312878540ce69ba5892c";
   const verify = () => {
-    // console.log("Verify function called", users);
-    // toast.error("Error starting KYC verification.");
     setLoading(true);
     if (users != null) {
+      // axios
+      //   .post(
+      //     "https://kyc-api.amlbot.com/applicants",
+      //     {
+      //       type: "PERSON",
+      //       first_name: users.first_name,
+      //       middle_name: "",
+      //       last_name: users.last_name,
+      //       dob: users.dateofBirth?.substring(0, 10),
+      //       residence_country: users.residence_country,
+      //       nationality: users.nationality,
+      //       email: users.email,
+      //     },
+      //     {
+      //       headers: headers,
+      //     }
+      //   )
+      //   .then((response) => {
+      //     axios.patch(
+      //       `${url}/users/${user._id}`,
+      //       {
+      //         applicant_id: response.data?.applicant_id,
+      //       },
+      //       setHeaders()
+      //     );
+      // if (response.data.applicant_id) {
       axios
         .post(
-          "https://kyc-api.amlbot.com/applicants",
+          // "https://kyc-api.amlbot.com/verifications"
+          "https://kyc-api.amlbot.com/forms/8b32344e08c0454c312878540ce69ba5892c/urls",
           {
-            type: "PERSON",
-            first_name: users.first_name,
-            middle_name: "",
-            last_name: users.last_name,
-            dob: users.dateofBirth?.substring(0, 10),
-            residence_country: users.residence_country,
-            nationality: users.nationality,
-            email: users.email,
+            // applicant_id: response.data?.applicant_id,
+            redirect_url: `http://localhost:3000/account`,
+            external_applicant_id: user._id,
+            // callback_url:
+            //   "https://api.secondarydao.com/api/kyc/kyc-callback",
+            // redirect_url: `${url}/account`,
+            // type: "DOCUMENT",
+            // form_id: formId,
           },
           {
             headers: headers,
           }
         )
-        .then((response) => {
-          axios.patch(
-            `${url}/users/${user._id}`,
-            {
-              applicant_id: response.data?.applicant_id,
-            },
-            setHeaders()
+        .then((res) => {
+          console.log(
+            "kyc-api.amlbot.com/forms/8b32344e08c0454c312878540ce69ba5892c/urls POST RESPONSE",
+            res.data
           );
-          if (response.data.applicant_id) {
-            axios
-              .post(
-                // "https://kyc-api.amlbot.com/verifications"
-                "https://kyc-api.amlbot.com/forms/8b32344e08c0454c312878540ce69ba5892c/urls",
-                {
-                  applicant_id: response.data?.applicant_id,
-                  redirect_url: `https://www.app.secondarydao.com/account`,
-                  // redirect_url: `${url}/account`,
-                  // type: "DOCUMENT",
-                  // form_id: formId,
-                },
-                {
-                  headers: headers,
-                }
-              )
-              .then((res) => {
-                axios.patch(
-                  `${url}/users/${user._id}`,
-                  {
-                    verification_id: res.data?.verification_id,
-                  },
-                  setHeaders()
-                );
-                // setVerification(res.data.verification_id);
-                if (res.data.verification_id) {
-                  axios
-                    .get(
-                      `https://kyc-api.amlbot.com/verifications/${res.data.verification_id}`,
-                      // "https://kyc-api.amlbot.com/verifications/res.data.verification_id"
-                      {
-                        headers: headers,
-                      }
-                    )
-                    .then((resGet) => {
-                      setcheck(resGet.data.status);
-                    });
-                }
-                if (res.data.form_url) {
-                  setLoading(false);
-                  window.location.href = res.data.form_url;
-                }
-                // console.log("responseresponseresponse", res);
-              });
+          // axios.patch(
+          //   `${url}/users/${user._id}`,
+          //   {
+          //     verification_id: res.data?.verification_id,
+          //   },
+          //   setHeaders()
+          // );
+          // setVerification(res.data.verification_id);
+          if (res.data) {
+            // axios
+            //   .get(
+            //     `https://kyc-api.amlbot.com/verifications/${res.data.verification_id}`,
+            //     // "https://kyc-api.amlbot.com/verifications/res.data.verification_id"
+            //     {
+            //       headers: headers,
+            //     }
+            //   )
+            //   .then((resGet) => {
+            //     setcheck(resGet.data.status);
+            //   });
+            // axios
+            //   .post(
+            //     "https://kyc-api.amlbot.com/verifications",
+            //     {
+            //       applicant_id: users.applicant_id,
+            //       form_id: formId,
+            //       // types: ["DOCUMENT"],
+            //       callback_url:
+            //         "https://api.secondarydao.com/api/kyc/kyc-callback",
+            //     },
+            //     {
+            //       headers: headers,
+            //     }
+            //   )
+            //   .then((verification) => {
+            //     console.log("verification comoplete", verification);
+            //   });
           }
-          setappID(response.data.applicant_id);
-          setdone(true);
+          if (res.data.form_url) {
+            setLoading(false);
+            window.location.href = res.data.form_url;
+          }
+          // console.log("responseresponseresponse", res);
         })
+        // }
+        // setappID(response.data.applicant_id);
+        // setdone(true);
+        // })
         .catch((error) => {
           setLoading(false);
 
@@ -197,7 +260,7 @@ const Kyc = () => {
     }
   };
   const verifyID = () => {
-    setLoading(true);
+    // setLoading(true);
     axios
       .post(
         "https://kyc-api.amlbot.com/verifications",
@@ -299,7 +362,7 @@ const Kyc = () => {
         headers: headers,
       })
       .then((response) => {
-        console.log("response =>", response);
+        // console.log("response =>", response);
         // setLoading(false);
         // setdone(true); // Mark the process as done
       })
@@ -339,33 +402,80 @@ const Kyc = () => {
       });
   };
 
-  // console.log("user => ", user);
+  // console.log("usersData=> ", usersData);
 
   return (
-    <div>
+    <div style={{ minHeight: "80vh" }}>
       {/* { */}
       <div className="text ">
         {/* {done != true ? ( */}
-        <>
-          <h1 className="display-2 ml-5 text-center fw-bold text-Black">
-            Start <br />
-            KYC <span className="text-gradient">Verification....</span>
-            <br />
-            {/* <Link className="btn btn-primary" onClick={() => kycVerify()}> */}
-            <button className="btn btn-primary" onClick={() => verify()}>
-              {loading ? "Loading..." : " KYC verification"}
-            </button>
-            {/* <a href="https://kyc-api.amlbot.com/websdk/forms/FORM_ID?key=8b32344e08c0454c312878540ce69ba5892c" target="_blank">KYC verification</a> */}
-            {/* <a
-              className="btn btn-primary"
-              href="https://kyc-api.amlbot.com/websdk/forms/8b32344e08c0454c312878540ce69ba5892c?key=a32b70f9003f9040e0086380cebe4c672465"
-              target="_blank"
-              rel="noreferrer"
-            >
-              KYC verification
-            </a> */}
+        {/* <a href="https://kyc-api.amlbot.com/websdk/forms/FORM_ID?key=8b32344e08c0454c312878540ce69ba5892c" target="_blank">KYC verification</a> */}
+        {/* <a
+        className="btn btn-primary"
+        href="https://kyc-api.amlbot.com/websdk/forms/8b32344e08c0454c312878540ce69ba5892c?key=a32b70f9003f9040e0086380cebe4c672465"
+        target="_blank"
+        rel="noreferrer"
+      >
+        KYC verification
+        </a> */}
+        {isKYCDataLoading ? (
+          <h1 className="position-absolute top-50 start-50 translate-middle">
+            Loading...
           </h1>
-        </>
+        ) : userKycData?.status === "pending" ? (
+          // <div className="position-relative">
+          <h1 className="position-absolute top-50 start-50 translate-middle">
+            Verification Pending
+          </h1>
+        ) : // </div>
+        userKycData?.status === "completed" ? (
+          userKycData.verified ? (
+            <>
+              <h1 className="text-green position-absolute top-50 start-50 translate-middle">
+                Verification Passed
+              </h1>
+            </>
+          ) : (
+            <>
+              <h1 className="position-absolute top-50 start-50 translate-middle">
+                Verification Failed
+                <h4 className="mt-1 text-center mb-5">
+                  Attempts Left:{" "}
+                  {userKycData.verification_attempts_left === null
+                    ? "Unlimited"
+                    : userKycData.verification_attempts_left}
+                </h4>
+                <h4 className="ml-5 text-center fw-bold text-Black">
+                  Attempt Verification Again
+                  <br />
+                  {/* <Link className="btn btn-primary" onClick={() => kycVerify()}> */}
+                </h4>
+                <button
+                  className="mt-5 position-absolute start-50 translate-middle btn btn-primary"
+                  onClick={() => verify()}
+                >
+                  {loading ? "Loading..." : " KYC verification"}
+                </button>
+              </h1>
+            </>
+          )
+        ) : userKycData?.status === "unused" ||
+          userKycData?.status === "new" ||
+          userKycData === null ? (
+          <>
+            <h1 className="display-2 ml-5 text-center fw-bold text-Black">
+              Start <br />
+              KYC <span className="text-gradient">Verification....</span>
+              <br />
+              {/* <Link className="btn btn-primary" onClick={() => kycVerify()}> */}
+              <button className="btn btn-primary" onClick={() => verify()}>
+                {loading ? "Loading..." : " KYC verification"}
+              </button>
+            </h1>
+          </>
+        ) : (
+          ""
+        )}
         {/* ----- REMOVED A CONDITION FORM HERE FOR TESTING, CONTENT CAN BE SEEN BELOW */}
       </div>
 
