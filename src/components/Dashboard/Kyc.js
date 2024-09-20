@@ -107,7 +107,7 @@ const Kyc = () => {
         .post(
           `https://kyc-api.amlbot.com/forms/${formId}/urls`,
           {
-            redirect_url: `https://www.app.secondarydao.com/account`,
+            redirect_url: `https://www.app.secondarydao.com/account?redirected=true`,
             external_applicant_id: user._id,
           },
           {
