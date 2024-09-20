@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { useLocation, useParams } from "react-router-dom";
 import axios from "axios";
 import { useSelector } from "react-redux";
 import { url, setHeaders } from "../../slices/api";
@@ -15,6 +15,8 @@ const Kyc = () => {
   // const dispatch = useAppDispatch();
   // const navigate = useNavigate();
   // const params = useParams();
+  const location = useLocation();
+
   // const [clientID, setclientID] = useState();
   // const [Verification, setVerification] = useState();
   // const [check, setcheck] = useState("");
@@ -32,6 +34,8 @@ const Kyc = () => {
   const [isKYCDataLoading, setIsKYCDataLoading] = useState(false);
   const [applicantDataLoading, setApplicantDataLoading] = useState(false);
   // const [productImg, setProductImg] = useState("");
+  const isRedirectedUser =
+    new URLSearchParams(location.search).get("redirected") === "true";
 
   const headers = {
     "Content-Type": "application/json",
@@ -39,8 +43,8 @@ const Kyc = () => {
   };
 
   useEffect(() => {
-    if (user._id) {
-      const MAX_RETRIES = 3;
+    if (user._id && isRedirectedUser) {
+      const MAX_RETRIES = 8;
       let retries = 0;
 
       const fetchKYCData = async () => {
@@ -61,7 +65,7 @@ const Kyc = () => {
 
           if (retries < MAX_RETRIES) {
             // Wait for a short delay before refetching
-            setTimeout(fetchKYCData, 1000 * retries); // Increasing delay with retries (1s, 2s, 3s...)
+            setTimeout(fetchKYCData, 2000);
           } else {
             // Handle failure after max retries
             setIsKYCDataLoading(false);
