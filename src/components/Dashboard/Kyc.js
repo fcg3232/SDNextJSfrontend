@@ -43,11 +43,33 @@ const Kyc = () => {
   };
 
   useEffect(() => {
+    if (user._id && !isRedirectedUser) {
+      const fetchKYCData = async () => {
+        if (user._id) {
+          try {
+            setIsKYCDataLoading(true);
+            setApplicantDataLoading(true);
+            const kycRes = await axios.get(`${url}/kyc/find/${user._id}`, {
+              headers: headers,
+            });
+            setUserKycData(kycRes.data.kyc_data);
+            setApplicantDataLoading(false);
+            setIsKYCDataLoading(false);
+          } catch (err) {
+            setIsKYCDataLoading(false);
+            setApplicantDataLoading(false);
+            console.log("Error fetching KYC data:", err);
+          }
+        }
+      };
+
+      fetchKYCData();
+    }
     if (user._id && isRedirectedUser) {
       const MAX_RETRIES = 8;
       let retries = 0;
 
-      const fetchKYCData = async () => {
+      const fetchKYCDataWithPolling = async () => {
         try {
           setIsKYCDataLoading(true);
           setApplicantDataLoading(true);
@@ -65,7 +87,7 @@ const Kyc = () => {
 
           if (retries < MAX_RETRIES) {
             // Wait for a short delay before refetching
-            setTimeout(fetchKYCData, 2000);
+            setTimeout(fetchKYCDataWithPolling, 2000);
           } else {
             // Handle failure after max retries
             setIsKYCDataLoading(false);
@@ -75,28 +97,8 @@ const Kyc = () => {
         }
       };
 
-      fetchKYCData();
+      fetchKYCDataWithPolling();
     }
-    // const fetchuser = async () => {
-    //   if (user._id) {
-    //     try {
-    //       setIsKYCDataLoading(true);
-    //       setApplicantDataLoading(true);
-    //       const kycRes = await axios.get(`${url}/kyc/find/${user._id}`, {
-    //         headers: headers,
-    //       });
-    //       setUserKycData(kycRes.data.kyc_data);
-    //       setApplicantDataLoading(false);
-    //       setIsKYCDataLoading(false);
-    //     } catch (err) {
-    //       setIsKYCDataLoading(false);
-    //       setApplicantDataLoading(false);
-    //       console.log("Error fetching KYC data:", err);
-    //     }
-    //   }
-    // };
-
-    // fetchuser();
   }, [user._id]);
 
   const formId = "8b32344e08c0454c312878540ce69ba5892c";
