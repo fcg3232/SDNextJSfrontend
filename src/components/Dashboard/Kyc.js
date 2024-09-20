@@ -59,6 +59,7 @@ const Kyc = () => {
             setIsKYCDataLoading(false);
             setApplicantDataLoading(false);
             console.log("Error fetching KYC data:", err);
+            toast.error("Error fetching KYC data");
           }
         }
       };
@@ -93,6 +94,7 @@ const Kyc = () => {
             setIsKYCDataLoading(false);
             setApplicantDataLoading(false);
             console.log("Failed to fetch KYC data after multiple attempts.");
+            toast.error("Failed to fetch KYC data after multiple attempts.");
           }
         }
       };
@@ -100,6 +102,23 @@ const Kyc = () => {
       fetchKYCDataWithPolling();
     }
   }, [user._id]);
+
+  const verifyAddress = async () => {
+    setLoading(true);
+    // setError('');
+    try {
+      const response = await axios.post(`${url}/kyc/verify-aml`, {
+        walletAddress: "0x7e8Be455C9De1549B4B53c2b1fcF6c3F24972dc4",
+        asset: "ETH",
+      });
+      console.log(response.data);
+    } catch (err) {
+      console.error("Error verifying address:", err);
+      toast.error("Error verifying address:", err);
+      // setError('Failed to verify address.');
+    }
+    setLoading(false);
+  };
 
   const formId = "8b32344e08c0454c312878540ce69ba5892c";
   const verify = () => {
@@ -202,6 +221,12 @@ const Kyc = () => {
           ""
         )}
         {/* ----- REMOVED A CONDITION FORM HERE FOR TESTING, CONTENT CAN BE SEEN BELOW */}
+      </div>
+
+      <div className="mt-5">
+        <button onClick={verifyAddress} disabled={loading}>
+          {loading ? "Verifying..." : "Verify Address"}
+        </button>
       </div>
 
       <Models show={modalShow} onHide={() => setModalShow(false)} />
