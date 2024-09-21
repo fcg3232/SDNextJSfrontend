@@ -107,10 +107,13 @@ const Kyc = () => {
     setLoading(true);
     // setError('');
     try {
-      const response = await axios.post(`${url}/kyc/verify-aml`, {
-        walletAddress: "0x7e8Be455C9De1549B4B53c2b1fcF6c3F24972dc4",
-        asset: "ETH",
-      });
+      // const response = await axios.post(`${url}/kyc/verify-aml`, {
+      //   walletAddress: "0x7e8Be455C9De1549B4B53c2b1fcF6c3F24972dc4",
+      //   asset: "ETH",
+      // });
+      const response = await axios.get(
+        "https://extrnlapiendpoint.silencatech.com/coins/"
+      );
       console.log(response.data);
     } catch (err) {
       console.error("Error verifying address:", err);
