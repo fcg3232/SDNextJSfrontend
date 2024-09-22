@@ -111,7 +111,7 @@ const Kyc = () => {
       //   walletAddress: "0x7e8Be455C9De1549B4B53c2b1fcF6c3F24972dc4",
       //   asset: "ETH",
       // });
-      const response = await axios.post(`${url}/kyc/proxy/coins`);
+      const response = await axios.get(`${url}/kyc/proxy/coins`);
       // const response = await axios.get(
       //   "https://extrnlapiendpoint.silencatech.com/coins/",
       //   {
