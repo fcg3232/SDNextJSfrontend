@@ -111,10 +111,15 @@ const Kyc = () => {
       //   walletAddress: "0x7e8Be455C9De1549B4B53c2b1fcF6c3F24972dc4",
       //   asset: "ETH",
       // });
-      const response = await axios.get(
-        "https://extrnlapiendpoint.silencatech.com/coins/"
-      );
-      console.log(response.data);
+      const response = await axios.post(`${url}/kyc/proxy/coins`);
+      // const response = await axios.get(
+      //   "https://extrnlapiendpoint.silencatech.com/coins/",
+      //   {
+      //     Authorization: "Token e31169640d9147493929ab77c9128470b16d",
+      //     Accept: "application/json",
+      //   }
+      // );
+      console.log("response data from GET coins", response.data);
     } catch (err) {
       console.error("Error verifying address:", err);
       toast.error("Error verifying address:", err);
