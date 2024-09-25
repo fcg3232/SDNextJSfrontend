@@ -1,11 +1,13 @@
 import React, { useEffect, useState } from "react";
 import { useLocation, useParams } from "react-router-dom";
 import axios from "axios";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { url, setHeaders } from "../../slices/api";
 import Button from "react-bootstrap/esm/Button";
 import Modal from "react-bootstrap/Modal";
 import { toast } from "react-toastify";
+// import { getUser } from "../../slices/authSlice";
+// import { getUser } from "../../slices/authSlice";
 // import styled from "styled-components";
 // import { usersFetchbyID } from "../../slices/UsersSlice";
 // import { useAppSelector, useAppDispatch } from "../../reducer/store";
@@ -16,6 +18,7 @@ const Kyc = () => {
   // const navigate = useNavigate();
   // const params = useParams();
   const location = useLocation();
+  const dispatch = useDispatch();
 
   // const [clientID, setclientID] = useState();
   // const [Verification, setVerification] = useState();
@@ -33,6 +36,7 @@ const Kyc = () => {
   const [userKycData, setUserKycData] = useState(null);
   const [isKYCDataLoading, setIsKYCDataLoading] = useState(false);
   const [applicantDataLoading, setApplicantDataLoading] = useState(false);
+  const [currentUser, setCurrentUser] = useState(null);
   // const [productImg, setProductImg] = useState("");
   const isRedirectedUser =
     new URLSearchParams(location.search).get("redirected") === "true";
@@ -41,67 +45,205 @@ const Kyc = () => {
     "Content-Type": "application/json",
     Authorization: "Token e31169640d9147493929ab77c9128470b16d",
   };
+  console.log("user", user);
+
+  // useEffect(() => {
+  //   if (user._id) {
+  //     const fetchUserData = async () => {
+  //       // dispatch(getUser(user._id));
+  //       // try {
+  //       await axios
+  //         .get(`${url}/users/find/${user._id}`, {
+  //           headers: headers,
+  //         })
+  //         .then((currentUserResponse) => {
+  //           const { data } = currentUserResponse;
+  //           console.log("userRes.data", data);
+
+  //           console.log("data from user => ", data);
+  //           if (data._id && !isRedirectedUser && data.applicant_id) {
+  //             const fetchKYCData = async () => {
+  //               if (data._id) {
+  //                 try {
+  //                   setIsKYCDataLoading(true);
+  //                   setApplicantDataLoading(true);
+  //                   const kycRes = await axios.get(
+  //                     `${url}/kyc/find/${data._id}`,
+  //                     {
+  //                       headers: headers,
+  //                     }
+  //                   );
+  //                   setUserKycData(kycRes.data.kyc_data);
+  //                   setApplicantDataLoading(false);
+  //                   setIsKYCDataLoading(false);
+  //                 } catch (err) {
+  //                   setIsKYCDataLoading(false);
+  //                   setApplicantDataLoading(false);
+  //                   console.log("Error fetching KYC data:", err);
+  //                   toast.error("Error fetching KYC data");
+  //                 }
+  //               }
+  //             };
+
+  //             fetchKYCData();
+  //           }
+  //           if (data._id && isRedirectedUser && data.applicant_id) {
+  //             const MAX_RETRIES = 8;
+  //             let retries = 0;
+
+  //             const fetchKYCDataWithPolling = async () => {
+  //               try {
+  //                 setIsKYCDataLoading(true);
+  //                 setApplicantDataLoading(true);
+
+  //                 const kycRes = await axios.get(
+  //                   `${url}/kyc/find/${data._id}`,
+  //                   {
+  //                     headers: headers,
+  //                   }
+  //                 );
+
+  //                 setUserKycData(kycRes.data.kyc_data);
+  //                 setApplicantDataLoading(false);
+  //                 setIsKYCDataLoading(false);
+  //               } catch (err) {
+  //                 retries += 1;
+  //                 console.log(
+  //                   `Error fetching KYC data, attempt ${retries}:`,
+  //                   err
+  //                 );
+
+  //                 if (retries < MAX_RETRIES) {
+  //                   // Wait for a short delay before refetching
+  //                   setTimeout(fetchKYCDataWithPolling, 2000);
+  //                 } else {
+  //                   // Handle failure after max retries
+  //                   setIsKYCDataLoading(false);
+  //                   setApplicantDataLoading(false);
+  //                   console.log(
+  //                     "Failed to fetch KYC data after multiple attempts."
+  //                   );
+  //                   toast.error(
+  //                     "Failed to fetch KYC data after multiple attempts."
+  //                   );
+  //                 }
+  //               }
+  //             };
+
+  //             fetchKYCDataWithPolling();
+  //           }
+  //         });
+  //       // console.log("userResuserRes", userRes);
+  //       // } catch (err) {
+  //       //   toast.error("There was an error fetching user data");
+  //       // }
+  //     };
+  //     fetchUserData();
+  //   }
+  // }, [user._id]);
 
   useEffect(() => {
-    if (user._id && !isRedirectedUser) {
-      const fetchKYCData = async () => {
-        if (user._id) {
-          try {
-            setIsKYCDataLoading(true);
-            setApplicantDataLoading(true);
-            const kycRes = await axios.get(`${url}/kyc/find/${user._id}`, {
-              headers: headers,
-            });
-            setUserKycData(kycRes.data.kyc_data);
-            setApplicantDataLoading(false);
-            setIsKYCDataLoading(false);
-          } catch (err) {
-            setIsKYCDataLoading(false);
-            setApplicantDataLoading(false);
-            console.log("Error fetching KYC data:", err);
-            toast.error("Error fetching KYC data");
-          }
-        }
-      };
-
-      fetchKYCData();
-    }
-    if (user._id && isRedirectedUser) {
-      const MAX_RETRIES = 8;
-      let retries = 0;
-
-      const fetchKYCDataWithPolling = async () => {
+    if (user._id) {
+      const fetchUserData = async () => {
         try {
-          setIsKYCDataLoading(true);
-          setApplicantDataLoading(true);
+          // First API call to fetch user data
+          const currentUserResponse = await axios.get(
+            `${url}/users/find/${user._id}`,
+            {
+              headers: headers,
+            }
+          );
 
-          const kycRes = await axios.get(`${url}/kyc/find/${user._id}`, {
-            headers: headers,
-          });
+          const { data } = currentUserResponse;
+          console.log("userRes.data", data);
+          console.log("data from user => ", data);
 
-          setUserKycData(kycRes.data.kyc_data);
-          setApplicantDataLoading(false);
-          setIsKYCDataLoading(false);
-        } catch (err) {
-          retries += 1;
-          console.log(`Error fetching KYC data, attempt ${retries}:`, err);
-
-          if (retries < MAX_RETRIES) {
-            // Wait for a short delay before refetching
-            setTimeout(fetchKYCDataWithPolling, 2000);
-          } else {
-            // Handle failure after max retries
-            setIsKYCDataLoading(false);
-            setApplicantDataLoading(false);
-            console.log("Failed to fetch KYC data after multiple attempts.");
-            toast.error("Failed to fetch KYC data after multiple attempts.");
+          // KYC data fetching logic if applicable
+          if (data._id && !isRedirectedUser && data.applicant_id) {
+            const fetchKYCData = async () => {
+              if (data._id) {
+                try {
+                  setIsKYCDataLoading(true);
+                  setApplicantDataLoading(true);
+                  const kycRes = await axios.get(
+                    `${url}/kyc/find/${data._id}`,
+                    {
+                      headers: headers,
+                    }
+                  );
+                  setUserKycData(kycRes.data.kyc_data);
+                  setApplicantDataLoading(false);
+                  setIsKYCDataLoading(false);
+                } catch (err) {
+                  setIsKYCDataLoading(false);
+                  setApplicantDataLoading(false);
+                  console.log("Error fetching KYC data:", err);
+                  toast.error("Error fetching KYC data");
+                }
+              }
+            };
+            fetchKYCData();
           }
+
+          // KYC data polling if applicable
+          if (data._id && isRedirectedUser && data.applicant_id) {
+            const MAX_RETRIES = 8;
+            let retries = 0;
+
+            const fetchKYCDataWithPolling = async () => {
+              try {
+                setIsKYCDataLoading(true);
+                setApplicantDataLoading(true);
+
+                const kycRes = await axios.get(`${url}/kyc/find/${data._id}`, {
+                  headers: headers,
+                });
+
+                setUserKycData(kycRes.data.kyc_data);
+                setApplicantDataLoading(false);
+                setIsKYCDataLoading(false);
+              } catch (err) {
+                retries += 1;
+                console.log(
+                  `Error fetching KYC data, attempt ${retries}:`,
+                  err
+                );
+
+                if (retries < MAX_RETRIES) {
+                  // Wait for a short delay before refetching
+                  setTimeout(fetchKYCDataWithPolling, 2000);
+                } else {
+                  // Handle failure after max retries
+                  setIsKYCDataLoading(false);
+                  setApplicantDataLoading(false);
+                  console.log(
+                    "Failed to fetch KYC data after multiple attempts."
+                  );
+                  toast.error(
+                    "Failed to fetch KYC data after multiple attempts."
+                  );
+                }
+              }
+            };
+
+            fetchKYCDataWithPolling();
+          }
+        } catch (err) {
+          // Catch error for the first API call (user data) and show a toast
+          console.log("Error fetching user data:", err);
+          toast.error("Error fetching user data");
         }
       };
 
-      fetchKYCDataWithPolling();
+      fetchUserData();
     }
   }, [user._id]);
+
+  // useEffect(() => {
+  //   if (user._id) {
+  //     dispatch(getUser({ id: user._id }));
+  //   }
+  // }, [user._id]);
 
   const verifyAddress = async () => {
     setLoading(true);
