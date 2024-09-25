@@ -186,7 +186,7 @@ const Kyc = () => {
           }
 
           // KYC data polling if applicable
-          if (data._id && isRedirectedUser && data.applicant_id) {
+          if (data._id && isRedirectedUser) {
             const MAX_RETRIES = 8;
             let retries = 0;
 
