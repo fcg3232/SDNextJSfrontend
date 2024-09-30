@@ -1,55 +1,68 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect } from "react";
 // import styled from "styled-components";
-import CountryDropdown from './CountryDropdown';
-import LocationDropdown from './LocationDropdown';
+import CountryDropdown from "./CountryDropdown";
+import LocationDropdown from "./LocationDropdown";
 // import { RiSearch2Line } from "react-icons/ri";
-import { Button, Dropdown, Nav, Tab } from 'react-bootstrap';
-import ReactSlider from 'react-slider'
-import { useAccount, useConnect, useDisconnect } from 'wagmi'
+import { Button, Dropdown, Nav, Tab } from "react-bootstrap";
+import ReactSlider from "react-slider";
+import { useAccount, useConnect, useDisconnect } from "wagmi";
 const Research = () => {
-    const account = useAccount();
-    const { connectors, connect, status, error } = useConnect();
-    const { disconnect } = useDisconnect();
-    const [headerFix, setheaderFix] = React.useState(false);
-    useEffect(() => {
-        window.addEventListener("scroll", () => {
-            setheaderFix(window.scrollY > 50);
-        });
-    }, []);
-    return (
-        <div className="site-header mo-left "
-            style={{
-                backgroundColor: "white",
-                zindex: "-1"
-            }}
-        >
-            <div className={`sticky-header main-bar-wraper  navbar-expand-lg ${headerFix ? "is-fixed" : ""}`}>
-                <div className=" clearfix">
-                    <div className="container clearfix">
-                        <ul className="nav navbar-nav navbar">
-                            <li><CountryDropdown /></li>
-                            <li><LocationDropdown /></li>
-                            <li
-                                style={{
-                                    width: "130px"
-                                }}
-                            >
-                                <ReactSlider
-                                    min={5}
-                                    max={99}
-                                    defaultValue={27}
-                                    className="progress-slider"
-                                    renderThumb={(props, state) => <div {...props}>{state.valueNow}%</div>}
-                                />
-                                <span
-                                    style={{
-                                        fontStyle: "normal",
-                                        fontWeight: "500",
-                                        fontSize: "12px",
-                                    }}
-                                >Current Projected IRR</span>
-                            </li>
-                            {/* <li
+  const account = useAccount();
+  const { connectors, connect, status, error } = useConnect();
+  const { disconnect } = useDisconnect();
+  const [headerFix, setheaderFix] = React.useState(false);
+  useEffect(() => {
+    window.addEventListener("scroll", () => {
+      setheaderFix(window.scrollY > 50);
+    });
+  }, []);
+  return (
+    <div
+      className="site-header mo-left "
+      style={{
+        backgroundColor: "white",
+        zindex: "-1",
+      }}
+    >
+      <div
+        className={`sticky-header main-bar-wraper  navbar-expand-lg ${
+          headerFix ? "is-fixed" : ""
+        }`}
+      >
+        <div className=" clearfix">
+          <div className="container clearfix">
+            <ul className="nav navbar-nav navbar">
+              <li>
+                <CountryDropdown />
+              </li>
+              <li>
+                <LocationDropdown />
+              </li>
+              <li
+                style={{
+                  width: "130px",
+                }}
+              >
+                <ReactSlider
+                  min={5}
+                  max={99}
+                  defaultValue={27}
+                  className="progress-slider"
+                  renderThumb={(props, state) => (
+                    <div {...props}>{state.valueNow}%</div>
+                  )}
+                />
+                <span
+                  style={{
+                    fontStyle: "normal",
+                    fontWeight: "500",
+                    fontSize: "12px",
+                  }}
+                >
+                  Current Projected IRR
+                </span>
+              </li>
+              {/* <li
                                 style={{
                                     width: "130px"
                                 }}
@@ -69,7 +82,7 @@ const Research = () => {
                                     }}
                                 >Current CoC Return</span>
                             </li> */}
-                            {/* <li>
+              {/* <li>
                                 <Tab.Container defaultActiveKey="Navbuy">
                                     <div className="buy-sell">
                                         <Nav className="nav nav-tabs" eventKey="nav-tab2" role="tablist">
@@ -117,19 +130,21 @@ const Research = () => {
                                 </div>
 										</div>
                             </li> */}
-                            <li>
-                                {(JSON.stringify(account.addresses))?.substring(0, 14) + " ...."}
-                            </li>
-                            <li>
-                                {account.status === 'connected' && (
-                                    <button type="button" onClick={() => disconnect()}
-                                        className="btn space-lg btn-gradient btn-shadow btn-primary"
-                                    >
-                                        Disconnect
-                                    </button>
-                                )}
-                            </li>
-                            {/* <li className='mb-3'>
+              <li>
+                {JSON.stringify(account.addresses)?.substring(0, 14) + " ...."}
+              </li>
+              <li>
+                {account.status === "connected" && (
+                  <button
+                    type="button"
+                    onClick={() => disconnect()}
+                    className="btn space-lg btn-gradient btn-shadow btn-primary"
+                  >
+                    Disconnect
+                  </button>
+                )}
+              </li>
+              {/* <li className='mb-3'>
                                 <div className="limit-sell"
                                     style={{
                                         width: "280px"
@@ -145,14 +160,13 @@ const Research = () => {
                                     <Tab.Pane id="Navselllimit" ></Tab.Pane>
                                 </Tab.Content>
                             </li> */}
-
-                        </ul>
-                    </div>
-                </div>
-            </div>
+            </ul>
+          </div>
         </div>
-    )
-}
+      </div>
+    </div>
+  );
+};
 
 export default Research;
 

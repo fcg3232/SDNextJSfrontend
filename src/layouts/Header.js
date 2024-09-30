@@ -5,9 +5,11 @@ import Logos from "./../assets/images/logos.png";
 import LogoWhite from "./../assets/images/logos.png";
 import { logoutUser } from "../slices/authSlice";
 import { loadUser } from "../slices/authSlice";
-import { useAccount, useConnect, useDisconnect } from 'wagmi'
+import { useAccount, useConnect, useDisconnect } from "wagmi";
 import wal from "./../assets/images/icons/wal.svg";
 import { Button } from "react-bootstrap";
+import { url } from "../slices/api";
+import axios from "axios";
 function Header() {
   const dispatch = useDispatch();
   const auth = useSelector((state) => state.auth);
@@ -15,10 +17,32 @@ function Header() {
   const [showMenu, setShowMenu] = useState(false);
   /* for sticky header */
   const [headerFix, setheaderFix] = React.useState(false);
-  const account = useAccount();
-  const { connectors, connect, status, error } = useConnect();
+  // const account = useAccount();
+  // const { connectors, connect, status, error } = useConnect();
+  const { address, isConnected, status } = useAccount();
   const { disconnect } = useDisconnect();
+  const user = useSelector((state) => state.auth);
+  console.log("useruser", user);
 
+  const handleDisconnect = async () => {
+    if (isConnected && address) {
+      console.log(`Disconnecting wallet with address: ${address}`);
+
+      // Call the backend to mark the wallet as inactive
+      try {
+        const response = await axios.patch(
+          `${url}/users/wallet/disconnect/${user._id}`,
+          {
+            walletAddress: address, // Send the address to mark inactive
+          }
+        );
+        console.log(response.data.message);
+      } catch (error) {
+        console.error("Error disconnecting wallet:", error);
+      }
+    }
+    disconnect(); // Call disconnect function from WAGMI
+  };
   useEffect(() => {
     window.addEventListener("scroll", () => {
       setheaderFix(window.scrollY > 50);
@@ -29,13 +53,13 @@ function Header() {
     dispatch(loadUser(null));
   }, [dispatch]);
 
-
   return (
     <>
       <header className="site-header mo-left header header-transparent style-1">
         <div
-          className={`sticky-header main-bar-wraper navbar-expand-lg ${headerFix ? "is-fixed" : ""
-            }`}
+          className={`sticky-header main-bar-wraper navbar-expand-lg ${
+            headerFix ? "is-fixed" : ""
+          }`}
         >
           <div className="main-bar clearfix">
             <div className="container clearfix">
@@ -49,8 +73,9 @@ function Header() {
               </div>
               <button
                 type="button"
-                className={`navbar-toggler  navicon justify-content-end ${sidebarOpen ? "open" : "collapsed"
-                  }`}
+                className={`navbar-toggler  navicon justify-content-end ${
+                  sidebarOpen ? "open" : "collapsed"
+                }`}
                 onClick={() => setSidebarOpen(!sidebarOpen)}
               >
                 <span></span>
@@ -65,8 +90,9 @@ function Header() {
                             </div> */}
 
               <div
-                className={`header-nav navbar-collapse collapse justify-content-end ${sidebarOpen ? "show" : ""
-                  }`}
+                className={`header-nav navbar-collapse collapse justify-content-end ${
+                  sidebarOpen ? "show" : ""
+                }`}
                 id="navbarNavDropdown"
               >
                 <div className="logo-header mostion">
@@ -74,9 +100,8 @@ function Header() {
                     <img width="150" height="150" src={Logos} alt="" />
                   </NavLink>
                 </div>
-                {account.status === 'connected' ? (
+                {status === "connected" ? (
                   <ul className="nav navbar-nav navbar">
-
                     {auth._id ? (
                       <>
                         <li>
@@ -129,24 +154,37 @@ function Header() {
                           </li>
                         </ul>
                       </li> */}
-                        <li><NavLink to={"/login"}>Log In</NavLink></li>
-                        <li><NavLink to={"/signup"}>Sign Up</NavLink></li>
+                        <li>
+                          <NavLink to={"/login"}>Log In</NavLink>
+                        </li>
+                        <li>
+                          <NavLink to={"/signup"}>Sign Up</NavLink>
+                        </li>
                       </>
                     )}
 
                     <li>
                       <NavLink>
-                        <button onClick={() => disconnect()}
+                        <button
+                          onClick={() => handleDisconnect()}
                           type="button"
                           className="btn btn-outline-primary text-primary"
                         >
                           Disconnect
-                          <img src={wal} alt="wallets" height="15" width="15" style={{ marginLeft: "10px", }} />
+                          <img
+                            src={wal}
+                            alt="wallets"
+                            height="15"
+                            width="15"
+                            style={{ marginLeft: "10px" }}
+                          />
                         </button>
                       </NavLink>
                     </li>
                   </ul>
-                ) : ("")}
+                ) : (
+                  ""
+                )}
                 <div className="header-bottom">
                   <div className="dz-social-icon">
                     <ul>

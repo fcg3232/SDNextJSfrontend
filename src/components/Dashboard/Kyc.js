@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import axios from "axios";
 import { useDispatch, useSelector } from "react-redux";
 import { url, setHeaders } from "../../slices/api";
@@ -14,13 +14,19 @@ const Kyc = () => {
   const [users, setusers] = useState([]);
   const [userKycData, setUserKycData] = useState(null);
   const [isKYCDataLoading, setIsKYCDataLoading] = useState(true);
+  const [activeWalletData, setActiveWalletData] = useState([]);
+  const [userData, setUserData] = useState(null);
   const [userKycVerificationStatus, setUserKycVerificationStatus] =
     useState(null);
+
+  // ----------------- DONT SHOW KYC BTN UNTIL USER IS LOADED AS WE SEND EXTERNAL ID WITH IT
 
   const headers = {
     "Content-Type": "application/json",
     Authorization: "Token e31169640d9147493929ab77c9128470b16d",
   };
+
+  // console.log("activeWallet", activeWallet);
 
   useEffect(() => {
     if (user._id) {
@@ -34,6 +40,54 @@ const Kyc = () => {
             }
           );
           const { data } = currentUserResponse;
+          setUserData(data);
+          // console.log("activeWallet", activeWallet);
+          const activeWallet = data.wallets.filter(
+            (wallet) => wallet.active === true
+          );
+          setActiveWalletData(activeWallet);
+          console.log("activeWalletactiveWallet", activeWallet);
+
+          if (activeWallet[0].addressVerificationStatus === null) {
+            const verifyAddress = async () => {
+              // setLoading(true);
+              try {
+                const verifyAMLResponse = await axios.post(
+                  `${url}/kyc/verify-aml`,
+                  {
+                    walletAddress: activeWallet[0].address,
+                    asset: "ETH",
+                  }
+                );
+
+                if (verifyAMLResponse.data) {
+                  await axios.patch(`${url}/users/wallet/update/${user._id}`, {
+                    walletAddresses: data.wallets.map(
+                      (wallet) => wallet.address
+                    ), // Array of connected wallets
+                    activeWallet: activeWallet[0].address,
+                    amlStatusUpdate: verifyAMLResponse.data,
+                  });
+                  const currentUserResponse = await axios.get(
+                    `${url}/users/find/${user._id}`,
+                    {
+                      headers: headers,
+                    }
+                  );
+                  const { data } = currentUserResponse;
+                  setUserData(data);
+                } else {
+                  toast.error("Error adding AML address verification");
+                  // handleError("Verification failed. Please try again.");
+                }
+              } catch (err) {
+                console.error("Error verifying address:", err);
+                toast.error("Error verifying address:", err);
+              }
+              // setLoading(false);
+            };
+            verifyAddress();
+          }
 
           if (data._id && data.applicant_id) {
             const fetchKYCData = async () => {
@@ -50,38 +104,6 @@ const Kyc = () => {
                   setUserKycData(kycRes.data.kyc_data);
                   console.log("kycRes.data", kycRes.data);
                   setIsKYCDataLoading(false);
-
-                  if (!kycRes.data.AMLAddressVerification) {
-                    const verifyAddress = async () => {
-                      // setLoading(true);
-                      try {
-                        const response = await axios.post(
-                          `${url}/kyc/verify-aml`,
-                          {
-                            walletAddress:
-                              "0x7e8Be455C9De1549B4B53c2b1fcF6c3F24972dc4",
-                            asset: "ETH",
-                          }
-                        );
-                        console.log("datadatadatadata", data);
-                        if (response.data) {
-                          await axios.patch(
-                            `${url}/kyc/${data._id}`,
-                            { AMLAddressVerification: response.data },
-                            setHeaders()
-                          );
-                        } else {
-                          toast.error("Error adding AML address verification");
-                          // handleError("Verification failed. Please try again.");
-                        }
-                      } catch (err) {
-                        console.error("Error verifying address:", err);
-                        toast.error("Error verifying address:", err);
-                      }
-                      // setLoading(false);
-                    };
-                    verifyAddress();
-                  }
                 } catch (err) {
                   setIsKYCDataLoading(false);
                   console.log("Error fetching KYC data:", err);
@@ -175,21 +197,83 @@ const Kyc = () => {
       toast.error("Error starting KYC verification.");
     }
   };
+  console.log("userDatauserData", userData);
+
+  const WalletData = () => {
+    if (userData?.wallets.length > 0) {
+      return (
+        <div
+          style={{
+            border: "1px solid blue",
+            borderRadius: "15px",
+            padding: "30px",
+          }}
+        >
+          <h5 className="text-center fw-bold text-Black">
+            <span>Wallet Address: </span>
+            <span>{activeWalletData[0]?.address}</span>
+          </h5>
+
+          <h5 className="text-center fw-bold text-Black">
+            <span>Network: </span>
+            <span>
+              {activeWalletData[0]?.addressVerificationStatus?.data.network}
+            </span>
+          </h5>
+          <h5 className="text-center fw-bold text-Black">
+            <span>Verification Status: </span>
+            <span>
+              {activeWalletData[0]?.addressVerificationStatus?.data.status ===
+              "pending"
+                ? "Results are pending"
+                : activeWalletData[0]?.addressVerificationStatus?.data.status}
+            </span>
+          </h5>
+        </div>
+      );
+    } else if (!isKYCDataLoading) {
+      return (
+        <Link to={"/"}>
+          <h3 className="text-center fw-bold text-Black">
+            Connect a wallet to verify it's status (Click here)
+          </h3>
+        </Link>
+      );
+    }
+  };
 
   if (userKycVerificationStatus !== null) {
     return (
-      <div style={{ minHeight: "80vh" }}>
+      <div style={{ minHeight: "60vh" }}>
         <div className="text ">
           <h1 className="position-absolute top-50 start-50 translate-middle">
             Verification Pending
           </h1>
         </div>
+        {WalletData()}
       </div>
+    );
+  } else if (userKycVerificationStatus === null) {
+    return (
+      <>
+        <div style={{ minHeight: "60vh" }}>
+          <h1 className="display-2 ml-5 text-center fw-bold text-Black position-absolute top-50 start-50 translate-middle">
+            Start <br />
+            KYC <span className="text-gradient">Verification....</span>
+            <br />
+            <button className="btn btn-primary" onClick={() => verify()}>
+              {loading ? "Loading..." : " KYC verification"}
+            </button>
+          </h1>
+        </div>
+
+        {WalletData()}
+      </>
     );
   }
 
   return (
-    <div style={{ minHeight: "80vh" }}>
+    <div style={{ minHeight: "60vh" }}>
       <div className="text ">
         {isKYCDataLoading ? (
           <h1 className="position-absolute top-50 start-50 translate-middle">
@@ -241,13 +325,14 @@ const Kyc = () => {
                 {loading ? "Loading..." : " KYC verification"}
               </button>
             </h1>
+            {/* <div className="mb-5">{activeWallet.address}</div> */}
           </>
         ) : (
           ""
         )}
         {/* ----- REMOVED A CONDITION FORM HERE FOR TESTING, CONTENT CAN BE SEEN BELOW */}
       </div>
-
+      {WalletData()}
       {/* <div className="mt-5">
         <button onClick={verifyAddress} disabled={loading}>
           {loading ? "Verifying..." : "Verify Address"}
@@ -256,7 +341,7 @@ const Kyc = () => {
 
       <Models show={modalShow} onHide={() => setModalShow(false)} />
 
-      <div className="mb-5"></div>
+      {/* <div className="mb-5">{activeWallet.address}</div> */}
     </div>
   );
 };
