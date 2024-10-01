@@ -81,6 +81,11 @@ const Kyc = () => {
                       }
                     );
                     setUserData(updatedUserResponse.data);
+                    const updateWallet =
+                      updatedUserResponse.data.wallets.filter(
+                        (wallet) => wallet.active === true
+                      );
+                    setActiveWalletData(updateWallet);
                   } else {
                     toast.error("Error adding AML address verification");
                   }
@@ -268,9 +273,12 @@ const Kyc = () => {
     userKycVerificationStatus.status === "pending"
   ) {
     return (
-      <div style={{ minHeight: "60vh" }}>
+      <div style={{ minHeight: "80vh" }}>
         <div className="text ">
-          <h1 className="position-absolute top-50 start-50 translate-middle">
+          <h1
+            className="position-absolute start-50 translate-middle"
+            style={{ top: "35%" }}
+          >
             Verification Pending
           </h1>
         </div>
