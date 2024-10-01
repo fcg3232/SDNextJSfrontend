@@ -143,6 +143,7 @@ const Kyc = () => {
               toast.error("Error fetching KYC verification");
             }
           }
+          setIsKYCDataLoading(false);
         } catch (userError) {
           setIsKYCDataLoading(false);
           console.error("Error fetching user data:", userError);
