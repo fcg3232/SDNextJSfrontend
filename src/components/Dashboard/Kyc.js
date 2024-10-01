@@ -41,57 +41,79 @@ const Kyc = () => {
           );
           const { data } = currentUserResponse;
           setUserData(data);
-          // console.log("activeWallet", activeWallet);
-          const activeWallet = data.wallets.filter(
-            (wallet) => wallet.active === true
-          );
-          setActiveWalletData(activeWallet);
-          console.log("activeWalletactiveWallet", activeWallet);
 
-          if (activeWallet[0].addressVerificationStatus === null) {
-            const verifyAddress = async () => {
-              // setLoading(true);
-              try {
-                const verifyAMLResponse = await axios.post(
-                  `${url}/kyc/verify-aml`,
-                  {
-                    walletAddress: activeWallet[0].address,
-                    asset: "ETH",
-                  }
-                );
+          // Try-Catch around the activeWallet logic
+          try {
+            const activeWallet = data.wallets.filter(
+              (wallet) => wallet.active === true
+            );
+            setActiveWalletData(activeWallet);
+            console.log("activeWalletactiveWallet", activeWallet);
 
-                if (verifyAMLResponse.data) {
-                  await axios.patch(`${url}/users/wallet/update/${user._id}`, {
-                    walletAddresses: data.wallets.map(
-                      (wallet) => wallet.address
-                    ), // Array of connected wallets
-                    activeWallet: activeWallet[0].address,
-                    amlStatusUpdate: verifyAMLResponse.data,
-                  });
-                  const currentUserResponse = await axios.get(
-                    `${url}/users/find/${user._id}`,
+            if (activeWallet[0]?.addressVerificationStatus === null) {
+              const verifyAddress = async () => {
+                try {
+                  const verifyAMLResponse = await axios.post(
+                    `${url}/kyc/verify-aml`,
                     {
-                      headers: headers,
+                      walletAddress: activeWallet[0].address,
+                      asset: "ETH",
                     }
                   );
-                  const { data } = currentUserResponse;
-                  setUserData(data);
-                } else {
-                  toast.error("Error adding AML address verification");
-                  // handleError("Verification failed. Please try again.");
+
+                  if (verifyAMLResponse.data) {
+                    await axios.patch(
+                      `${url}/users/wallet/update/${user._id}`,
+                      {
+                        walletAddresses: data.wallets.map(
+                          (wallet) => wallet.address
+                        ),
+                        activeWallet: activeWallet[0].address,
+                        amlStatusUpdate: verifyAMLResponse.data,
+                      }
+                    );
+
+                    // Fetch updated user data after AML verification
+                    const updatedUserResponse = await axios.get(
+                      `${url}/users/find/${user._id}`,
+                      {
+                        headers: headers,
+                      }
+                    );
+                    setUserData(updatedUserResponse.data);
+                  } else {
+                    toast.error("Error adding AML address verification");
+                  }
+                } catch (err) {
+                  console.error("Error verifying address:", err);
+                  toast.error("Error verifying address:", err);
                 }
-              } catch (err) {
-                console.error("Error verifying address:", err);
-                toast.error("Error verifying address:", err);
-              }
-              // setLoading(false);
-            };
-            verifyAddress();
+              };
+              verifyAddress();
+            }
+          } catch (walletError) {
+            console.error("Error processing wallet data:", walletError);
+            toast.error("Error processing wallet data");
           }
 
-          if (data._id && data.applicant_id) {
-            const fetchKYCData = async () => {
-              if (data._id) {
+          console.log("data._id", data._id);
+          console.log("data.verification_id", data.verification_id);
+
+          // Fetch KYC Data Logic
+          if (data._id && data.verification_id) {
+            try {
+              const verificationRes = await axios.get(
+                `https://kyc-api.amlbot.com/verifications/${data.verification_id}`,
+                {
+                  headers: headers,
+                }
+              );
+
+              if (
+                data._id &&
+                data.applicant_id &&
+                verificationRes.data.status !== "pending"
+              ) {
                 try {
                   const kycRes = await axios.get(
                     `${url}/kyc/find/${data._id}`,
@@ -99,49 +121,38 @@ const Kyc = () => {
                       headers: headers,
                     }
                   );
-                  // setting null to skip pending status ( see bottom )
-                  setUserKycVerificationStatus(null);
+                  setUserKycVerificationStatus(null); // Skip pending status
                   setUserKycData(kycRes.data.kyc_data);
                   console.log("kycRes.data", kycRes.data);
                   setIsKYCDataLoading(false);
-                } catch (err) {
+                } catch (kycError) {
                   setIsKYCDataLoading(false);
-                  console.log("Error fetching KYC data:", err);
+                  console.error("Error fetching KYC data:", kycError);
                   toast.error("Error fetching KYC data");
                 }
               }
-            };
-            fetchKYCData();
-          } else if (data._id && data.verification_id) {
-            const getVerificationStatus = async () => {
-              try {
-                const kycRes = await axios.get(
-                  `https://kyc-api.amlbot.com/verifications/${data.verification_id}`,
-                  {
-                    headers: headers,
-                  }
-                );
 
-                setUserKycVerificationStatus(kycRes.data);
-                setIsKYCDataLoading(false);
-              } catch (err) {
-                setIsKYCDataLoading(false);
-                console.log(`Error fetching KYC data, attempt`, err);
-              }
-            };
-
-            getVerificationStatus();
+              setUserKycVerificationStatus(verificationRes.data);
+              setIsKYCDataLoading(false);
+            } catch (kycVerificationError) {
+              setIsKYCDataLoading(false);
+              console.error(
+                "Error fetching KYC verification:",
+                kycVerificationError
+              );
+              toast.error("Error fetching KYC verification");
+            }
           }
-        } catch (err) {
-          // Catch error for the first API call (user data) and show a toast
+        } catch (userError) {
           setIsKYCDataLoading(false);
-          console.log("Error fetching user data:", err);
+          console.error("Error fetching user data:", userError);
           toast.error("Error fetching user data");
         }
       };
       fetchUserData();
     }
   }, [user._id]);
+
   // console.log("useruseruser", user);
 
   const formId = "8b32344e08c0454c312878540ce69ba5892c";
@@ -200,14 +211,17 @@ const Kyc = () => {
   console.log("userDatauserData", userData);
 
   const WalletData = () => {
-    if (userData?.wallets.length > 0) {
+    if (userData?.wallets.length > 0 && activeWalletData.length > 0) {
       return (
         <div
           style={{
             border: "1px solid blue",
             borderRadius: "15px",
             padding: "30px",
+            position: "absolute",
+            bottom: "0",
           }}
+          className="start-50 translate-middle"
         >
           <h5 className="text-center fw-bold text-Black">
             <span>Wallet Address: </span>
@@ -234,15 +248,24 @@ const Kyc = () => {
     } else if (!isKYCDataLoading) {
       return (
         <Link to={"/"}>
-          <h3 className="text-center fw-bold text-Black">
+          <h4
+            className="text-center fw-bold text-Black start-50 translate-middle"
+            style={{ position: "absolute", bottom: "0" }}
+          >
             Connect a wallet to verify it's status (Click here)
-          </h3>
+          </h4>
         </Link>
       );
     }
   };
 
-  if (userKycVerificationStatus !== null) {
+  console.log("userKycData", userKycData);
+  console.log("userKycVerificationStatus", userKycVerificationStatus);
+
+  if (
+    userKycVerificationStatus !== null &&
+    userKycVerificationStatus.status === "pending"
+  ) {
     return (
       <div style={{ minHeight: "60vh" }}>
         <div className="text ">
@@ -253,35 +276,32 @@ const Kyc = () => {
         {WalletData()}
       </div>
     );
-  } else if (userKycVerificationStatus === null) {
-    return (
-      <>
-        <div style={{ minHeight: "60vh" }}>
-          <h1 className="display-2 ml-5 text-center fw-bold text-Black position-absolute top-50 start-50 translate-middle">
-            Start <br />
-            KYC <span className="text-gradient">Verification....</span>
-            <br />
-            <button className="btn btn-primary" onClick={() => verify()}>
-              {loading ? "Loading..." : " KYC verification"}
-            </button>
-          </h1>
-        </div>
-
-        {WalletData()}
-      </>
-    );
   }
+  // else if (userKycVerificationStatus === null) {
+  //   return (
+  //     <>
+  //       <div style={{ minHeight: "60vh" }}>
+  //         <h1 className="display-2 ml-5 text-center fw-bold text-Black position-absolute top-50 start-50 translate-middle">
+  //           Start <br />
+  //           KYC <span className="text-gradient">Verification....</span>
+  //           <br />
+  //           <button className="btn btn-primary" onClick={() => verify()}>
+  //             {loading ? "Loading..." : " KYC verification"}
+  //           </button>
+  //         </h1>
+  //       </div>
+
+  //       {WalletData()}
+  //     </>
+  //   );
+  // }
 
   return (
-    <div style={{ minHeight: "60vh" }}>
+    <div style={{ minHeight: "90vh" }}>
       <div className="text ">
         {isKYCDataLoading ? (
           <h1 className="position-absolute top-50 start-50 translate-middle">
             Loading...
-          </h1>
-        ) : userKycData?.status === "pending" ? (
-          <h1 className="position-absolute top-50 start-50 translate-middle">
-            Verification Pending
           </h1>
         ) : userKycData?.status === "completed" ? (
           userKycData.verified ? (
@@ -292,7 +312,10 @@ const Kyc = () => {
             </>
           ) : (
             <>
-              <h1 className="position-absolute top-50 start-50 translate-middle">
+              <h1
+                className="position-absolute start-50 translate-middle"
+                style={{ top: "35%" }}
+              >
                 Verification Failed
                 <h4 className="mt-1 text-center mb-5">
                   Attempts Left:{" "}
@@ -315,7 +338,8 @@ const Kyc = () => {
           )
         ) : userKycData?.status === "unused" ||
           userKycData?.status === "new" ||
-          userKycData === null ? (
+          userKycData === null ||
+          userKycVerificationStatus === null ? (
           <>
             <h1 className="display-2 ml-5 text-center fw-bold text-Black position-absolute top-50 start-50 translate-middle">
               Start <br />
