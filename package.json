@@ -22,7 +22,6 @@
     "jwt-decode": "^3.1.2",
     "marquee": "^0.2.1",
     "motion": "^10.16.4",
-    "node-sass": "^8.0.0",
     "prop-types": "^15.8.1",
     "react": "^18.2.0",
     "react-apexcharts": "^1.4.0",
@@ -57,7 +56,7 @@
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
-    "sass": "node-sass --watch src/assets/scss/main.scss src/assets/css/style.css --source-map src/assets/css/style.css.map"
+    "sass": "sass --watch src/assets/scss/main.scss src/assets/css/style.css --source-map"
   },
   "eslintConfig": {
     "extends": [
