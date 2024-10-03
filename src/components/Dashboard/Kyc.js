@@ -6,6 +6,8 @@ import { url, setHeaders } from "../../slices/api";
 import Button from "react-bootstrap/esm/Button";
 import Modal from "react-bootstrap/Modal";
 import { toast } from "react-toastify";
+import { useAccount } from "wagmi";
+import { evaluateRisk } from "../../utils/Utils";
 
 const Kyc = () => {
   const [loading, setLoading] = useState(false);
@@ -18,6 +20,8 @@ const Kyc = () => {
   const [userData, setUserData] = useState(null);
   const [userKycVerificationStatus, setUserKycVerificationStatus] =
     useState(null);
+  const { address, isConnected, status, addresses } = useAccount();
+  // console.log({ address, isConnected, status, addresses });
 
   // ----------------- DONT SHOW KYC BTN UNTIL USER IS LOADED AS WE SEND EXTERNAL ID WITH IT
 
@@ -47,62 +51,85 @@ const Kyc = () => {
             const activeWallet = data.wallets.filter(
               (wallet) => wallet.active === true
             );
-            setActiveWalletData(activeWallet);
-            console.log("activeWalletactiveWallet", activeWallet);
+            if (activeWallet.length > 0 && address) {
+              // we can extract this data from useAccount() hook, why not do it instead?
+              const doubleCheckWithAccountHook =
+                address === activeWallet[0].address ? activeWallet : [];
+              setActiveWalletData(doubleCheckWithAccountHook);
+              console.log("activeWalletactiveWallet", activeWallet);
 
-            if (activeWallet[0]?.addressVerificationStatus === null) {
-              const verifyAddress = async () => {
-                try {
-                  const verifyAMLResponse = await axios.post(
-                    `${url}/kyc/verify-aml`,
-                    {
-                      walletAddress: activeWallet[0].address,
-                      asset: "ETH",
-                    }
-                  );
-
-                  if (verifyAMLResponse.data) {
-                    await axios.patch(
-                      `${url}/users/wallet/update/${user._id}`,
+              if (
+                activeWallet[0]?.addressVerificationStatus === null &&
+                address === activeWallet[0].address
+              ) {
+                const verifyAddress = async () => {
+                  try {
+                    const verifyAMLResponse = await axios.post(
+                      `${url}/kyc/verify-aml`,
                       {
-                        walletAddresses: data.wallets.map(
-                          (wallet) => wallet.address
-                        ),
-                        activeWallet: activeWallet[0].address,
-                        amlStatusUpdate: verifyAMLResponse.data,
+                        walletAddress: activeWallet[0].address,
+                        asset: "ETH",
                       }
                     );
 
-                    // Fetch updated user data after AML verification
-                    const updatedUserResponse = await axios.get(
-                      `${url}/users/find/${user._id}`,
-                      {
-                        headers: headers,
-                      }
-                    );
-                    setUserData(updatedUserResponse.data);
-                    const updateWallet =
-                      updatedUserResponse.data.wallets.filter(
-                        (wallet) => wallet.active === true
+                    if (verifyAMLResponse.data) {
+                      // console.log(
+                      //   "activeWallet[0]?.addressVerificationStatus",
+                      //   verifyAMLResponse.data.data.
+                      // );
+                      // const evaluationResult = evaluateRisk(
+                      //   verifyAMLResponse.data.data
+                      // );
+                      // console.log(
+                      //   "evaluationResultevaluationResult",
+                      //   evaluationResult
+                      // );
+                      await axios.patch(
+                        `${url}/users/wallet/update/${user._id}`,
+                        {
+                          walletAddresses: data.wallets.map(
+                            (wallet) => wallet.address
+                          ),
+                          activeWallet: activeWallet[0].address,
+                          amlStatusUpdate: verifyAMLResponse.data,
+                          // evaluationResult: evaluationResult,
+                        }
                       );
-                    setActiveWalletData(updateWallet);
-                  } else {
-                    toast.error("Error adding AML address verification");
+
+                      // Fetch updated user data after AML verification
+                      const updatedUserResponse = await axios.get(
+                        `${url}/users/find/${user._id}`,
+                        {
+                          headers: headers,
+                        }
+                      );
+                      setUserData(updatedUserResponse.data);
+                      const updateWallet =
+                        updatedUserResponse.data.wallets.filter(
+                          (wallet) => wallet.active === true
+                        );
+                      setActiveWalletData(updateWallet);
+                    } else {
+                      toast.error("Error adding AML address verification");
+                    }
+                  } catch (err) {
+                    console.error("Error verifying address:", err);
+                    toast.error("Error verifying address:", err);
                   }
-                } catch (err) {
-                  console.error("Error verifying address:", err);
-                  toast.error("Error verifying address:", err);
-                }
-              };
-              verifyAddress();
+                };
+                verifyAddress();
+              }
+            } else {
+              console.warn("Address or active wallet is undefined");
             }
+            // if end
           } catch (walletError) {
             console.error("Error processing wallet data:", walletError);
             toast.error("Error processing wallet data");
           }
 
-          console.log("data._id", data._id);
-          console.log("data.verification_id", data.verification_id);
+          // console.log("data._id", data._id);
+          // console.log("data.verification_id", data.verification_id);
 
           // Fetch KYC Data Logic
           if (data._id && data.verification_id) {
@@ -128,7 +155,7 @@ const Kyc = () => {
                   );
                   setUserKycVerificationStatus(null); // Skip pending status
                   setUserKycData(kycRes.data.kyc_data);
-                  console.log("kycRes.data", kycRes.data);
+                  // console.log("kycRes.data", kycRes.data);
                   setIsKYCDataLoading(false);
                 } catch (kycError) {
                   setIsKYCDataLoading(false);
@@ -158,6 +185,41 @@ const Kyc = () => {
       fetchUserData();
     }
   }, [user._id]);
+
+  // useEffect(() => {
+  //   const handleRiskEvalutaion = async () => {
+  //     if (activeWalletData[0]?.addressVerificationStatus.data) {
+  //       const evaluationResult = evaluateRisk(
+  //         activeWalletData[0]?.addressVerificationStatus.data
+  //       );
+  //       await axios.patch(
+  //         `${url}/users/wallet/update/${user._id}`,
+  //         {
+  //           walletAddresses: data.wallets.map(
+  //             (wallet) => wallet.address
+  //           ),
+  //           activeWallet: activeWallet[0].address,
+  //           amlStatusUpdate: verifyAMLResponse.data,
+  //         }
+  //       );
+
+  //       // Fetch updated user data after AML verification
+  //       const updatedUserResponse = await axios.get(
+  //         `${url}/users/find/${user._id}`,
+  //         {
+  //           headers: headers,
+  //         }
+  //       );
+  //       setUserData(updatedUserResponse.data);
+  //       const updateWallet =
+  //         updatedUserResponse.data.wallets.filter(
+  //           (wallet) => wallet.active === true
+  //         );
+  //       setActiveWalletData(updateWallet);
+  //     }
+  //   };
+  //   handleRiskEvalutaion();
+  // }, [activeWalletData]);
 
   // console.log("useruseruser", user);
 
@@ -214,41 +276,72 @@ const Kyc = () => {
       toast.error("Error starting KYC verification.");
     }
   };
-  console.log("userDatauserData", userData);
+  // console.log("userDatauserData", userData);
 
   const WalletData = () => {
     if (userData?.wallets.length > 0 && activeWalletData.length > 0) {
       return (
         <div
           style={{
-            border: "1px solid blue",
+            border:
+              activeWalletData[0].addressVerificationStatus?.data.riskscore >
+              0.7
+                ? "3px solid #e74c3c" // Lighter red for risky
+                : "3px solid #27ae60", // Lighter green for safe
             borderRadius: "15px",
             padding: "30px",
+            boxShadow: "0 4px 8px rgba(0, 0, 0, 0.1)", // Adds depth with a subtle shadow
             position: "absolute",
             bottom: "0",
+            maxWidth: "80%",
+            backgroundColor:
+              activeWalletData[0].addressVerificationStatus?.data.riskscore >
+              0.7
+                ? "#cc0000"
+                : "#ADD8E6", // Light background for better contrast
+            whiteSpace: "nowrap", // Prevent wrapping
+            overflow: "hidden", // Hide overflow if text is too long
+            textOverflow: "ellipsis",
           }}
           className="start-50 translate-middle"
         >
-          <h5 className="text-center fw-bold text-Black">
+          {activeWalletData[0].addressVerificationStatus?.data.riskscore >
+            0.7 && (
+            <Link to={"/"}>
+              <h4
+                className="text-center fw-bold"
+                style={{ color: "#2c3e50", textDecoration: "underline" }}
+                // className="text-center fw-bold text-Black start-50 translate-middle"
+                // style={{ position: "absolute", bottom: "0" }}
+              >
+                Your Wallet is risky, connect a new one
+              </h4>
+            </Link>
+          )}
+          <h5 className="text-center fw-bold" style={{ color: "#2c3e50" }}>
             <span>Wallet Address: </span>
             <span>{activeWalletData[0]?.address}</span>
           </h5>
 
-          <h5 className="text-center fw-bold text-Black">
+          <h5 className="text-center fw-bold" style={{ color: "#2c3e50" }}>
             <span>Network: </span>
             <span>
               {activeWalletData[0]?.addressVerificationStatus?.data.network}
             </span>
           </h5>
-          <h5 className="text-center fw-bold text-Black">
-            <span>Verification Status: </span>
-            <span>
-              {activeWalletData[0]?.addressVerificationStatus?.data.status ===
-              "pending"
-                ? "Results are pending"
-                : activeWalletData[0]?.addressVerificationStatus?.data.status}
-            </span>
-          </h5>
+
+          {activeWalletData[0].addressVerificationStatus?.data.riskscore <
+            0.7 && (
+            <h5 className="text-center fw-bold" style={{ color: "#2c3e50" }}>
+              <span>Verification Status: </span>
+              <span>
+                {activeWalletData[0]?.addressVerificationStatus?.data.status ===
+                "pending"
+                  ? "Results are pending"
+                  : activeWalletData[0]?.addressVerificationStatus?.data.status}
+              </span>
+            </h5>
+          )}
         </div>
       );
     } else if (!isKYCDataLoading) {
@@ -265,8 +358,8 @@ const Kyc = () => {
     }
   };
 
-  console.log("userKycData", userKycData);
-  console.log("userKycVerificationStatus", userKycVerificationStatus);
+  // console.log("userKycData", userKycData);
+  // console.log("userKycVerificationStatus", userKycVerificationStatus);
 
   if (
     userKycVerificationStatus !== null &&
