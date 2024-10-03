@@ -351,7 +351,7 @@ const Kyc = () => {
             className="text-center fw-bold text-Black start-50 translate-middle"
             style={{ position: "absolute", bottom: "0" }}
           >
-            Connect a wallet to verify it's status (Click here)
+            Wallet not detected, Click here to connect
           </h4>
         </Link>
       );
