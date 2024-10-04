@@ -2,6 +2,19 @@
 	{
 		"inputs": [
 			{
+				"internalType": "address",
+				"name": "_address",
+				"type": "address"
+			}
+		],
+		"name": "AccountantAddress",
+		"outputs": [],
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
 				"components": [
 					{
 						"internalType": "string",
@@ -29,6 +42,20 @@
 		],
 		"name": "CreateEscrow",
 		"type": "event"
+	},
+	{
+		"inputs": [],
+		"name": "CreateEscrows",
+		"outputs": [],
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"inputs": [],
+		"name": "EndReSell",
+		"outputs": [],
+		"stateMutability": "nonpayable",
+		"type": "function"
 	},
 	{
 		"anonymous": false,
@@ -63,35 +90,110 @@
 		"type": "event"
 	},
 	{
+		"inputs": [],
+		"name": "renounceOwnership",
+		"outputs": [],
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"inputs": [],
+		"name": "SatrtSelling",
+		"outputs": [],
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
 		"inputs": [
 			{
 				"internalType": "address",
-				"name": "_address",
+				"name": "_PropertyOwnerAddress",
+				"type": "address"
+			},
+			{
+				"internalType": "address",
+				"name": "_WhitelistAddress",
+				"type": "address"
+			},
+			{
+				"internalType": "uint256",
+				"name": "_PurchasePrice",
+				"type": "uint256"
+			},
+			{
+				"internalType": "uint256",
+				"name": "_ListingFee",
+				"type": "uint256"
+			},
+			{
+				"internalType": "uint256",
+				"name": "_InitialReserves",
+				"type": "uint256"
+			},
+			{
+				"internalType": "uint256",
+				"name": "_TokenPrice",
+				"type": "uint256"
+			},
+			{
+				"internalType": "uint256",
+				"name": "_BuySellingFee",
+				"type": "uint256"
+			},
+			{
+				"internalType": "address",
+				"name": "__SDTokenAddress",
 				"type": "address"
 			}
 		],
-		"name": "AccountantAddress",
+		"name": "setInfo",
 		"outputs": [],
 		"stateMutability": "nonpayable",
 		"type": "function"
 	},
 	{
 		"inputs": [],
-		"name": "CreateEscrows",
+		"name": "StatrtResell",
+		"outputs": [],
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "address",
+				"name": "newOwner",
+				"type": "address"
+			}
+		],
+		"name": "transferOwnership",
+		"outputs": [],
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "uint256",
+				"name": "_fee",
+				"type": "uint256"
+			}
+		],
+		"name": "updateBuySellingFee",
 		"outputs": [],
 		"stateMutability": "nonpayable",
 		"type": "function"
 	},
 	{
 		"inputs": [],
-		"name": "EndReSell",
+		"name": "updatedTokenPrice",
 		"outputs": [],
 		"stateMutability": "nonpayable",
 		"type": "function"
 	},
 	{
 		"inputs": [],
-		"name": "EscrowAccount",
+		"name": "EscrowContractAddress",
 		"outputs": [
 			{
 				"internalType": "address",
@@ -110,59 +212,6 @@
 				"internalType": "address",
 				"name": "",
 				"type": "address"
-			}
-		],
-		"stateMutability": "view",
-		"type": "function"
-	},
-	{
-		"inputs": [],
-		"name": "PropertyOwnerAddress",
-		"outputs": [
-			{
-				"internalType": "address",
-				"name": "",
-				"type": "address"
-			}
-		],
-		"stateMutability": "view",
-		"type": "function"
-	},
-	{
-		"inputs": [],
-		"name": "SatrtSelling",
-		"outputs": [],
-		"stateMutability": "nonpayable",
-		"type": "function"
-	},
-	{
-		"inputs": [],
-		"name": "StatrtResell",
-		"outputs": [],
-		"stateMutability": "nonpayable",
-		"type": "function"
-	},
-	{
-		"inputs": [],
-		"name": "TokenCount",
-		"outputs": [
-			{
-				"internalType": "uint256",
-				"name": "",
-				"type": "uint256"
-			}
-		],
-		"stateMutability": "view",
-		"type": "function"
-	},
-	{
-		"inputs": [],
-		"name": "TokenPrice",
-		"outputs": [
-			{
-				"internalType": "uint256",
-				"name": "",
-				"type": "uint256"
 			}
 		],
 		"stateMutability": "view",
@@ -238,6 +287,11 @@
 								"internalType": "bool",
 								"name": "Resell",
 								"type": "bool"
+							},
+							{
+								"internalType": "address",
+								"name": "SDTokentokenAddress",
+								"type": "address"
 							}
 						],
 						"internalType": "struct IProp.PropertyInfo",
@@ -294,85 +348,41 @@
 	},
 	{
 		"inputs": [],
-		"name": "renounceOwnership",
-		"outputs": [],
-		"stateMutability": "nonpayable",
-		"type": "function"
-	},
-	{
-		"inputs": [
+		"name": "PropertyOwnerAddress",
+		"outputs": [
 			{
 				"internalType": "address",
-				"name": "_PropertyOwnerAddress",
-				"type": "address"
-			},
-			{
-				"internalType": "address",
-				"name": "_WhitelistAddress",
-				"type": "address"
-			},
-			{
-				"internalType": "uint256",
-				"name": "_PurchasePrice",
-				"type": "uint256"
-			},
-			{
-				"internalType": "uint256",
-				"name": "_ListingFee",
-				"type": "uint256"
-			},
-			{
-				"internalType": "uint256",
-				"name": "_InitialReserves",
-				"type": "uint256"
-			},
-			{
-				"internalType": "uint256",
-				"name": "_TokenPrice",
-				"type": "uint256"
-			},
-			{
-				"internalType": "uint256",
-				"name": "_BuySellingFee",
-				"type": "uint256"
-			}
-		],
-		"name": "setInfo",
-		"outputs": [],
-		"stateMutability": "nonpayable",
-		"type": "function"
-	},
-	{
-		"inputs": [
-			{
-				"internalType": "address",
-				"name": "newOwner",
+				"name": "",
 				"type": "address"
 			}
 		],
-		"name": "transferOwnership",
-		"outputs": [],
-		"stateMutability": "nonpayable",
-		"type": "function"
-	},
-	{
-		"inputs": [
-			{
-				"internalType": "uint256",
-				"name": "_fee",
-				"type": "uint256"
-			}
-		],
-		"name": "updateBuySellingFee",
-		"outputs": [],
-		"stateMutability": "nonpayable",
+		"stateMutability": "view",
 		"type": "function"
 	},
 	{
 		"inputs": [],
-		"name": "updatedTokenPrice",
-		"outputs": [],
-		"stateMutability": "nonpayable",
+		"name": "TokenCount",
+		"outputs": [
+			{
+				"internalType": "uint256",
+				"name": "",
+				"type": "uint256"
+			}
+		],
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"inputs": [],
+		"name": "TokenPrice",
+		"outputs": [
+			{
+				"internalType": "uint256",
+				"name": "",
+				"type": "uint256"
+			}
+		],
+		"stateMutability": "view",
 		"type": "function"
 	}
 ]
