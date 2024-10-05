@@ -458,7 +458,7 @@ const Sidebar = () => {
             if (tokensPrice == 0) {
               settokensPrice(result.PropertyDetails.TokenPrice);
             }
-            setcontractAddr(result.PropertyDetails.propertyAddress);
+            // setcontractAddr(result.PropertyDetails.propertyAddress);
             setbuySell(result.PropertyDetails.BuySellingFee);
             console.log("Property Details", result.PropertyDetails);
           })
@@ -492,10 +492,10 @@ const Sidebar = () => {
       }
       EscrowAddressFetch();
     }
-  },[EscrowAddress])
+  })
 
   useEffect(() => {
-    if(EscrowAddress != "0x0000000000000000000000000000000000000000"){
+    if(EscrowAddress){
       const FetchEscrowBal = async () => {
         await EscrowBalance(EscrowAddress)
           .then((result) => {
@@ -507,6 +507,7 @@ const Sidebar = () => {
       FetchEscrowBal();
   }
 })
+console.log("EscrowAddress",EscrowAddress)
   // get contract details of property
   // useEffect(() => {
   //   if (window.ethereum) {

@@ -18,60 +18,123 @@ import { readContract } from '@wagmi/core'
 
 const USDCaddr = "0x0153002d20B96532C639313c2d54c3dA09109309";
 const USDTaddr = "0x80EDee6f667eCc9f63a0a6f55578F870651f06A4";
-const aggregatorV3InterfaceABI = [
-  {
-    inputs: [],
-    name: "decimals",
-    outputs: [{ internalType: "uint8", name: "", type: "uint8" }],
-    stateMutability: "view",
-    type: "function",
-  },
-  {
-    inputs: [],
-    name: "description",
-    outputs: [{ internalType: "string", name: "", type: "string" }],
-    stateMutability: "view",
-    type: "function",
-  },
-  {
-    inputs: [{ internalType: "uint80", name: "_roundId", type: "uint80" }],
-    name: "getRoundData",
-    outputs: [
-      { internalType: "uint80", name: "roundId", type: "uint80" },
-      { internalType: "int256", name: "answer", type: "int256" },
-      { internalType: "uint256", name: "startedAt", type: "uint256" },
-      { internalType: "uint256", name: "updatedAt", type: "uint256" },
-      { internalType: "uint80", name: "answeredInRound", type: "uint80" },
-    ],
-    stateMutability: "view",
-    type: "function",
-  },
-  {
-    inputs: [],
-    name: "latestRoundData",
-    outputs: [
-      { internalType: "uint80", name: "roundId", type: "uint80" },
-      { internalType: "int256", name: "answer", type: "int256" },
-      { internalType: "uint256", name: "startedAt", type: "uint256" },
-      { internalType: "uint256", name: "updatedAt", type: "uint256" },
-      { internalType: "uint80", name: "answeredInRound", type: "uint80" },
-    ],
-    stateMutability: "view",
-    type: "function",
-  },
-  {
-    inputs: [],
-    name: "version",
-    outputs: [{ internalType: "uint256", name: "", type: "uint256" }],
-    stateMutability: "view",
-    type: "function",
-  },
-]
+// const aggregatorV3InterfaceABI = [
+//   {
+//     inputs: [],
+//     name: "decimals",
+//     outputs: [{ internalType: "uint8", name: "", type: "uint8" }],
+//     stateMutability: "view",
+//     type: "function",
+//   },
+//   {
+//     inputs: [],
+//     name: "description",
+//     outputs: [{ internalType: "string", name: "", type: "string" }],
+//     stateMutability: "view",
+//     type: "function",
+//   },
+//   {
+//     inputs: [{ internalType: "uint80", name: "_roundId", type: "uint80" }],
+//     name: "getRoundData",
+//     outputs: [
+//       { internalType: "uint80", name: "roundId", type: "uint80" },
+//       { internalType: "int256", name: "answer", type: "int256" },
+//       { internalType: "uint256", name: "startedAt", type: "uint256" },
+//       { internalType: "uint256", name: "updatedAt", type: "uint256" },
+//       { internalType: "uint80", name: "answeredInRound", type: "uint80" },
+//     ],
+//     stateMutability: "view",
+//     type: "function",
+//   },
+//   {
+//     inputs: [],
+//     name: "latestRoundData",
+//     outputs: [
+//       { internalType: "uint80", name: "roundId", type: "uint80" },
+//       { internalType: "int256", name: "answer", type: "int256" },
+//       { internalType: "uint256", name: "startedAt", type: "uint256" },
+//       { internalType: "uint256", name: "updatedAt", type: "uint256" },
+//       { internalType: "uint80", name: "answeredInRound", type: "uint80" },
+//     ],
+//     stateMutability: "view",
+//     type: "function",
+//   },
+//   {
+//     inputs: [],
+//     name: "version",
+//     outputs: [{ internalType: "uint256", name: "", type: "uint256" }],
+//     stateMutability: "view",
+//     type: "function",
+//   },
+// ]
 
+const aggregatorV3InterfaceABI = [
+	{
+		"inputs": [],
+		"name": "_answer",
+		"outputs": [
+			{
+				"internalType": "int256",
+				"name": "",
+				"type": "int256"
+			}
+		],
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"inputs": [],
+		"name": "latestRoundData",
+		"outputs": [
+			{
+				"internalType": "uint80",
+				"name": "roundId",
+				"type": "uint80"
+			},
+			{
+				"internalType": "int256",
+				"name": "answer",
+				"type": "int256"
+			},
+			{
+				"internalType": "uint256",
+				"name": "startedAt",
+				"type": "uint256"
+			},
+			{
+				"internalType": "uint256",
+				"name": "updatedAt",
+				"type": "uint256"
+			},
+			{
+				"internalType": "uint80",
+				"name": "answeredInRound",
+				"type": "uint80"
+			}
+		],
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "int256",
+				"name": "value",
+				"type": "int256"
+			}
+		],
+		"name": "setValue",
+		"outputs": [],
+		"stateMutability": "nonpayable",
+		"type": "function"
+	}
+]
+const SEDTMockOracle = "0xcb4ADE6C45599031b59Cce0DC33Ef1b873411F5D";
 
 const OrderForm = () => {
   const params = useParams();
   const [USDTprice, setUSDTprice] = useState(0);
+  const [SEDTprice, setSEDTprice] = useState(0);
   const [USDCprice, setUSDCprice] = useState(0);
   const [usdtToken, setusdtToken] = useState();
   const [isApprove, setisApprove] = useState(false);
@@ -85,7 +148,7 @@ const OrderForm = () => {
   const [loadEscrow, setloadEscrow] = useState();
   const [EscrowAddress, setEscrowAddress] = useState(null);
   const [tokensPrice, settokensPrice] = useState(0);
-  const [datas, setdatas] = useState([]);
+  const [datas, setdatas] = useState({});
   const [totaltoken, settotaltoken] = useState();
   const [loading, setLoading] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
@@ -126,7 +189,48 @@ const OrderForm = () => {
         // console.error('Failed to copy: ', err);
       });
   };
-  // console.log("USDTprice",tokensPrice)
+  
+  const FetchSEDTvalue = async () => {
+    const result = await readContract(config, {
+      abi: aggregatorV3InterfaceABI,
+      address: SEDTMockOracle,
+      functionName: '_answer',
+    })
+    return result;
+  }
+  
+  useEffect(() => {
+        const USDTPrice = async () => {
+          await FetchSEDTvalue()
+            .then((result) => {
+              if (SEDTprice == 0) {
+                setSEDTprice(result);
+              }
+            })
+        }
+        USDTPrice();
+      },[SEDTprice]);
+      const SEDTApprove = async () => {
+        try {
+          let tokens = ((tokensPrice * quantity * 10 ** 6) / (USDTprice)).toFixed(0).toString();
+          let fee = ((tokens / (10 ** 10)) * buySell).toFixed(0).toString();
+          setcheckUSDTTokens(Number(tokens) + Number(fee));
+          setLoading(true);
+          await UsdtContract?.methods
+            .approve(EscrowAddress, Number(tokens) + Number(fee))
+            .send({ from: accounts[0] })
+            .then(async () => {
+              const QuantNo = Number(quantity * 10 ** 18).toFixed(0).toString();
+              await loadEscrow?.methods
+                .BuyPropertyToken(accounts[0], tokenType, QuantNo)
+                .send({ from: accounts[0] });
+              setLoading(false);
+            })
+        } catch (error) {
+          setLoading(false);
+          console.log("First Approve Error", error);
+        }
+      };
   const UsdtApprove = async () => {
     try {
       let tokens = ((tokensPrice * quantity * 10 ** 6) / (USDTprice)).toFixed(0).toString();
@@ -183,24 +287,24 @@ const OrderForm = () => {
   //   }
   // },[])
 
-  const CalculateValue = (_tokensPrice, _quantity) => {
-    if (tokenType == 0) {
-      let tokens = ((_tokensPrice * (_quantity)*1e6) / (USDTprice)).toFixed(0).toString();
-      let fee = ((tokens/1e10) * buySell).toFixed(0).toString();
-      // setCalToken(Number(tokens) + Number(fee))
-      const num = Number(tokens) + Number(fee)
-      return num;
-    } else {
-      let tokens = ((_tokensPrice * (_quantity)*1e6) / (USDCprice)).toFixed(0).toString();
-      let fee = ((tokens / (1e10)) * buySell).toFixed(0).toString();
-      // setCalToken(Number(tokens) + Number(fee))
-      const num = Number(tokens) + Number(fee)
-      return num;
-    }
-  }
-  const checkNumbers = useMemo(() => {
-    return CalculateValue(tokensPrice, quantity)
-  }, [tokensPrice, quantity])
+  // const CalculateValue = (_tokensPrice, _quantity) => {
+  //   if (tokenType == 0) {
+  //     let tokens = ((_tokensPrice * (_quantity)*1e6) / (USDTprice)).toFixed(0).toString();
+  //     let fee = ((tokens/1e10) * buySell).toFixed(0).toString();
+  //     // setCalToken(Number(tokens) + Number(fee))
+  //     const num = Number(tokens) + Number(fee)
+  //     return num;
+  //   } else {
+  //     let tokens = ((_tokensPrice * (_quantity)*1e6) / (USDCprice)).toFixed(0).toString();
+  //     let fee = ((tokens / (1e10)) * buySell).toFixed(0).toString();
+  //     // setCalToken(Number(tokens) + Number(fee))
+  //     const num = Number(tokens) + Number(fee)
+  //     return num;
+  //   }
+  // }
+  // const checkNumbers = useMemo(() => {
+  //   return CalculateValue(tokensPrice, quantity)
+  // }, [tokensPrice, quantity])
 
   // update account
   useEffect(() => {
@@ -215,55 +319,42 @@ const OrderForm = () => {
   });
 
 
-  // useEffect(()=>{
-  // 	//destroyExistingSlider();
-  // 	var slider = document.getElementById('slider');
-  // 	noUiSlider.create(slider, {
-  // 		start: [20, 80],
-  // 		connect: true,
-  // 		range: {
-  // 			'min': 0,
-  // 			'max': 100
-  // 		}
-  // 	});
-  //});
 
   //  fetch USDT and USDC price
-  useEffect(() => {
-    if (window.ethereum) {
-      if (web3) {
-        const USDTPrice = async () => {
-          const USDTpriceFeed = new web3.eth.Contract(aggregatorV3InterfaceABI, USDTaddr);
-          USDTpriceFeed.methods.latestRoundData().call()
-            .then((roundData) => {
-              // const price = Number((roundData.answer) / 1e8).toFixed(3);
-              if (USDTprice == 0) {
-                setUSDTprice(roundData.answer);
-              }
-            })
-        }
-        USDTPrice();
-      }
-      if (web3) {
-        const USDCPrice = async () => {
-          const USDCpriceFeed = new web3.eth.Contract(aggregatorV3InterfaceABI, USDCaddr);
-          USDCpriceFeed.methods.latestRoundData().call()
-            .then((roundData) => {
-              // const price = Number((roundData.answer) / 1e8).toFixed(3);
+  // useEffect(() => {
+  //   if (window.ethereum) {
+  //     if (web3) {
+  //       const USDTPrice = async () => {
+  //         const USDTpriceFeed = new web3.eth.Contract(aggregatorV3InterfaceABI, USDTaddr);
+  //         USDTpriceFeed.methods.latestRoundData().call()
+  //           .then((roundData) => {
+  //             // const price = Number((roundData.answer) / 1e8).toFixed(3);
+  //             if (USDTprice == 0) {
+  //               setUSDTprice(roundData.answer);
+  //             }
+  //           })
+  //       }
+  //       USDTPrice();
+  //     }
+  //     if (web3) {
+  //       const USDCPrice = async () => {
+  //         const USDCpriceFeed = new web3.eth.Contract(aggregatorV3InterfaceABI, USDCaddr);
+  //         USDCpriceFeed.methods.latestRoundData().call()
+  //           .then((roundData) => {
+  //             // const price = Number((roundData.answer) / 1e8).toFixed(3);
 
-              if (USDCprice == 0) {
-                setUSDCprice(roundData.answer);
-              }
-            })
-        }
-        USDCPrice();
-      }
-    }
-  }, [])
+  //             if (USDCprice == 0) {
+  //               setUSDCprice(roundData.answer);
+  //             }
+  //           })
+  //       }
+  //       USDCPrice();
+  //     }
+  //   }
+  // }, [])
 
   // get property Address
   useEffect(() => {
-    if (window.ethereum) {
       const fetchProduct = async () => {
         try {
           // setLoading(true);
@@ -276,117 +367,210 @@ const OrderForm = () => {
         }
       };
       fetchProduct();
-    }
   }, [params.id, checkID])
 
   // get contract of property
-  useEffect(() => {
-    if (window.ethereum) {
-      if (checkID) {
-        const fetchContract = async () => {
-          try {
-            const contractofProperty = new web3.eth.Contract(
-              Property_ABI,
-              product.uid
-            );
-            if (loadchain == null) {
-              setloadchain(contractofProperty);
-            }
-          } catch (err) {
-            console.log(err);
-          }
-        };
-        fetchContract();
-      }
-    }
-  })
+  // useEffect(() => {
+  //   if (window.ethereum) {
+  //     if (checkID) {
+  //       const fetchContract = async () => {
+  //         try {
+  //           const contractofProperty = new web3.eth.Contract(
+  //             Property_ABI,
+  //             product.uid
+  //           );
+  //           if (loadchain == null) {
+  //             setloadchain(contractofProperty);
+  //           }
+  //         } catch (err) {
+  //           console.log(err);
+  //         }
+  //       };
+  //       fetchContract();
+  //     }
+  //   }
+  // })
   
   // get contract details of property
-  useEffect(() => {
-    if (window.ethereum) {
-      if (loadchain) {
-        const fetchData = async () => {
-          try {
-            let completeProp = await loadchain.methods
-              .getCompletePropDetails()
-              .call();
-            if (tokensPrice == 0) {
-              settokensPrice(completeProp.PropertyDetails.TokenPrice);
-            }
-            setcontractAddr(completeProp.PropertyDetails.propertyAddress);
-            setbuySell(completeProp.PropertyDetails.BuySellingFee);
-            setdatas(completeProp);
-            let TotalTokens = await loadchain.methods
-              .TokenCount()
-              .call();
-            settotaltoken(TotalTokens);
-          } catch (err) {
-            console.log("Property Details Fetch error", err);
-          }
-        };
-        fetchData();
-      }
-    }
-  }, [loadchain])
+  // useEffect(() => {
+  //   if (window.ethereum) {
+  //     if (loadchain) {
+  //       const fetchData = async () => {
+  //         try {
+  //           let completeProp = await loadchain.methods
+  //             .getCompletePropDetails()
+  //             .call();
+  //           if (tokensPrice == 0) {
+  //             settokensPrice(completeProp.PropertyDetails.TokenPrice);
+  //           }
+  //           setcontractAddr(completeProp.PropertyDetails.propertyAddress);
+  //           setbuySell(completeProp.PropertyDetails.BuySellingFee);
+  //           setdatas(completeProp);
+  //           let TotalTokens = await loadchain.methods
+  //             .TokenCount()
+  //             .call();
+  //           settotaltoken(TotalTokens);
+  //         } catch (err) {
+  //           console.log("Property Details Fetch error", err);
+  //         }
+  //       };
+  //       fetchData();
+  //     }
+  //   }
+  // }, [loadchain])
+  const CompleteDetaisl = async (addres) => {
+    const result = await readContract(config, {
+      abi: Property_ABI,
+      address: addres,
+      functionName: 'getCompletePropDetails',
+    })
+    return result;
+  }
+  const EscrowAcont = async (addres) => {
+    const result = await readContract(config, {
+      abi: Property_ABI,
+      address: addres,
+      functionName: 'EscrowContractAddress',
+    })
+    return result;
+  }
 
+  const EscrowBalance = async (addres) => {
+    const result = await readContract(config, {
+      abi: Escrow_ABI,
+      address: addres,
+      functionName: 'balanceOf',
+      args: [addres],
+    })
+    return result;
+  }
+
+  const TokenCont = async (addres) => {
+    const result = await readContract(config, {
+      abi: Property_ABI,
+      address: addres,
+      functionName: 'TokenCount',
+    })
+    return result;
+  }
+
+    // get contract of property
+    useEffect(() => {
+      if (checkID) {
+        const fetchda = async () => {
+          await CompleteDetaisl(checkID)
+            .then((result) => {
+              setdatas(result.PropertyDetails)
+              if (tokensPrice == 0) {
+                settokensPrice(result.PropertyDetails.TokenPrice);
+              }
+              // setcontractAddr(result.PropertyDetails.propertyAddress);
+              setbuySell(result.PropertyDetails.BuySellingFee);
+              // console.log("Property Details", result.PropertyDetails);
+            })
+        }
+        fetchda();
+      }
+    },[checkID])
+
+    console.log("tokensPrice",tokensPrice)
+    useEffect(() => {
+      if(checkID){
+        const FetchTokenCount = async () => {
+          await TokenCont(checkID)
+            .then((result) => {
+              settotaltoken(result)
+            })
+        }
+        FetchTokenCount();
+      }
+    },[totaltoken])
   // get Escrow Address of property
   useEffect(() => {
-    if (window.ethereum) {
-      if (loadchain) {
-        const fetchEscrowAdd = async () => {
-          try {
-            let Add = await loadchain.methods.EscrowAccount().call();
+    if(checkID){
+      const EscrowAddressFetch = async () => {
+        await EscrowAcont(checkID)
+          .then((result) => {
             if (EscrowAddress == null) {
-              setEscrowAddress(Add);
+              setEscrowAddress(result);
             }
-            !textToCopy && setTextToCopy(Add);
-          } catch (error) {
-            console.log("Ecrow Address Error", error);
-          }
-        }
-        fetchEscrowAdd();
+            !textToCopy && setTextToCopy(result);
+          })
       }
+      EscrowAddressFetch();
     }
-  })
+  },[EscrowAddress])
+
+  useEffect(() => {
+    if(EscrowAddress){
+      const FetchEscrowBal = async () => {
+        await EscrowBalance(EscrowAddress)
+          .then((result) => {
+            if (balnc == 0) {
+              setbalnc((Number(result) / 1e18).toFixed(4));
+            }
+          })
+      }
+      FetchEscrowBal();
+  }
+})
+  // useEffect(() => {
+  //   if (window.ethereum) {
+  //     if (loadchain) {
+  //       const fetchEscrowAdd = async () => {
+  //         try {
+  //           let Add = await loadchain.methods.EscrowAccount().call();
+  //           if (EscrowAddress == null) {
+  //             setEscrowAddress(Add);
+  //           }
+  //           !textToCopy && setTextToCopy(Add);
+  //         } catch (error) {
+  //           console.log("Ecrow Address Error", error);
+  //         }
+  //       }
+  //       fetchEscrowAdd();
+  //     }
+  //   }
+  // })
 
   // get Escrow Contract of property
-  useEffect(() => {
-    if (window.ethereum) {
-      if (EscrowAddress) {
-        const fetchEscrow = async () => {
-          try {
-            const contractofEscrow = new web3.eth.Contract(
-              Escrow_ABI,
-              EscrowAddress
-            );
-            setloadEscrow(contractofEscrow);
-          } catch (error) {
-            console.log("Ecrow Contract Error", error);
-          }
-        }
-        fetchEscrow();
-      }
-    }
-  }, [EscrowAddress])
+  // useEffect(() => {
+  //   if (window.ethereum) {
+  //     if (EscrowAddress) {
+  //       const fetchEscrow = async () => {
+  //         try {
+  //           const contractofEscrow = new web3.eth.Contract(
+  //             Escrow_ABI,
+  //             EscrowAddress
+  //           );
+  //           setloadEscrow(contractofEscrow);
+  //         } catch (error) {
+  //           console.log("Ecrow Contract Error", error);
+  //         }
+  //       }
+  //       fetchEscrow();
+  //     }
+  //   }
+  // }, [EscrowAddress])
 
   // get Escrow Balance of property
-  useEffect(() => {
-    if (window.ethereum) {
-      if (loadEscrow) {
-        const fetchBal = async () => {
-          try {
-            let bal = await loadEscrow.methods.balanceOf(EscrowAddress).call();
-            if (balnc == 0) {
-              setbalnc((Number(bal) / 1e18).toFixed(4));
-            }
-          } catch (error) {
-            console.log("Escrow Balance Error", error);
-          }
-        }
-        fetchBal();
-      }
-    }
-  })
+  // useEffect(() => {
+  //   if (window.ethereum) {
+  //     if (loadEscrow) {
+  //       const fetchBal = async () => {
+  //         try {
+  //           let bal = await loadEscrow.methods.balanceOf(EscrowAddress).call();
+  //           if (balnc == 0) {
+  //             setbalnc((Number(bal) / 1e18).toFixed(4));
+  //           }
+  //         } catch (error) {
+  //           console.log("Escrow Balance Error", error);
+  //         }
+  //       }
+  //       fetchBal();
+  //     }
+  //   }
+  // })
 
 
   return (
@@ -469,17 +653,15 @@ const OrderForm = () => {
                   onChange={(e) => setquantity(e.target.value)}
                   placeholder="0.00"
                 />
-                {tokenType == 0 ? (
+                {/* {tokenType == 0 ? (
                   <span className="input-group-text">
                     <span className="text-warning">
-                      {/* {Number(CalToken / 1e6).toFixed(3)}</span> {""}-USDT</span> */}
                       {Number(checkNumbers / 1e6).toFixed(3)}</span> {""}-USDT</span>
                 ) : (
                   <span className="input-group-text">
                     <span className="text-warning">
-                      {/* {Number(CalToken / 1e6).toFixed(3)}</span> {""}-USDC</span> */}
                       {Number(checkNumbers / 1e6).toFixed(3)}</span> {""}-USDC</span>
-                )}
+                )} */}
               </div>
             </div>
 
