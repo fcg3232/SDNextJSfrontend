@@ -95,7 +95,7 @@ const Sidebar = () => {
   const [datas, setdatas] = useState([]);
   const [buyerOrd, setbuyerOrd] = useState([]);
   const [sellerOrd, setsellerOrd] = useState([]);
-  const [totaltoken, settotaltoken] = useState();
+  const [totaltoken, settotaltoken] = useState(0);
   const [loading, setLoading] = useState(false);
   const [contractAddr, setcontractAddr] = useState();
   const [checkID, setcheckID] = useState();
@@ -124,7 +124,7 @@ const Sidebar = () => {
   const [CalToken, setCalToken] = useState('');
   const [CalTokens, setCalTokens] = useState('');
   const [buyerAddres, setbuyerAddres] = useState('');
-  const [buySell, setbuySell] = useState();
+  const [buySell, setbuySell] = useState(0);
   const [ordersId, setorderId] = useState();
   const [timeLeft, setTimeLeft] = useState(CountdownTimer());
   const dispatch = useAppDispatch();
@@ -459,36 +459,40 @@ const Sidebar = () => {
               settokensPrice(result.PropertyDetails.TokenPrice);
             }
             // setcontractAddr(result.PropertyDetails.propertyAddress);
+            if(buySell == 0){
             setbuySell(result.PropertyDetails.BuySellingFee);
+            }
             console.log("Property Details", result.PropertyDetails);
           })
       }
       fetchda();
     }
-  },[checkID])
+  },[datas])
 
   useEffect(() => {
     if(checkID){
       const FetchTokenCount = async () => {
-        await TokenCont(checkID)
+        if(totaltoken == 0){
+          await TokenCont(checkID)
           .then((result) => {
             settotaltoken(result)
           })
+        }
       }
       FetchTokenCount();
     }
-  },[totaltoken])
+  })
   
   useEffect(() => {
     if(checkID){
       const EscrowAddressFetch = async () => {
+        if (EscrowAddress == null) {
         await EscrowAcont(checkID)
           .then((result) => {
-            if (EscrowAddress == null) {
               setEscrowAddress(result);
-            }
             !TextToCopy && setTextToCopy(result);
           })
+        }
       }
       EscrowAddressFetch();
     }
@@ -497,17 +501,17 @@ const Sidebar = () => {
   useEffect(() => {
     if(EscrowAddress){
       const FetchEscrowBal = async () => {
+        if (balnc == 0) {
         await EscrowBalance(EscrowAddress)
           .then((result) => {
-            if (balnc == 0) {
               setbalnc((Number(result) / 1e18).toFixed(4));
-            }
           })
+        }
       }
       FetchEscrowBal();
   }
 })
-console.log("EscrowAddress",EscrowAddress)
+
   // get contract details of property
   // useEffect(() => {
   //   if (window.ethereum) {

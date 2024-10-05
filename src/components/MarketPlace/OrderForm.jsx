@@ -140,7 +140,7 @@ const OrderForm = () => {
   const [isApprove, setisApprove] = useState(false);
   const [tokenType, settokenType] = useState();
   const [TokenToUSD, setTokenToUSD] = useState();
-  const [buySell, setbuySell] = useState();
+  const [buySell, setbuySell] = useState(0);
   const [price, setprice] = useState();
   const [quantity, setquantity] = useState();
   const [product, setProduct] = useState({});
@@ -210,6 +210,7 @@ const OrderForm = () => {
         }
         USDTPrice();
       },[SEDTprice]);
+      
       const SEDTApprove = async () => {
         try {
           let tokens = ((tokensPrice * quantity * 10 ** 6) / (USDTprice)).toFixed(0).toString();
@@ -287,24 +288,31 @@ const OrderForm = () => {
   //   }
   // },[])
 
-  // const CalculateValue = (_tokensPrice, _quantity) => {
-  //   if (tokenType == 0) {
-  //     let tokens = ((_tokensPrice * (_quantity)*1e6) / (USDTprice)).toFixed(0).toString();
-  //     let fee = ((tokens/1e10) * buySell).toFixed(0).toString();
-  //     // setCalToken(Number(tokens) + Number(fee))
-  //     const num = Number(tokens) + Number(fee)
-  //     return num;
-  //   } else {
-  //     let tokens = ((_tokensPrice * (_quantity)*1e6) / (USDCprice)).toFixed(0).toString();
-  //     let fee = ((tokens / (1e10)) * buySell).toFixed(0).toString();
-  //     // setCalToken(Number(tokens) + Number(fee))
-  //     const num = Number(tokens) + Number(fee)
-  //     return num;
-  //   }
-  // }
-  // const checkNumbers = useMemo(() => {
-  //   return CalculateValue(tokensPrice, quantity)
-  // }, [tokensPrice, quantity])
+  const CalculateValue = (_tokensPrice, _quantity) => {
+    if (tokenType == 0) {
+      let tokens = ((Number(_tokensPrice) * (_quantity)*1e6) / (USDTprice)).toFixed(0).toString();
+      let fee = ((tokens/1e10) * Number(buySell)).toFixed(0).toString();
+      // setCalToken(Number(tokens) + Number(fee))
+      const num = Number(tokens) + Number(fee)
+      return num;
+    } else if(tokenType == 1){
+      let tokens = ((Number(_tokensPrice) * (_quantity)*1e6) / (USDCprice)).toFixed(0).toString();
+      let fee = ((tokens / (1e10)) * Number(buySell)).toFixed(0).toString();
+      // setCalToken(Number(tokens) + Number(fee))
+      const num = Number(tokens) + Number(fee)
+      return num;
+    }else {
+      let tokens = ((Number(_tokensPrice) * (_quantity)*1e6) / Number(SEDTprice)).toFixed(0).toString();
+      let fee = ((tokens / (1e10)) * Number(buySell));
+      // setCalToken(Number(tokens) + Number(fee))
+      const num = Number(tokens) + Number(fee)
+      return num;
+    }
+  }
+  const checkNumbers = useMemo(() => {
+    return CalculateValue(tokensPrice, quantity)
+  }, [tokensPrice, quantity])
+ 
 
   // update account
   useEffect(() => {
@@ -465,7 +473,9 @@ const OrderForm = () => {
                 settokensPrice(result.PropertyDetails.TokenPrice);
               }
               // setcontractAddr(result.PropertyDetails.propertyAddress);
-              setbuySell(result.PropertyDetails.BuySellingFee);
+              if(buySell == 0){
+                setbuySell(result.PropertyDetails.BuySellingFee);
+              }
               // console.log("Property Details", result.PropertyDetails);
             })
         }
@@ -473,7 +483,7 @@ const OrderForm = () => {
       }
     },[checkID])
 
-    console.log("tokensPrice",tokensPrice)
+
     useEffect(() => {
       if(checkID){
         const FetchTokenCount = async () => {
@@ -489,27 +499,27 @@ const OrderForm = () => {
   useEffect(() => {
     if(checkID){
       const EscrowAddressFetch = async () => {
+        if (EscrowAddress == null) {
         await EscrowAcont(checkID)
           .then((result) => {
-            if (EscrowAddress == null) {
               setEscrowAddress(result);
-            }
             !textToCopy && setTextToCopy(result);
           })
+        }
       }
       EscrowAddressFetch();
     }
-  },[EscrowAddress])
+  })
 
   useEffect(() => {
     if(EscrowAddress){
       const FetchEscrowBal = async () => {
+        if (balnc == 0) {
         await EscrowBalance(EscrowAddress)
           .then((result) => {
-            if (balnc == 0) {
               setbalnc((Number(result) / 1e18).toFixed(4));
-            }
           })
+        }
       }
       FetchEscrowBal();
   }
@@ -628,6 +638,7 @@ const OrderForm = () => {
                   <option value="">Select Payable Token Types </option>
                   <option value="0">USDT</option>
                   <option value="1">USDC</option>
+                  <option value="2">SEDT</option>
                 </select>
                 {/* <select
               className="form-control"
@@ -653,15 +664,23 @@ const OrderForm = () => {
                   onChange={(e) => setquantity(e.target.value)}
                   placeholder="0.00"
                 />
-                {/* {tokenType == 0 ? (
+                {tokenType == 0 ? (
                   <span className="input-group-text">
                     <span className="text-warning">
                       {Number(checkNumbers / 1e6).toFixed(3)}</span> {""}-USDT</span>
                 ) : (
-                  <span className="input-group-text">
+                  <>
+                   {tokenType == 1 ? (
+                    <span className="input-group-text">
                     <span className="text-warning">
                       {Number(checkNumbers / 1e6).toFixed(3)}</span> {""}-USDC</span>
-                )} */}
+                  ):(
+                    <span className="input-group-text">
+                    <span className="text-warning">
+                      {Number(checkNumbers / 1e6).toFixed(3)}</span> {""}-SEDT</span>
+                  )}
+                  </>
+                )}
               </div>
             </div>
 
