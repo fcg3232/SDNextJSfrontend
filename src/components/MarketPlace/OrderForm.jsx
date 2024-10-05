@@ -13,7 +13,7 @@ import CountdownTimer from "./countdownTimer";
 import { RiFileCopyLine } from 'react-icons/ri';
 import { IoCheckmarkDone } from "react-icons/io5";
 import Loader from './Loader';
-import { config } from '../slices/config'
+import { config } from '../../slices/config'
 import { readContract } from '@wagmi/core'
 
 const USDCaddr = "0x0153002d20B96532C639313c2d54c3dA09109309";
