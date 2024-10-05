@@ -13,18 +13,8 @@ import CountdownTimer from "./countdownTimer";
 import { RiFileCopyLine } from 'react-icons/ri';
 import { IoCheckmarkDone } from "react-icons/io5";
 import Loader from './Loader';
-// import Nouislider from "nouislider-react";
-//import noUiSlider from "nouislider";
-//import "nouislider/distribute/nouislider.css";
-//import 'nouislider/dist/nouislider.css';
-
-//let slider;
-
-// function destroyExistingSlider(){
-//   if(slider && slider.noUiSlider){
-//     slider.noUiSlider.destroy();
-//   }
-// }
+import { config } from '../slices/config'
+import { readContract } from '@wagmi/core'
 
 const USDCaddr = "0x0153002d20B96532C639313c2d54c3dA09109309";
 const USDTaddr = "0x80EDee6f667eCc9f63a0a6f55578F870651f06A4";

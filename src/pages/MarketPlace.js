@@ -20,7 +20,7 @@ import { getEnsName } from "wagmi/actions";
 import { config } from "../components/MarketPlace/config";
 const MarketPlace = () => {
   const account = useAccount();
-  console.log("account =>>", account);
+  // console.log("account =>>", account);
   const { connectors, connect, status, error } = useConnect();
   const { disconnect } = useDisconnect();
   const [timeLeft, setTimeLeft] = useState(CountdownTimer());
@@ -30,7 +30,7 @@ const MarketPlace = () => {
   //   const { data: ensAvatar } = useEnsAvatar({ name: ensName! })
 
   const user = useSelector((state) => state.auth);
-  console.log("useruseruser", user);
+  // console.log("useruseruser", user);
   // const { items: data, status } = useAppSelector((state) => state.products);
 
   //   useEffect(() => {

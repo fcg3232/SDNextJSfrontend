@@ -22,7 +22,7 @@ function Header() {
   const { address, isConnected, status } = useAccount();
   const { disconnect } = useDisconnect();
   const user = useSelector((state) => state.auth);
-  console.log("useruser", user);
+  // console.log("useruser", user);
 
   const handleDisconnect = async () => {
     if (isConnected && address) {

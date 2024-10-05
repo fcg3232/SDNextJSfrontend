@@ -5,7 +5,8 @@ import { loadBlockchain } from "../../slices/web3ContractSlice";
 import axios from "axios";
 import { url } from "../../slices/api";
 import Property_ABI from '../../contract/property.json';
-
+import { config } from '../../slices/config'
+import { readContract } from '@wagmi/core'
 import avat3 from "../../assets/images/avatar/avatar3.jpg";
 // import avat3 from "../../assets/images/avatar/avatar";
 
@@ -22,9 +23,17 @@ const Details = () => {
   const { web3, contract, accounts, socketContract } = useAppSelector(
     (state) => state.web3Connect
   );
+  const functionRead = async(addres) => {
+    const result = await readContract(config, {
+      abi: Property_ABI,
+      address: addres,
+      functionName: 'getCompletePropDetails',
+    })
+      return result;
+      }
 
   useEffect(() => {
-    dispatch(loadBlockchain());
+    // dispatch(loadBlockchain());
     const fetchProduct = async () => {
       try {
         setLoading(true);
@@ -38,26 +47,34 @@ const Details = () => {
     };
     fetchProduct();
     if (checkID) {
-      const contractofProperty = new web3.eth.Contract(
-        Property_ABI,
-        product.uid
-      );
-      !loadchain && setloadchain(contractofProperty);
-      if (loadchain) {
-        const fetchData = async () => {
-          try {
-            let completeProp = await contractofProperty.methods
-              .getCompletePropDetails()
-              .call();
-            setdatas(completeProp);
-          } catch (err) {
-            console.log(err);
-          }
-        };
-        fetchData();
-      }
+      // const contractofProperty = new web3.eth.Contract(
+      //   Property_ABI,
+      //   product.uid
+      // );
+      // !loadchain && setloadchain(contractofProperty);
+      // if (loadchain) {
+      //   const fetchData = async () => {
+      //     try {
+      //       let completeProp = await contractofProperty.methods
+      //         .getCompletePropDetails()
+      //         .call();
+      //       setdatas(completeProp);
+      //     } catch (err) {
+      //       console.log(err);
+      //     }
+      //   };
+      //   fetchData();
+      // }
+      const fetchda = async () => {
+        await functionRead(checkID)
+        .then((result) => {
+          setdatas(result.PropertyDetails)
+          console.log("Property Details",result.PropertyDetails);
+        })
+        }
+        fetchda()
     }
-  }, [params.id, loadchain, checkID]);
+  }, [params.id, checkID]);
 
   return (
     <>
