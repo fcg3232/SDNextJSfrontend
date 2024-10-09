@@ -21,7 +21,7 @@ import { useWriteContract, useReadContract ,useAccountEffect   } from 'wagmi';
 import { readContract } from '@wagmi/core'
 
 const navbarLink = ['Details', "Financials", 'Documents', 'Buying Process', 'Market', 'Order Book']
-const CONTRACT_ADDRESS="0x7893ced02F69d9fa44dD8371D4eaC6085fA35336"
+const CONTRACT_ADDRESS="0x910603b35A1fD922094F5243BC30182611db13bC"
 const AllComponents = ({ componentType }) => {
   const componentMap = {
     Details: Details,

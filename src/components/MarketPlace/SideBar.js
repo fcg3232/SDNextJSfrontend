@@ -301,36 +301,36 @@ const Sidebar = () => {
 
   //  fetch USDT and USDC price
 
-  useEffect(() => {
-    if (window.ethereum) {
-      if (web3) {
-        const USDTPrice = async () => {
-          const USDTpriceFeed = new web3.eth.Contract(aggregatorV3InterfaceABI, USDTaddr);
-          USDTpriceFeed.methods.latestRoundData().call()
-            .then((roundData) => {
-              // const price = Number((roundData.answer) / 1e8).toFixed(3);
-              if (USDTprice == 0) {
-                setUSDTprice(roundData.answer);
-              }
-            })
-        }
-        USDTPrice();
-      }
-      if (web3) {
-        const USDCPrice = async () => {
-          const USDCpriceFeed = new web3.eth.Contract(aggregatorV3InterfaceABI, USDCaddr);
-          USDCpriceFeed.methods.latestRoundData().call()
-            .then((roundData) => {
-              // const price = Number((roundData.answer) / 1e8).toFixed(3);
-              if (USDCprice == 0) {
-                setUSDCprice(roundData.answer);
-              }
-            })
-        }
-        USDCPrice();
-      }
-    }
-  }, [])
+  // useEffect(() => {
+  //   if (window.ethereum) {
+  //     if (web3) {
+  //       const USDTPrice = async () => {
+  //         const USDTpriceFeed = new web3.eth.Contract(aggregatorV3InterfaceABI, USDTaddr);
+  //         USDTpriceFeed.methods.latestRoundData().call()
+  //           .then((roundData) => {
+  //             // const price = Number((roundData.answer) / 1e8).toFixed(3);
+  //             if (USDTprice == 0) {
+  //               setUSDTprice(roundData.answer);
+  //             }
+  //           })
+  //       }
+  //       USDTPrice();
+  //     }
+  //     if (web3) {
+  //       const USDCPrice = async () => {
+  //         const USDCpriceFeed = new web3.eth.Contract(aggregatorV3InterfaceABI, USDCaddr);
+  //         USDCpriceFeed.methods.latestRoundData().call()
+  //           .then((roundData) => {
+  //             // const price = Number((roundData.answer) / 1e8).toFixed(3);
+  //             if (USDCprice == 0) {
+  //               setUSDCprice(roundData.answer);
+  //             }
+  //           })
+  //       }
+  //       USDCPrice();
+  //     }
+  //   }
+  // }, [])
 
   const CalculateValues = (_clickPrice, _tokenQuant) => {
     if (tokenType == 0) {
@@ -462,7 +462,7 @@ const Sidebar = () => {
             if(buySell == 0){
             setbuySell(result.PropertyDetails.BuySellingFee);
             }
-            console.log("Property Details", result.PropertyDetails);
+            // console.log("Property Details", result.PropertyDetails);
           })
       }
       fetchda();

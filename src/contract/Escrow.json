@@ -27,11 +27,6 @@
 						"internalType": "address",
 						"name": "PropertyAdmin",
 						"type": "address"
-					},
-					{
-						"internalType": "address",
-						"name": "SDTokentokenAddress",
-						"type": "address"
 					}
 				],
 				"internalType": "struct IProp.EscrowModel",
@@ -460,8 +455,23 @@
 				"type": "address"
 			},
 			{
+				"internalType": "enum Escrow.TypeOfFund",
+				"name": "_Type_of_Currency",
+				"type": "uint8"
+			},
+			{
 				"internalType": "uint256",
 				"name": "_propTokens",
+				"type": "uint256"
+			},
+			{
+				"internalType": "uint256",
+				"name": "_RecivableTokens",
+				"type": "uint256"
+			},
+			{
+				"internalType": "uint256",
+				"name": "_Recivablefee",
 				"type": "uint256"
 			}
 		],
@@ -582,32 +592,6 @@
 		"type": "function"
 	},
 	{
-		"inputs": [
-			{
-				"internalType": "address",
-				"name": "_address",
-				"type": "address"
-			}
-		],
-		"name": "SD_Token_Price",
-		"outputs": [],
-		"stateMutability": "nonpayable",
-		"type": "function"
-	},
-	{
-		"inputs": [],
-		"name": "TokenToUSD",
-		"outputs": [
-			{
-				"internalType": "uint256",
-				"name": "",
-				"type": "uint256"
-			}
-		],
-		"stateMutability": "view",
-		"type": "function"
-	},
-	{
 		"inputs": [],
 		"name": "TotalBuyers",
 		"outputs": [
@@ -663,6 +647,24 @@
 			}
 		],
 		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "address",
+				"name": "_USDT",
+				"type": "address"
+			},
+			{
+				"internalType": "address",
+				"name": "_USDC",
+				"type": "address"
+			}
+		],
+		"name": "UploadTokensAddress",
+		"outputs": [],
+		"stateMutability": "nonpayable",
 		"type": "function"
 	},
 	{
