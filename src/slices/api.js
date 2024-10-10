@@ -9,6 +9,3 @@ export const setHeaders = () => {
 
   return headers;
 };
-
-// http://localhost:5000
-// https://api.secondarydao.com/
