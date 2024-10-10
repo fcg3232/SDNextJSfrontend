@@ -60,6 +60,33 @@
 		"type": "error"
 	},
 	{
+		"inputs": [],
+		"name": "ECDSAInvalidSignature",
+		"type": "error"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "uint256",
+				"name": "length",
+				"type": "uint256"
+			}
+		],
+		"name": "ECDSAInvalidSignatureLength",
+		"type": "error"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "bytes32",
+				"name": "s",
+				"type": "bytes32"
+			}
+		],
+		"name": "ECDSAInvalidSignatureS",
+		"type": "error"
+	},
+	{
 		"inputs": [
 			{
 				"internalType": "address",
@@ -146,8 +173,56 @@
 		"type": "error"
 	},
 	{
+		"inputs": [
+			{
+				"internalType": "uint256",
+				"name": "deadline",
+				"type": "uint256"
+			}
+		],
+		"name": "ERC2612ExpiredSignature",
+		"type": "error"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "address",
+				"name": "signer",
+				"type": "address"
+			},
+			{
+				"internalType": "address",
+				"name": "owner",
+				"type": "address"
+			}
+		],
+		"name": "ERC2612InvalidSigner",
+		"type": "error"
+	},
+	{
 		"inputs": [],
 		"name": "FailedInnerCall",
+		"type": "error"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "address",
+				"name": "account",
+				"type": "address"
+			},
+			{
+				"internalType": "uint256",
+				"name": "currentNonce",
+				"type": "uint256"
+			}
+		],
+		"name": "InvalidAccountNonce",
+		"type": "error"
+	},
+	{
+		"inputs": [],
+		"name": "InvalidShortString",
 		"type": "error"
 	},
 	{
@@ -164,6 +239,17 @@
 			}
 		],
 		"name": "SafeERC20FailedOperation",
+		"type": "error"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "string",
+				"name": "str",
+				"type": "string"
+			}
+		],
+		"name": "StringTooLong",
 		"type": "error"
 	},
 	{
@@ -209,17 +295,17 @@
 			{
 				"indexed": false,
 				"internalType": "uint256",
-				"name": "_index",
-				"type": "uint256"
-			},
-			{
-				"indexed": false,
-				"internalType": "uint256",
 				"name": "tokenQuant",
 				"type": "uint256"
 			}
 		],
 		"name": "BuyToken",
+		"type": "event"
+	},
+	{
+		"anonymous": false,
+		"inputs": [],
+		"name": "EIP712DomainChanged",
 		"type": "event"
 	},
 	{
@@ -349,6 +435,52 @@
 		"type": "event"
 	},
 	{
+		"inputs": [],
+		"name": "Balance",
+		"outputs": [
+			{
+				"internalType": "uint256",
+				"name": "",
+				"type": "uint256"
+			}
+		],
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "address",
+				"name": "_buyeraddress",
+				"type": "address"
+			},
+			{
+				"internalType": "enum Escrow.TypeOfFund",
+				"name": "_Type_of_Currency",
+				"type": "uint8"
+			},
+			{
+				"internalType": "uint256",
+				"name": "_propTokens",
+				"type": "uint256"
+			},
+			{
+				"internalType": "uint256",
+				"name": "_RecivableTokens",
+				"type": "uint256"
+			},
+			{
+				"internalType": "uint256",
+				"name": "_Recivablefee",
+				"type": "uint256"
+			}
+		],
+		"name": "BuyPropertyToken",
+		"outputs": [],
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
 		"inputs": [
 			{
 				"internalType": "address",
@@ -362,146 +494,43 @@
 			},
 			{
 				"internalType": "uint256",
-				"name": "_index",
+				"name": "_Caltokens",
 				"type": "uint256"
-			},
-			{
-				"internalType": "enum Escrow.TypeOfFund",
-				"name": "_Type_of_Currency",
-				"type": "uint8"
 			},
 			{
 				"internalType": "uint256",
 				"name": "_propTokens",
 				"type": "uint256"
+			},
+			{
+				"internalType": "uint256",
+				"name": "_buyersfee",
+				"type": "uint256"
+			},
+			{
+				"internalType": "uint256",
+				"name": "_sellerfee",
+				"type": "uint256"
+			},
+			{
+				"internalType": "uint256",
+				"name": "_Price",
+				"type": "uint256"
 			}
 		],
-		"name": "Buy",
+		"name": "Buy_and_Sell",
 		"outputs": [],
 		"stateMutability": "nonpayable",
 		"type": "function"
 	},
 	{
-		"inputs": [
-			{
-				"internalType": "address",
-				"name": "_buyeraddress",
-				"type": "address"
-			},
-			{
-				"internalType": "enum Escrow.TypeOfFund",
-				"name": "_Type_of_Currency",
-				"type": "uint8"
-			},
-			{
-				"internalType": "uint256",
-				"name": "_propTokens",
-				"type": "uint256"
-			}
-		],
-		"name": "BuyPropertyToken",
-		"outputs": [],
-		"stateMutability": "nonpayable",
-		"type": "function"
-	},
-	{
-		"inputs": [
-			{
-				"internalType": "address",
-				"name": "_address",
-				"type": "address"
-			},
-			{
-				"internalType": "uint256",
-				"name": "_index",
-				"type": "uint256"
-			}
-		],
-		"name": "BuyerCancellOrder",
+		"inputs": [],
+		"name": "DOMAIN_SEPARATOR",
 		"outputs": [
 			{
-				"internalType": "enum Escrow.OrderStatus",
+				"internalType": "bytes32",
 				"name": "",
-				"type": "uint8"
-			}
-		],
-		"stateMutability": "nonpayable",
-		"type": "function"
-	},
-	{
-		"inputs": [
-			{
-				"internalType": "address",
-				"name": "buyerAddress",
-				"type": "address"
-			},
-			{
-				"internalType": "enum Escrow.TypeOfFund",
-				"name": "_Type_of_Currency",
-				"type": "uint8"
-			},
-			{
-				"internalType": "uint256",
-				"name": "NoPropertToken",
-				"type": "uint256"
-			},
-			{
-				"internalType": "uint256",
-				"name": "Price",
-				"type": "uint256"
-			}
-		],
-		"name": "BuyersOffer",
-		"outputs": [],
-		"stateMutability": "nonpayable",
-		"type": "function"
-	},
-	{
-		"inputs": [
-			{
-				"internalType": "address",
-				"name": "_propAddress",
-				"type": "address"
-			}
-		],
-		"name": "GetBuyerOffer",
-		"outputs": [
-			{
-				"components": [
-					{
-						"internalType": "address",
-						"name": "buyerAddress",
-						"type": "address"
-					},
-					{
-						"internalType": "enum Escrow.TypeOfFund",
-						"name": "Type_of_Currency",
-						"type": "uint8"
-					},
-					{
-						"internalType": "uint256",
-						"name": "NoPropertToken",
-						"type": "uint256"
-					},
-					{
-						"internalType": "uint256",
-						"name": "Price",
-						"type": "uint256"
-					},
-					{
-						"internalType": "uint256",
-						"name": "ExpiryTime",
-						"type": "uint256"
-					},
-					{
-						"internalType": "enum Escrow.OrderStatus",
-						"name": "orderStatus",
-						"type": "uint8"
-					}
-				],
-				"internalType": "struct Escrow.BuyerInfo[]",
-				"name": "",
-				"type": "tuple[]"
+				"type": "bytes32"
 			}
 		],
 		"stateMutability": "view",
@@ -523,49 +552,17 @@
 	{
 		"inputs": [
 			{
-				"internalType": "address",
-				"name": "_propAddress",
-				"type": "address"
+				"internalType": "enum Escrow.Months",
+				"name": "_month",
+				"type": "uint8"
 			}
 		],
-		"name": "GetSellerOffer",
+		"name": "GetMonthlyRent",
 		"outputs": [
 			{
-				"components": [
-					{
-						"internalType": "address",
-						"name": "sellerAddress",
-						"type": "address"
-					},
-					{
-						"internalType": "uint256",
-						"name": "TokenQuantity",
-						"type": "uint256"
-					},
-					{
-						"internalType": "uint256",
-						"name": "Price",
-						"type": "uint256"
-					},
-					{
-						"internalType": "uint256",
-						"name": "PlateFormFee",
-						"type": "uint256"
-					},
-					{
-						"internalType": "uint256",
-						"name": "ExpiryTime",
-						"type": "uint256"
-					},
-					{
-						"internalType": "enum Escrow.OrderStatus",
-						"name": "orderStatus",
-						"type": "uint8"
-					}
-				],
-				"internalType": "struct Escrow.SelerInfo[]",
+				"internalType": "uint256",
 				"name": "",
-				"type": "tuple[]"
+				"type": "uint256"
 			}
 		],
 		"stateMutability": "view",
@@ -575,78 +572,21 @@
 		"inputs": [
 			{
 				"internalType": "address",
-				"name": "_address",
+				"name": "_payer",
 				"type": "address"
 			},
 			{
 				"internalType": "uint256",
-				"name": "_index",
+				"name": "_payment",
 				"type": "uint256"
-			}
-		],
-		"name": "SallerCancellOrder",
-		"outputs": [
+			},
 			{
-				"internalType": "enum Escrow.OrderStatus",
-				"name": "",
+				"internalType": "enum Escrow.Months",
+				"name": "_month",
 				"type": "uint8"
 			}
 		],
-		"stateMutability": "nonpayable",
-		"type": "function"
-	},
-	{
-		"inputs": [
-			{
-				"internalType": "address",
-				"name": "_Selleraddress",
-				"type": "address"
-			},
-			{
-				"internalType": "address",
-				"name": "_buyeraddress",
-				"type": "address"
-			},
-			{
-				"internalType": "uint256",
-				"name": "_index",
-				"type": "uint256"
-			},
-			{
-				"internalType": "enum Escrow.TypeOfFund",
-				"name": "_Type_of_Currency",
-				"type": "uint8"
-			},
-			{
-				"internalType": "uint256",
-				"name": "_propTokens",
-				"type": "uint256"
-			}
-		],
-		"name": "Sell",
-		"outputs": [],
-		"stateMutability": "nonpayable",
-		"type": "function"
-	},
-	{
-		"inputs": [
-			{
-				"internalType": "address",
-				"name": "sellerAddress",
-				"type": "address"
-			},
-			{
-				"internalType": "uint256",
-				"name": "TokenQuantity",
-				"type": "uint256"
-			},
-			{
-				"internalType": "uint256",
-				"name": "Price",
-				"type": "uint256"
-			}
-		],
-		"name": "SellerOffer",
+		"name": "PayPropertyRent",
 		"outputs": [],
 		"stateMutability": "nonpayable",
 		"type": "function"
@@ -694,6 +634,37 @@
 			}
 		],
 		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"inputs": [],
+		"name": "TotalToken",
+		"outputs": [
+			{
+				"internalType": "uint256",
+				"name": "",
+				"type": "uint256"
+			}
+		],
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "address",
+				"name": "_USDT",
+				"type": "address"
+			},
+			{
+				"internalType": "address",
+				"name": "_USDC",
+				"type": "address"
+			}
+		],
+		"name": "UploadTokensAddress",
+		"outputs": [],
+		"stateMutability": "nonpayable",
 		"type": "function"
 	},
 	{
@@ -783,6 +754,30 @@
 		"type": "function"
 	},
 	{
+		"inputs": [
+			{
+				"internalType": "address",
+				"name": "_address",
+				"type": "address"
+			},
+			{
+				"internalType": "enum Escrow.Months",
+				"name": "_month",
+				"type": "uint8"
+			}
+		],
+		"name": "calculateRent",
+		"outputs": [
+			{
+				"internalType": "uint256",
+				"name": "",
+				"type": "uint256"
+			}
+		],
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
 		"inputs": [],
 		"name": "decimals",
 		"outputs": [
@@ -790,6 +785,49 @@
 				"internalType": "uint8",
 				"name": "",
 				"type": "uint8"
+			}
+		],
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"inputs": [],
+		"name": "eip712Domain",
+		"outputs": [
+			{
+				"internalType": "bytes1",
+				"name": "fields",
+				"type": "bytes1"
+			},
+			{
+				"internalType": "string",
+				"name": "name",
+				"type": "string"
+			},
+			{
+				"internalType": "string",
+				"name": "version",
+				"type": "string"
+			},
+			{
+				"internalType": "uint256",
+				"name": "chainId",
+				"type": "uint256"
+			},
+			{
+				"internalType": "address",
+				"name": "verifyingContract",
+				"type": "address"
+			},
+			{
+				"internalType": "bytes32",
+				"name": "salt",
+				"type": "bytes32"
+			},
+			{
+				"internalType": "uint256[]",
+				"name": "extensions",
+				"type": "uint256[]"
 			}
 		],
 		"stateMutability": "view",
@@ -814,25 +852,6 @@
 		"type": "function"
 	},
 	{
-		"inputs": [
-			{
-				"internalType": "address",
-				"name": "_address",
-				"type": "address"
-			}
-		],
-		"name": "monthlyRent",
-		"outputs": [
-			{
-				"internalType": "uint256",
-				"name": "",
-				"type": "uint256"
-			}
-		],
-		"stateMutability": "view",
-		"type": "function"
-	},
-	{
 		"inputs": [],
 		"name": "name",
 		"outputs": [
@@ -840,6 +859,25 @@
 				"internalType": "string",
 				"name": "",
 				"type": "string"
+			}
+		],
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "address",
+				"name": "owner",
+				"type": "address"
+			}
+		],
+		"name": "nonces",
+		"outputs": [
+			{
+				"internalType": "uint256",
+				"name": "",
+				"type": "uint256"
 			}
 		],
 		"stateMutability": "view",
@@ -876,6 +914,49 @@
 			}
 		],
 		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "address",
+				"name": "owner",
+				"type": "address"
+			},
+			{
+				"internalType": "address",
+				"name": "spender",
+				"type": "address"
+			},
+			{
+				"internalType": "uint256",
+				"name": "value",
+				"type": "uint256"
+			},
+			{
+				"internalType": "uint256",
+				"name": "deadline",
+				"type": "uint256"
+			},
+			{
+				"internalType": "uint8",
+				"name": "v",
+				"type": "uint8"
+			},
+			{
+				"internalType": "bytes32",
+				"name": "r",
+				"type": "bytes32"
+			},
+			{
+				"internalType": "bytes32",
+				"name": "s",
+				"type": "bytes32"
+			}
+		],
+		"name": "permit",
+		"outputs": [],
+		"stateMutability": "nonpayable",
 		"type": "function"
 	},
 	{
@@ -999,29 +1080,6 @@
 	{
 		"inputs": [],
 		"name": "unpause",
-		"outputs": [],
-		"stateMutability": "nonpayable",
-		"type": "function"
-	},
-	{
-		"inputs": [
-			{
-				"internalType": "enum Escrow.TypeOfFund",
-				"name": "Type_token",
-				"type": "uint8"
-			},
-			{
-				"internalType": "uint256",
-				"name": "_tokens",
-				"type": "uint256"
-			},
-			{
-				"internalType": "address",
-				"name": "_address",
-				"type": "address"
-			}
-		],
-		"name": "withdrawTokens",
 		"outputs": [],
 		"stateMutability": "nonpayable",
 		"type": "function"

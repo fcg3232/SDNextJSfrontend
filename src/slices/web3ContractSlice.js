@@ -16,7 +16,7 @@ import USDC_ABI from '../contract/USDC.json';
 
 const USDTADDRESS = "0x5417928Ef1Ab9e341E92872b3995ed03cb3f7e34";
 const USDCADDRESS = "0x67B77178515655715C0fD328B057aD318B76B6Bb";
-const CONTRACT_ADDRESS = "0xe0755986fEc9012c76Cb8ad9C4905286bc1EDA3c";
+const CONTRACT_ADDRESS = "0x910603b35A1fD922094F5243BC30182611db13bC";
 const WhiteList_ADDRESS = "0x6f463fd67F7e6742bA8C636879De8001df52FA2b";
 const Infura = 'https://arbitrum-sepolia.infura.io/v3/61679e33f48747afac34c6aabc66e5c4'
 // https://sepolia-rollup.arbitrum.io/rpc

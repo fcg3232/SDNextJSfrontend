@@ -91,7 +91,7 @@
 	},
 	{
 		"inputs": [],
-		"name": "EscrowAccount",
+		"name": "EscrowContractAddress",
 		"outputs": [
 			{
 				"internalType": "address",

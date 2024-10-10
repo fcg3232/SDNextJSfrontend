@@ -16,10 +16,12 @@ import Documents from "../components/MarketPlace/Documents";
 import BuyingProcess from "../components/MarketPlace/BuyingProcess";
 import Market from "../components/MarketPlace/Market";
 import OrderBook from "../components/MarketPlace/OrderBook";
-
+import { config } from '../slices/config'
+import { useWriteContract, useReadContract ,useAccountEffect   } from 'wagmi';
+import { readContract } from '@wagmi/core'
 
 const navbarLink = ['Details', "Financials", 'Documents', 'Buying Process', 'Market', 'Order Book']
-
+const CONTRACT_ADDRESS="0x910603b35A1fD922094F5243BC30182611db13bC"
 const AllComponents = ({ componentType }) => {
   const componentMap = {
     Details: Details,
@@ -48,8 +50,17 @@ function PropertyDetails() {
     (state) => state.web3Connect
   );
 
+  const functionRead = async(addres) => {
+    const result = await readContract(config, {
+      abi: Property_ABI,
+      address: addres,
+      functionName: 'getCompletePropDetails',
+    })
+      return result;
+      }
+
   useEffect(() => {
-    dispatch(loadBlockchain());
+    // dispatch(loadBlockchain());
     const fetchProduct = async () => {
       try {
         setLoading(true);
@@ -63,27 +74,37 @@ function PropertyDetails() {
     };
     fetchProduct();
     if (checkID) {
-      const contractofProperty = new web3.eth.Contract(
-        Property_ABI,
-        product.uid
-      );
-      !loadchain && setloadchain(contractofProperty);
-      if (loadchain) {
-        const fetchData = async () => {
-          try {
-            let completeProp = await contractofProperty.methods
-              .getCompletePropDetails()
-              .call();
-            setdatas(completeProp);
-          } catch (err) {
-            console.log(err);
-          }
-        };
-        fetchData();
-      }
-    }
-  }, [params.id, loadchain, checkID]);
+      const fetchda = async () => {
+        await functionRead(checkID)
+        .then((result) => {
+          setdatas(result.PropertyDetails)
+          // console.log("Property Details",result.PropertyDetails);
+        })
+        }
+        fetchda()
 
+      // const contractofProperty = new web3.eth.Contract(
+      //   Property_ABI,
+      //   product.uid
+      // );
+      // !loadchain && setloadchain(contractofProperty);
+      // if (loadchain) {
+      //   const fetchData = async () => {
+      //     try {
+      //       let completeProp = await contractofProperty.methods
+      //         .getCompletePropDetails()
+      //         .call();
+      //       setdatas(completeProp);
+      //     } catch (err) {
+      //       console.log(err);
+      //     }
+      //   };
+      //   fetchData();
+      // }
+    }
+  }, [params.id, checkID]);
+
+// console.log("Property Details in array",product);
 
   return (
     <>
@@ -115,7 +136,7 @@ function PropertyDetails() {
                   </div>
                   <AllComponents componentType={activeComponent} />
                 </div>
-                <div className="clear" id="comment-list">
+                {/* <div className="clear" id="comment-list">
                   <div className="comments-area style-1 clearfix" id="comments">
                     <div className="widget-title">
                       <h4 className="title">Leave A Reply</h4>
@@ -177,7 +198,7 @@ function PropertyDetails() {
                       </div>
                     </div>
                   </div>
-                </div>
+                </div> */}
               </div>
               <div className="col-xl-4 col-lg-4">
                 <Sidebar />

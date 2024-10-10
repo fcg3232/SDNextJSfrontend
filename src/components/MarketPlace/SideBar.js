@@ -12,7 +12,8 @@ import BuyerOrder from "./BuyerOrder";
 import CountdownTimer from "./countdownTimer";
 import Escrow_ABI from '../../contract/Escrow.json'
 import { limitOrderOfferCreate } from "../../slices/LimitOrderSlice";
-
+import { config } from '../../slices/config'
+import { readContract } from '@wagmi/core'
 // import { IoJournalSharp } from "react-icons/io5";
 // const listData = [{}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}];
 
@@ -94,7 +95,7 @@ const Sidebar = () => {
   const [datas, setdatas] = useState([]);
   const [buyerOrd, setbuyerOrd] = useState([]);
   const [sellerOrd, setsellerOrd] = useState([]);
-  const [totaltoken, settotaltoken] = useState();
+  const [totaltoken, settotaltoken] = useState(0);
   const [loading, setLoading] = useState(false);
   const [contractAddr, setcontractAddr] = useState();
   const [checkID, setcheckID] = useState();
@@ -123,7 +124,7 @@ const Sidebar = () => {
   const [CalToken, setCalToken] = useState('');
   const [CalTokens, setCalTokens] = useState('');
   const [buyerAddres, setbuyerAddres] = useState('');
-  const [buySell, setbuySell] = useState();
+  const [buySell, setbuySell] = useState(0);
   const [ordersId, setorderId] = useState();
   const [timeLeft, setTimeLeft] = useState(CountdownTimer());
   const dispatch = useAppDispatch();
@@ -140,7 +141,7 @@ const Sidebar = () => {
   const { buyerOffer } = useAppSelector((state) => state.buyerOrder);
   const { sellerOffer } = useAppSelector((state) => state.sellerOrder);
   const [checkTokens, setcheckTokens] = useState();
-// console.log("sellerOffer",sellerOffer)
+  // console.log("sellerOffer",sellerOffer)
 
 
   const ModleData = (_index, _price, _token, _type, _add, _id) => {
@@ -300,47 +301,47 @@ const Sidebar = () => {
 
   //  fetch USDT and USDC price
 
-  useEffect(() => {
-    if (window.ethereum) {
-      if (web3) {
-        const USDTPrice = async () => {
-          const USDTpriceFeed = new web3.eth.Contract(aggregatorV3InterfaceABI, USDTaddr);
-          USDTpriceFeed.methods.latestRoundData().call()
-            .then((roundData) => {
-              // const price = Number((roundData.answer) / 1e8).toFixed(3);
-              if (USDTprice == 0) {
-                setUSDTprice(roundData.answer);
-              }
-            })
-        }
-        USDTPrice();
-      }
-      if (web3) {
-        const USDCPrice = async () => {
-          const USDCpriceFeed = new web3.eth.Contract(aggregatorV3InterfaceABI, USDCaddr);
-          USDCpriceFeed.methods.latestRoundData().call()
-            .then((roundData) => {
-              // const price = Number((roundData.answer) / 1e8).toFixed(3);
-              if (USDCprice == 0) {
-                setUSDCprice(roundData.answer);
-              }
-            })
-        }
-        USDCPrice();
-      }
-    }
-  }, [])
+  // useEffect(() => {
+  //   if (window.ethereum) {
+  //     if (web3) {
+  //       const USDTPrice = async () => {
+  //         const USDTpriceFeed = new web3.eth.Contract(aggregatorV3InterfaceABI, USDTaddr);
+  //         USDTpriceFeed.methods.latestRoundData().call()
+  //           .then((roundData) => {
+  //             // const price = Number((roundData.answer) / 1e8).toFixed(3);
+  //             if (USDTprice == 0) {
+  //               setUSDTprice(roundData.answer);
+  //             }
+  //           })
+  //       }
+  //       USDTPrice();
+  //     }
+  //     if (web3) {
+  //       const USDCPrice = async () => {
+  //         const USDCpriceFeed = new web3.eth.Contract(aggregatorV3InterfaceABI, USDCaddr);
+  //         USDCpriceFeed.methods.latestRoundData().call()
+  //           .then((roundData) => {
+  //             // const price = Number((roundData.answer) / 1e8).toFixed(3);
+  //             if (USDCprice == 0) {
+  //               setUSDCprice(roundData.answer);
+  //             }
+  //           })
+  //       }
+  //       USDCPrice();
+  //     }
+  //   }
+  // }, [])
 
   const CalculateValues = (_clickPrice, _tokenQuant) => {
     if (tokenType == 0) {
-      let tokens = ((_clickPrice * (_tokenQuant)*1e6) / (USDTprice)).toFixed(0).toString();
+      let tokens = ((_clickPrice * (_tokenQuant) * 1e6) / (USDTprice)).toFixed(0).toString();
       // let tokens = ((Number(_clickPrice) * Number(_tokenQuant)) / (USDTprice));
       // let fee = ((tokens / (10 ** 10)) * buySell).toFixed(0).toString();
       // setCalTokens(Number(tokens))
       const num = Number(tokens);
       return num;
     } else {
-      let tokens = ((_clickPrice * (_tokenQuant)*1e6) / (USDCprice)).toFixed(0).toString();
+      let tokens = ((_clickPrice * (_tokenQuant) * 1e6) / (USDCprice)).toFixed(0).toString();
       // let tokens = ((Number(_clickPrice) * Number(_tokenQuant)) / (USDCprice));
       // let fee = ((tokens / (10 ** 10)) * buySell).toFixed(0).toString();
       // setCalTokens(Number(tokens));
@@ -350,14 +351,14 @@ const Sidebar = () => {
   }
   const CalculateValue = (_clickPrice, _tokenQuant) => {
     if (tokenTypeAcc == 0) {
-      let tokens = ((_clickPrice * (_tokenQuant)*1e6) / (USDTprice)).toFixed(0).toString();
+      let tokens = ((_clickPrice * (_tokenQuant) * 1e6) / (USDTprice)).toFixed(0).toString();
       // let tokens = ((Number(_clickPrice) * Number(_tokenQuant)) / (USDTprice));
       // let fee = ((tokens / (10 ** 10)) * buySell).toFixed(0).toString();
       // setCalTokens(Number(tokens))
       const num = Number(tokens);
       return num;
     } else {
-      let tokens = ((_clickPrice * (_tokenQuant)*1e6) / (USDCprice)).toFixed(0).toString();
+      let tokens = ((_clickPrice * (_tokenQuant) * 1e6) / (USDCprice)).toFixed(0).toString();
       // let tokens = ((Number(_clickPrice) * Number(_tokenQuant)) / (USDCprice));
       // let fee = ((tokens / (10 ** 10)) * buySell).toFixed(0).toString();
       // setCalTokens(Number(tokens));
@@ -365,7 +366,7 @@ const Sidebar = () => {
       return num;
     }
   }
- 
+
 
   const checkNumbers = useMemo(() => {
     return CalculateValue(clickPrice, tokenQuant)
@@ -375,11 +376,11 @@ const Sidebar = () => {
     return CalculateValues(clickPrice, tokenQuant)
   }, [clickPrice, tokenQuant])
 
-  console.log("clickPrice",clickPrice)
-  console.log("tokenQuant",tokenQuant)
-  console.log("USDTprice",USDTprice)
-  console.log("checkNumbers",checkNumbers)
-  console.log("calculatedNum",calculatedNum)
+  // console.log("EscrowAddress",EscrowAddress)
+  // console.log("tokenQuant",tokenQuant)
+  // console.log("USDTprice",USDTprice)
+  // console.log("checkNumbers",checkNumbers)
+  // console.log("calculatedNum",calculatedNum)
 
   useEffect(() => {
     window.localStorage.setItem("accounts[0]", accounts[0]);
@@ -395,135 +396,232 @@ const Sidebar = () => {
 
   // get property Address
   useEffect(() => {
-    if (window.ethereum) {
-      const fetchProduct = async () => {
-        try {
-          setLoading(true);
-          const res = await axios.get(`${url}/products/find/${params.id}`);
-          setProduct(res.data);
-          !checkID && setcheckID(res.data.uid);
-          setLoading(false);
-        } catch (err) {
-          console.log(err);
-        }
-      };
-      fetchProduct();
-    }
+    // if (window.ethereum) {
+    const fetchProduct = async () => {
+      try {
+        setLoading(true);
+        const res = await axios.get(`${url}/products/find/${params.id}`);
+        setProduct(res.data);
+        !checkID && setcheckID(res.data.uid);
+        setLoading(false);
+      } catch (err) {
+        console.log(err);
+      }
+    };
+    fetchProduct();
+    // }
   }, [params.id, checkID])
+
+  const CompleteDetaisl = async (addres) => {
+    const result = await readContract(config, {
+      abi: Property_ABI,
+      address: addres,
+      functionName: 'getCompletePropDetails',
+    })
+    return result;
+  }
+  const TokenCont = async (addres) => {
+    const result = await readContract(config, {
+      abi: Property_ABI,
+      address: addres,
+      functionName: 'TokenCount',
+    })
+    return result;
+  }
+
+  const EscrowAcont = async (addres) => {
+    const result = await readContract(config, {
+      abi: Property_ABI,
+      address: addres,
+      functionName: 'EscrowContractAddress',
+    })
+    return result;
+  }
+
+  const EscrowBalance = async (addres) => {
+    const result = await readContract(config, {
+      abi: Escrow_ABI,
+      address: addres,
+      functionName: 'balanceOf',
+      args: [addres],
+    })
+    return result;
+  }
 
   // get contract of property
   useEffect(() => {
-    if (window.ethereum) {
-      if (checkID) {
-        const fetchContract = async () => {
-          try {
-            const contractofProperty = new web3.eth.Contract(
-              Property_ABI,
-              product.uid
-            );
-            if (loadchain == null) {
-              setloadchain(contractofProperty);
+    if (checkID) {
+      const fetchda = async () => {
+        await CompleteDetaisl(checkID)
+          .then((result) => {
+            setdatas(result.PropertyDetails)
+            if (tokensPrice == 0) {
+              settokensPrice(result.PropertyDetails.TokenPrice);
             }
-          } catch (err) {
-            console.log(err);
-          }
-        };
-        fetchContract();
+            // setcontractAddr(result.PropertyDetails.propertyAddress);
+            if(buySell == 0){
+            setbuySell(result.PropertyDetails.BuySellingFee);
+            }
+            // console.log("Property Details", result.PropertyDetails);
+          })
       }
+      fetchda();
+    }
+  },[datas])
+
+  useEffect(() => {
+    if(checkID){
+      const FetchTokenCount = async () => {
+        if(totaltoken == 0){
+          await TokenCont(checkID)
+          .then((result) => {
+            settotaltoken(result)
+          })
+        }
+      }
+      FetchTokenCount();
     }
   })
+  
+  useEffect(() => {
+    if(checkID){
+      const EscrowAddressFetch = async () => {
+        if (EscrowAddress == null) {
+        await EscrowAcont(checkID)
+          .then((result) => {
+              setEscrowAddress(result);
+            !TextToCopy && setTextToCopy(result);
+          })
+        }
+      }
+      EscrowAddressFetch();
+    }
+  })
+
+  useEffect(() => {
+    if(EscrowAddress){
+      const FetchEscrowBal = async () => {
+        if (balnc == 0) {
+        await EscrowBalance(EscrowAddress)
+          .then((result) => {
+              setbalnc((Number(result) / 1e18).toFixed(4));
+          })
+        }
+      }
+      FetchEscrowBal();
+  }
+})
 
   // get contract details of property
-  useEffect(() => {
-    if (window.ethereum) {
-      if (loadchain) {
-        const fetchData = async () => {
-          try {
-            let completeProp = await loadchain.methods
-              .getCompletePropDetails()
-              .call();
-            if (tokensPrice == 0) {
-              settokensPrice(completeProp.PropertyDetails.TokenPrice);
-            }
-            setcontractAddr(completeProp.PropertyDetails.propertyAddress);
-            setbuySell(completeProp.PropertyDetails.BuySellingFee);
-            setdatas(completeProp);
-            let TotalTokens = await loadchain.methods
-              .TokenCount()
-              .call();
-            settotaltoken(TotalTokens);
-          } catch (err) {
-            console.log("Property Details Fetch error", err);
-          }
-        };
-        fetchData();
-      }
-    }
-  }, [loadchain])
+  // useEffect(() => {
+  //   if (window.ethereum) {
+  //     if (loadchain) {
+  //       const fetchData = async () => {
+  //         try {
+  //           let completeProp = await loadchain.methods
+  //             .getCompletePropDetails()
+  //             .call();
+  //           if (tokensPrice == 0) {
+  //             settokensPrice(completeProp.PropertyDetails.TokenPrice);
+  //           }
+  //           setcontractAddr(completeProp.PropertyDetails.propertyAddress);
+  //           setbuySell(completeProp.PropertyDetails.BuySellingFee);
+  //           setdatas(completeProp);
+  //           let TotalTokens = await loadchain.methods
+  //             .TokenCount()
+  //             .call();
+  //           settotaltoken(TotalTokens);
+  //         } catch (err) {
+  //           console.log("Property Details Fetch error", err);
+  //         }
+  //       };
+  //       fetchData();
+  //     }
+  //   }
+  // }, [loadchain])
 
   // get Escrow Address of property
-  useEffect(() => {
-    if (window.ethereum) {
-      if (loadchain) {
-        const fetchEscrowAdd = async () => {
-          try {
-            let Add = await loadchain.methods
-              .EscrowAccount()
-              .call();
-            if (EscrowAddress == null) {
-              setEscrowAddress(Add);
-            }
-            !TextToCopy && setTextToCopy(Add);
-          } catch (error) {
-            console.log("Ecrow Address Error", error);
-          }
-        }
-        fetchEscrowAdd();
-      }
-    }
-  })
+  // useEffect(() => {
+  //   if (window.ethereum) {
+  //     if (loadchain) {
+  //       const fetchEscrowAdd = async () => {
+  //         try {
+  //           let Add = await loadchain.methods
+  //             .EscrowAccount()
+  //             .call();
+  //           if (EscrowAddress == null) {
+  //             setEscrowAddress(Add);
+  //           }
+  //           !TextToCopy && setTextToCopy(Add);
+  //         } catch (error) {
+  //           console.log("Ecrow Address Error", error);
+  //         }
+  //       }
+  //       fetchEscrowAdd();
+  //     }
+  //   }
+  // })
 
 
   // get Escrow Contract of property
-  useEffect(() => {
-    if (window.ethereum) {
-      if (EscrowAddress) {
-        const fetchEscrow = async () => {
-          try {
-            const contractofEscrow = new web3.eth.Contract(
-              Escrow_ABI,
-              EscrowAddress
-            );
-            if (loadEscrow == null) {
-              setloadEscrow(contractofEscrow);
-            }
-          } catch (error) {
-            console.log("Ecrow Contract Error", error);
-          }
-        }
-        fetchEscrow();
-      }
-    }
-  })
+  // useEffect(() => {
+  //   if (window.ethereum) {
+  //     if (EscrowAddress) {
+  //       const fetchEscrow = async () => {
+  //         try {
+  //           const contractofEscrow = new web3.eth.Contract(
+  //             Escrow_ABI,
+  //             EscrowAddress
+  //           );
+  //           if (loadEscrow == null) {
+  //             setloadEscrow(contractofEscrow);
+  //           }
+  //         } catch (error) {
+  //           console.log("Ecrow Contract Error", error);
+  //         }
+  //       }
+  //       fetchEscrow();
+  //     }
+  //   }
+  // })
+  // useEffect(() => {
+  //     if (EscrowAddress) {
+  //       const fetchEscrow = async () => {
+  //         try {
+  //           const contractofEscrow = new web3.eth.Contract(
+  //             Escrow_ABI,
+  //             EscrowAddress
+  //           );
+  //           if (loadEscrow == null) {
+  //             setloadEscrow(contractofEscrow);
+  //           }
+  //         } catch (error) {
+  //           console.log("Ecrow Contract Error", error);
+  //         }
+  //       }
+  //       fetchEscrow();
+  //   }
+  // })
 
   // get Escrow Balance of property
-  useEffect(() => {
-    if (window.ethereum) {
-      if (loadEscrow) {
-        const fetchBal = async () => {
-          try {
-            let bal = await loadEscrow.methods.balanceOf(EscrowAddress).call();
-            if (balnc == 0) {
-              setbalnc((Number(bal) / 1e18).toFixed(4));
-            }
-          } catch (error) {
-            console.log("Escrow Balance Error", error);
-          }
-        }
-        fetchBal();
-      }
-    }
-  })
+  // useEffect(() => {
+  //   if (window.ethereum) {
+  //     if (loadEscrow) {
+  //       const fetchBal = async () => {
+  //         try {
+  //           let bal = await loadEscrow.methods.balanceOf(
+  //             EscrowAddress).call();
+  //           if (balnc == 0) {
+  //             setbalnc((Number(bal) / 1e18).toFixed(4));
+  //           }
+  //         } catch (error) {
+  //           console.log("Escrow Balance Error", error);
+  //         }
+  //       }
+  //       fetchBal();
+  //     }
+  //   }
+  // })
 
   // // get Buyers 
   // useEffect(() => {
@@ -1030,7 +1128,7 @@ const Sidebar = () => {
                     onChange={(e) => settokenQuant(e.target.value)}
                     placeholder={"Enter Quantity"}
                   />
-                  <span className="input-group-text">{Number(checkNumbers/1e6).toFixed(3)}
+                  <span className="input-group-text">{Number(checkNumbers / 1e6).toFixed(3)}
                     {tokenTypeAcc == 0 ?
                       (<a className="text-black"> -USDT</a>) : (
                         <a className="text-black"> -USDC</a>
@@ -1102,7 +1200,7 @@ const Sidebar = () => {
                     onChange={(e) => settokenQuant(e.target.value)}
                     placeholder={"Enter Quantity"}
                   />
-                  <span className="input-group-text">{Number(calculatedNum/1e6).toFixed(2)}
+                  <span className="input-group-text">{Number(calculatedNum / 1e6).toFixed(2)}
                     {tokenType == 0 ?
                       (<a className="text-black"> -USDT</a>) : (
                         tokenType == 1 ?

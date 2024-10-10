@@ -47,6 +47,16 @@
 				"internalType": "string",
 				"name": "_name",
 				"type": "string"
+			},
+			{
+				"internalType": "string",
+				"name": "_symble",
+				"type": "string"
+			},
+			{
+				"internalType": "address",
+				"name": "_oracle",
+				"type": "address"
 			}
 		],
 		"stateMutability": "nonpayable",
@@ -655,6 +665,19 @@
 				"internalType": "bool",
 				"name": "",
 				"type": "bool"
+			}
+		],
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"inputs": [],
+		"name": "SD_Price",
+		"outputs": [
+			{
+				"internalType": "uint256",
+				"name": "",
+				"type": "uint256"
 			}
 		],
 		"stateMutability": "view",
