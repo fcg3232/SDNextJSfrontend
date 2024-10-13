@@ -1,6 +1,6 @@
 import { http, createConfig } from 'wagmi'
 import { mainnet, sepolia,arbitrumSepolia, arbitrum } from 'wagmi/chains'
-import { coinbaseWallet, injected, walletConnect } from 'wagmi/connectors'
+import { walletConnect } from 'wagmi/connectors'
 import { ArbTestnet } from './Chain';
 
 

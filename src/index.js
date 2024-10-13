@@ -19,7 +19,7 @@ import { limitOrderOfferFetch } from "./slices/LimitOrderSlice";
 
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
 import { WagmiProvider } from 'wagmi'
-import { config } from '../src/components/MarketPlace/config'
+import { config } from './slices/config'
 
 store.dispatch(productsFetch());
 store.dispatch(personalFetch());

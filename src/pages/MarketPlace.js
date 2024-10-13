@@ -17,28 +17,15 @@ import { url } from "../slices/api";
 import axios from "axios";
 import { useSelector } from "react-redux";
 import { getEnsName } from "wagmi/actions";
-import { config } from "../components/MarketPlace/config";
+import { config } from "../slices/config";
+
 const MarketPlace = () => {
   const account = useAccount();
   // console.log("account =>>", account);
   const { connectors, connect, status, error } = useConnect();
   const { disconnect } = useDisconnect();
   const [timeLeft, setTimeLeft] = useState(CountdownTimer());
-  const { web3, contract, accounts, socketContract } = useAppSelector(
-    (state) => state.web3Connect
-  );
-  //   const { data: ensAvatar } = useEnsAvatar({ name: ensName! })
-
-  const user = useSelector((state) => state.auth);
-  // console.log("useruseruser", user);
-  // const { items: data, status } = useAppSelector((state) => state.products);
-
-  //   useEffect(() => {
-  //     const timer = setTimeout(() => {
-  //       setTimeLeft(CountdownTimer());
-  //     }, 1000);
-  //     return () => clearTimeout(timer);
-  //   }, [timeLeft]);
+const user = useSelector((state) => state.auth);
 
   const { address, addresses, isConnected } = useAccount(); // Destructure the required data from useAccount
 
