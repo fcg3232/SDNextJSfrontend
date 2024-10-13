@@ -9,8 +9,8 @@ export const config = createConfig({
   // chains: [mainnet, sepolia,arbitrumSepolia, arbitrum],
   chains: [ArbTestnet],
   connectors: [
-    injected(),
-    coinbaseWallet(),
+    // injected(),
+    // coinbaseWallet(),
     walletConnect({ projectId}),
   ],
   transports: {
