@@ -135,7 +135,7 @@ const Registration = () => {
                   <div className="info">
                     <h2>Contact Information</h2>
                     <p className="font-18">
-                      Fill up the form and our team will get back to you within
+                      Fill out the form and our team will get back to you within
                       24 hours.
                     </p>
                   </div>
